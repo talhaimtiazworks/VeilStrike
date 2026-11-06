@@ -1,0 +1,2 @@
+PASS v3 targeted smoke: actual campaign startMission path for all ten and range (300 VX-4 rounds), 300-shot firing, sprint/zoom firing, real hitscan damage once, HUD, swept collision/recovery, movement, caps, and exact-three-track diagnostics.
+NOTE Browser-rendered missions and audible playback remain unverified; MP3 files are user-supplied and absent from this workspace.

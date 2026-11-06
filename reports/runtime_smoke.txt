@@ -1,0 +1,17 @@
+PASS world/collision route smoke: recon_canyon (8 spawns, 4 surge anchors, 3 routes)
+PASS world/collision route smoke: riverside_village (8 spawns, 4 surge anchors, 3 routes)
+PASS world/collision route smoke: canal_market (8 spawns, 4 surge anchors, 3 routes)
+PASS world/collision route smoke: ridge_hold (8 spawns, 4 surge anchors, 3 routes)
+PASS distinct environment generation: facility (291 collision boxes, 145 cover points, 11 spawns)
+PASS distinct environment generation: desert (61 collision boxes, 56 cover points, 11 spawns)
+PASS distinct environment generation: urban (64 collision boxes, 72 cover points, 12 spawns)
+PASS distinct environment generation: snow (67 collision boxes, 71 cover points, 12 spawns)
+PASS distinct environment generation: industrial (155 collision boxes, 60 cover points, 9 spawns)
+PASS distinct environment generation: rural (128 collision boxes, 40 cover points, 7 spawns)
+PASS all ten campaign layouts have distinct generated geometry, routes, spawn/extraction placement, and cover signatures
+PASS all ten generated maps: safe fall/boundary recovery preserves mission facts; actual opening parties stage at 7–9 hostiles under the 12-live/30-total budgets
+PASS procedural fallback gait unit checks: idle pose fixed; moving gait advances
+PASS player runtime physics: walk 3.60 m/s, sprint 7.80 m/s; sustained, stop, ADS cap, wall collision
+PASS touch sprint arbitration unit check: held sprint survives stick movement/release and clears on sprint-button release
+PASS enemy runtime state smoke: idle/patrol (1.54 m/s), detection 0.4 s, pursuit, cover, fixed strafe endpoint, burst scheduler, lethal/death update; firing callback stubbed, not a rendered gunfight
+PASS music state-machine unit checks: exact registry/path, autoplay rejection, pause/disable races, volume, next/previous and same-element URL switching; real playback remains unverified without the exact files/browser

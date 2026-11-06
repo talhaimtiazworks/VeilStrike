@@ -1,0 +1,1196 @@
+{
+  "summary": {
+    "mapsAudited": 112,
+    "sampleSpacing": 1,
+    "totalLeakCells": 0,
+    "totalSamples": 4220734,
+    "leakRatePct": 0,
+    "totalNoFloorCells": 0,
+    "mapsWithLeaks": 0,
+    "worst": [
+      {
+        "map": "facility",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "desert",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "urban",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "snow",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "recon_canyon",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "industrial",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "rural",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "riverside_village",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "canal_market",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "ridge_hold",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "metro",
+        "leakCells": 0,
+        "leakPct": 0
+      },
+      {
+        "map": "foundry_rail",
+        "leakCells": 0,
+        "leakPct": 0
+      }
+    ],
+    "families": []
+  },
+  "rows": [
+    {
+      "label": "legacy:facility",
+      "map": "facility",
+      "uncoveredSolidMeshes": 0,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:desert",
+      "map": "desert",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:urban",
+      "map": "urban",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:snow",
+      "map": "snow",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:recon_canyon",
+      "map": "recon_canyon",
+      "uncoveredSolidMeshes": 2,
+      "samples": 24025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:industrial",
+      "map": "industrial",
+      "uncoveredSolidMeshes": 3,
+      "samples": 15351,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:rural",
+      "map": "rural",
+      "uncoveredSolidMeshes": 2,
+      "samples": 19321,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:riverside_village",
+      "map": "riverside_village",
+      "uncoveredSolidMeshes": 2,
+      "samples": 23707,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:canal_market",
+      "map": "canal_market",
+      "uncoveredSolidMeshes": 2,
+      "samples": 22165,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:ridge_hold",
+      "map": "ridge_hold",
+      "uncoveredSolidMeshes": 2,
+      "samples": 24025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:metro",
+      "map": "metro",
+      "uncoveredSolidMeshes": 0,
+      "samples": 117649,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "legacy:foundry_rail",
+      "map": "foundry_rail",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33489,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op001",
+      "map": "facility",
+      "uncoveredSolidMeshes": 0,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op002",
+      "map": "desert",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op003",
+      "map": "urban",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op004",
+      "map": "snow",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op005",
+      "map": "recon_canyon",
+      "uncoveredSolidMeshes": 2,
+      "samples": 24025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op006",
+      "map": "industrial",
+      "uncoveredSolidMeshes": 3,
+      "samples": 15351,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op007",
+      "map": "rural",
+      "uncoveredSolidMeshes": 2,
+      "samples": 19321,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op008",
+      "map": "riverside_village",
+      "uncoveredSolidMeshes": 2,
+      "samples": 23707,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op009",
+      "map": "canal_market",
+      "uncoveredSolidMeshes": 2,
+      "samples": 22165,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op010",
+      "map": "ridge_hold",
+      "uncoveredSolidMeshes": 2,
+      "samples": 24025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op011",
+      "map": "convoy_valley",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op012",
+      "map": "wadi_outpost",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36481,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op013",
+      "map": "glacier_pass",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32041,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op014",
+      "map": "harbor_boulevard",
+      "uncoveredSolidMeshes": 2,
+      "samples": 30561,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op015",
+      "map": "foundry_rail",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33489,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op016",
+      "map": "rowhouse_grid",
+      "uncoveredSolidMeshes": 2,
+      "samples": 29241,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op017",
+      "map": "kestrel_annex",
+      "uncoveredSolidMeshes": 2,
+      "samples": 30625,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op018",
+      "map": "metro",
+      "uncoveredSolidMeshes": 0,
+      "samples": 117649,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op019",
+      "map": "sector_019_redgate_crossing",
+      "uncoveredSolidMeshes": 2,
+      "samples": 40755,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op020",
+      "map": "sector_020_pinewatch_battery",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32375,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op021",
+      "map": "sector_021_seawall_bastion",
+      "uncoveredSolidMeshes": 2,
+      "samples": 31675,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op022",
+      "map": "sector_022_gantries_at_dusk",
+      "uncoveredSolidMeshes": 2,
+      "samples": 30975,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op023",
+      "map": "sector_023_highwater_lock",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33807,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op024",
+      "map": "sector_024_silent_turbine",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33099,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op025",
+      "map": "sector_025_amber_flare",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32391,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op026",
+      "map": "sector_026_volt_switch",
+      "uncoveredSolidMeshes": 2,
+      "samples": 31683,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op027",
+      "map": "sector_027_tarmac_spear",
+      "uncoveredSolidMeshes": 2,
+      "samples": 43263,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op028",
+      "map": "sector_028_cryo_wing",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34189,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op029",
+      "map": "sector_029_sublevel_zero",
+      "uncoveredSolidMeshes": 0,
+      "samples": 26553,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op030",
+      "map": "sector_030_casemate_nine",
+      "uncoveredSolidMeshes": 0,
+      "samples": 25917,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op031",
+      "map": "sector_031_freight_spur",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32041,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op032",
+      "map": "sector_032_tollgate_iron",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34547,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op033",
+      "map": "sector_033_orchard_hollow",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34209,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op034",
+      "map": "sector_034_garrison_vanguard",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33485,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op035",
+      "map": "sector_035_broken_foundry",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32761,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op036",
+      "map": "sector_036_breakwater_dock",
+      "uncoveredSolidMeshes": 2,
+      "samples": 32037,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op037",
+      "map": "sector_037_drydock_shadow",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34571,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op038",
+      "map": "sector_038_timber_ambush",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34587,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op039",
+      "map": "sector_039_span_breaker",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33855,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op040",
+      "map": "sector_040_outpost_scorpion",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33123,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op041",
+      "map": "sector_041_slag_corridor",
+      "uncoveredSolidMeshes": 2,
+      "samples": 35685,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op042",
+      "map": "sector_042_dead_loom",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34953,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op043",
+      "map": "sector_043_black_cracker",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34595,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op044",
+      "map": "sector_044_gridlock_seven",
+      "uncoveredSolidMeshes": 2,
+      "samples": 33855,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op045",
+      "map": "sector_045_deep_archive",
+      "uncoveredSolidMeshes": 0,
+      "samples": 26235,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op046",
+      "map": "sector_046_iron_gallery",
+      "uncoveredSolidMeshes": 0,
+      "samples": 28545,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op047",
+      "map": "sector_047_isotope_vault",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34965,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op048",
+      "map": "sector_048_dune_radar",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34969,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op049",
+      "map": "sector_049_frost_citadel",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34221,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op050",
+      "map": "sector_050_roundhouse_siege",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36839,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op051",
+      "map": "sector_051_checkpoint_viper",
+      "uncoveredSolidMeshes": 2,
+      "samples": 44091,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op052",
+      "map": "sector_052_crossroads_mill",
+      "uncoveredSolidMeshes": 2,
+      "samples": 43263,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op053",
+      "map": "sector_053_camp_centurion",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34965,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op054",
+      "map": "sector_054_midtown_overpass",
+      "uncoveredSolidMeshes": 2,
+      "samples": 34209,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op055",
+      "map": "sector_055_headland_battery",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36855,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op056",
+      "map": "sector_056_bunkering_pier",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36099,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op057",
+      "map": "sector_057_apron_thunder",
+      "uncoveredSolidMeshes": 2,
+      "samples": 48399,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op058",
+      "map": "sector_058_canopy_watch",
+      "uncoveredSolidMeshes": 2,
+      "samples": 35335,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op059",
+      "map": "sector_059_gorge_powerhouse",
+      "uncoveredSolidMeshes": 2,
+      "samples": 38009,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op060",
+      "map": "sector_060_bastion_kronos",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37245,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op061",
+      "map": "sector_061_crosswind_runway",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49729,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op062",
+      "map": "sector_062_rotor_base",
+      "uncoveredSolidMeshes": 2,
+      "samples": 48837,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op063",
+      "map": "sector_063_steel_junction",
+      "uncoveredSolidMeshes": 2,
+      "samples": 35319,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op064",
+      "map": "sector_064_borderlock_north",
+      "uncoveredSolidMeshes": 2,
+      "samples": 38021,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op065",
+      "map": "sector_065_pipeline_zero",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37249,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op066",
+      "map": "sector_066_dark_reactor",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36477,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op067",
+      "map": "sector_067_avionics_dome",
+      "uncoveredSolidMeshes": 2,
+      "samples": 48825,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op068",
+      "map": "sector_068_subterranean_spur",
+      "uncoveredSolidMeshes": 0,
+      "samples": 31675,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op069",
+      "map": "sector_069_bunker_complex_delta",
+      "uncoveredSolidMeshes": 0,
+      "samples": 30975,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op070",
+      "map": "sector_070_chemical_row",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37635,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op071",
+      "map": "sector_071_rusted_turbine",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36855,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op072",
+      "map": "sector_072_wadi_citadel",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36075,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op073",
+      "map": "sector_073_whiteeout_ridge",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39203,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op074",
+      "map": "sector_074_darkwater_woods",
+      "uncoveredSolidMeshes": 2,
+      "samples": 38415,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op075",
+      "map": "sector_075_amphibious_gate",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37627,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op076",
+      "map": "sector_076_port_sovereign",
+      "uncoveredSolidMeshes": 2,
+      "samples": 36839,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op077",
+      "map": "sector_077_floodgate_locks",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39597,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op078",
+      "map": "sector_078_valley_settlement",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39601,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op079",
+      "map": "sector_079_fob_vanguard",
+      "uncoveredSolidMeshes": 2,
+      "samples": 38805,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op080",
+      "map": "sector_080_hightower_keep",
+      "uncoveredSolidMeshes": 2,
+      "samples": 38009,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op081",
+      "map": "sector_081_downtown_siege",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37213,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op082",
+      "map": "sector_082_smelter_titan",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39999,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op083",
+      "map": "sector_083_hollow_arsenal",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39597,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op084",
+      "map": "sector_084_red_mirage",
+      "uncoveredSolidMeshes": 2,
+      "samples": 52425,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op085",
+      "map": "sector_085_summit_battery",
+      "uncoveredSolidMeshes": 2,
+      "samples": 37989,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op086",
+      "map": "sector_086_shadow_timber",
+      "uncoveredSolidMeshes": 2,
+      "samples": 49283,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op087",
+      "map": "sector_087_iron_headland",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39999,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op088",
+      "map": "sector_088_terminal_zulu",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39991,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op089",
+      "map": "sector_089_skyline_runway",
+      "uncoveredSolidMeshes": 2,
+      "samples": 52875,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op090",
+      "map": "sector_090_abyss_vault",
+      "uncoveredSolidMeshes": 0,
+      "samples": 30927,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op091",
+      "map": "sector_091_aegis_tunnels",
+      "uncoveredSolidMeshes": 0,
+      "samples": 33489,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op092",
+      "map": "sector_092_omega_labs",
+      "uncoveredSolidMeshes": 2,
+      "samples": 40397,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op093",
+      "map": "sector_093_hv_core_prime",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39975,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op094",
+      "map": "sector_094_inferno_terminal",
+      "uncoveredSolidMeshes": 2,
+      "samples": 39155,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op095",
+      "map": "sector_095_stonebridge_town",
+      "uncoveredSolidMeshes": 2,
+      "samples": 42025,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op096",
+      "map": "sector_096_titan_spillway",
+      "uncoveredSolidMeshes": 2,
+      "samples": 41205,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op097",
+      "map": "sector_097_iron_gateway",
+      "uncoveredSolidMeshes": 2,
+      "samples": 48825,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op098",
+      "map": "sector_098_central_depot",
+      "uncoveredSolidMeshes": 2,
+      "samples": 40365,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op099",
+      "map": "sector_099_garrison_prime",
+      "uncoveredSolidMeshes": 2,
+      "samples": 53297,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    },
+    {
+      "label": "op100",
+      "map": "sector_100_iron_citadel",
+      "uncoveredSolidMeshes": 2,
+      "samples": 42435,
+      "leakCells": 0,
+      "leakPct": 0,
+      "noFloorCells": 0,
+      "leakFamilies": []
+    }
+  ]
+}

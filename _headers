@@ -1,0 +1,86 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/index.html
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/*.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sw.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+  Service-Worker-Allowed: /
+
+/assets/vendor/three.module.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/vendor/jsm/loaders/*.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/vendor/jsm/utils/*.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/style.css
+  Content-Type: text/css; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/css/*.css
+  Content-Type: text/css; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/characters/*.glb
+  Content-Type: model/gltf-binary
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/characters/*.gltf
+  Content-Type: model/gltf+json
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/music/*.mp3
+  Content-Type: audio/mpeg
+  Cache-Control: public, max-age=0, must-revalidate
+  Accept-Ranges: bytes
+
+/assets/icons/*.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=604800
+
+/assets/*.png
+  Content-Type: image/png
+
+/assets/*/*.png
+  Content-Type: image/png
+
+/assets/*.jpg
+  Content-Type: image/jpeg
+
+/assets/*/*.jpg
+  Content-Type: image/jpeg
+
+/assets/*.jpeg
+  Content-Type: image/jpeg
+
+/assets/*/*.jpeg
+  Content-Type: image/jpeg
+
+/assets/*.webp
+  Content-Type: image/webp
+
+/assets/*/*.webp
+  Content-Type: image/webp
+
+/assets/*.svg
+  Content-Type: image/svg+xml
+
+/assets/*/*.svg
+  Content-Type: image/svg+xml

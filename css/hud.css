@@ -1,0 +1,1185 @@
+/* ============================================================================
+   VEILSTRIKE — Phase 13 design system: hud.css
+   Mobile-first gameplay HUD. Loaded AFTER menu.css; wins ties by order.
+   Contracts preserved:
+   - #hud{display:contents}: pointer events pass through to gameplay surfaces;
+     only explicitly interactive HUD chips re-enable them (Phase-09 hotfix B
+     class of bug is avoided by keeping #hud itself out of the box tree).
+   - updateHUD() drives classes/inline fills only — no geometry from JS except
+     values below marked JS-OVERRIDE (they stay compatible).
+   - body.hide-touch-{compass,objective,vitals,ammo} settings honored.
+   ============================================================================ */
+
+#hud { display: contents; }
+#hud > * { pointer-events: none; }
+#hud .hud-click { pointer-events: auto; }
+
+/* ---- ambient overlays (untouched geometry) ---- */
+#vignette, #damage-flash, #flashbang {
+  position: fixed; inset: 0; pointer-events: none;
+}
+#vignette { z-index: 30; background: radial-gradient(120% 100% at 50% 45%, transparent 62%, rgba(4, 6, 8, .55)); }
+#damage-flash { z-index: 31; background: radial-gradient(100% 100% at 50% 50%, rgba(209, 92, 72, .16), rgba(209, 92, 72, .42)); opacity: 0; }
+#flashbang { z-index: 32; background: #fff; opacity: 0; }
+
+/* ---- top strip: compass + alert + fps ---- */
+#compass-wrap {
+  position: fixed; top: calc(var(--sat) + 6px); left: 50%; z-index: 40;
+  transform: translateX(-50%);
+  width: min(60vw, 360px); height: 26px;
+  opacity: .92;
+}
+#compass { display: block; margin: 0 auto; }
+#alert-chip {
+  position: fixed; top: calc(var(--sat) + 38px); left: 50%; z-index: 41;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .2em;
+  color: var(--text-dim);
+  background: rgba(14, 18, 21, .78);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+#alert-chip.hidden { display: none; }
+#fps-counter {
+  position: fixed; top: calc(var(--sat) + 6px); right: calc(var(--sar) + 8px); z-index: 41;
+  font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-faint);
+}
+
+/* ---- objective block: top-left, compact ---- */
+#hud-objective {
+  position: fixed; top: calc(var(--sat) + 42px); left: calc(var(--sal) + 12px); z-index: 40;
+  max-width: min(52vw, 300px);
+  padding: 8px 12px;
+  background: rgba(14, 18, 21, .72);
+  border-radius: 8px;
+  border-left: 2px solid var(--accent);
+}
+.obj-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+#obj-label { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .22em; color: var(--accent); }
+#obj-text { font-size: var(--fs-small); font-weight: 600; letter-spacing: .05em; color: var(--text); margin-top: 1px; }
+.obj-action {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.35;
+  color: #6de2c2;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  padding: 2px 6px;
+  background: rgba(109, 226, 194, 0.08);
+  border-left: 2px solid #6de2c2;
+  border-radius: 2px;
+}
+.obj-action:empty { display: none; }
+#obj-sub { font-size: var(--fs-micro); color: var(--text-dim); letter-spacing: .04em; line-height: 1.35; margin-top: 1px; }
+#lockdown-timer { font-family: var(--font-mono); font-size: var(--fs-small); color: var(--danger); margin-top: 2px; letter-spacing: .12em; }
+#lockdown-timer.hidden { display: none; }
+
+/* ---- minimap: top-right with reachable map button ---- */
+#minimap {
+  position: fixed; top: calc(var(--sat) + 42px); right: calc(var(--sar) + 12px); z-index: 40;
+  width: clamp(88px, 20vh, 124px); height: clamp(88px, 20vh, 124px);
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: rgba(14, 18, 21, .6);
+}
+#minimap.hidden { display: none; }
+#hud-mapbtn {
+  position: fixed; z-index: 41;
+  top: calc(var(--sat) + 42px + clamp(88px, 20vh, 124px) + 6px); right: calc(var(--sar) + 12px);
+  min-width: var(--tap); min-height: var(--tap);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .16em;
+  color: var(--text-dim);
+  background: rgba(14, 18, 21, .78); border: 1px solid var(--line-strong); border-radius: 8px;
+  pointer-events: auto; touch-action: manipulation;
+}
+
+/* ---- crosshair / hitmarker / damage direction ---- */
+#crosshair {
+  position: fixed; left: 50%; top: 50%; z-index: 42;
+  width: 4px; height: 4px; transform: translate(-50%, -50%);
+}
+#ch-dot { position: absolute; inset: 0; border-radius: 50%; background: rgba(235, 244, 238, .95); }
+.ch-tick {
+  position: absolute; background: rgba(235, 244, 238, .9); border-radius: 1px;
+  transition: transform .12s var(--ease-out), opacity .12s;
+}
+#crosshair .ch-top   { width: 2px; height: 8px; left: 1px; top: -14px; }
+#crosshair .ch-bottom{ width: 2px; height: 8px; left: 1px; top: 6px; }
+#crosshair .ch-left  { width: 8px; height: 2px; left: -14px; top: 1px; }
+#crosshair .ch-right { width: 8px; height: 2px; left: 6px; top: 1px; }
+#crosshair.ads .ch-top { top: -9px; } #crosshair.ads .ch-bottom { top: 4px; }
+#crosshair.ads .ch-left { left: -9px; } #crosshair.ads .ch-right { left: 4px; }
+#crosshair.ads .ch-tick,
+#crosshair.ads #ch-dot {
+  opacity: 0;
+}
+#crosshair.hidden { display: none; }
+
+/* ---- Precision ADS Reticle: circular outline with centered plus sign ---- */
+#ads-reticle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .09s ease-out;
+}
+.ads-reticle-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ads-ring-bg {
+  fill: none;
+  stroke: rgba(5, 10, 8, 0.8);
+  stroke-width: 2.8;
+}
+.ads-ring-fg {
+  fill: none;
+  stroke: rgba(220, 245, 230, 0.95);
+  stroke-width: 1.35;
+}
+#crosshair.ads #ads-reticle {
+  opacity: 1;
+}
+#crosshair.sniper-ads,
+#crosshair.sniper-ads #ch-dot,
+#crosshair.sniper-ads .ch-tick,
+#crosshair.sniper-ads #ads-reticle,
+#crosshair.sniper-ads svg,
+#crosshair.sniper-ads circle {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* ---- Enemy Proximity Alert & Directional Threat Warnings (P0-C) ---- */
+#proximity-alert {
+  position: fixed;
+  top: calc(var(--sat, 0px) + 164px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: rgba(18, 5, 5, 0.88);
+  border: 1px solid rgba(230, 45, 45, 0.85);
+  border-left: 3px solid #ff3333;
+  border-radius: 4px;
+  color: #ff5555;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(220, 20, 20, 0.45), inset 0 0 10px rgba(220, 20, 20, 0.15);
+  z-index: 41;
+  pointer-events: none;
+  transition: opacity 0.14s ease-out, transform 0.14s ease-out;
+}
+#proximity-alert.hidden {
+  display: none !important;
+  opacity: 0;
+}
+#proximity-alert.escalated {
+  background: rgba(45, 8, 8, 0.94);
+  border-color: #ff1a1a;
+  color: #ff3333;
+  box-shadow: 0 0 24px rgba(255, 30, 30, 0.75), inset 0 0 14px rgba(255, 30, 30, 0.35);
+  animation: prox-pulse 0.65s infinite alternate ease-in-out;
+}
+@keyframes prox-pulse {
+  0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 14px rgba(255, 30, 30, 0.4); }
+  100% { transform: translateX(-50%) scale(1.04); box-shadow: 0 0 26px rgba(255, 30, 30, 0.85); }
+}
+.prox-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3333;
+  box-shadow: 0 0 8px #ff3333;
+  animation: prox-dot-blink 0.7s infinite alternate ease-in-out;
+}
+@keyframes prox-dot-blink {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+.prox-dist {
+  color: #ff9999;
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+/* ---- Directional Threat Indicators (Rear & Flanks) ---- */
+#threat-indicators {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+.threat-arc {
+  position: absolute;
+  pointer-events: none;
+  transition: opacity 0.12s ease-out;
+}
+.threat-arc.hidden {
+  display: none !important;
+  opacity: 0;
+}
+/* Rear Threat Indicator: bottom screen center arc/arrow */
+.threat-arc.threat-rear {
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 24px;
+  background: radial-gradient(ellipse at bottom, rgba(235, 40, 40, 0.85) 0%, rgba(200, 20, 20, 0.45) 45%, transparent 75%);
+  border-bottom: 3px solid #ff2a2a;
+  border-radius: 50% 50% 0 0;
+  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 0.8));
+}
+.threat-arc.threat-rear::after {
+  content: "▼ REAR THREAT ▼";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffdddd;
+  white-space: nowrap;
+}
+/* Left Flank Indicator: left screen edge arc */
+.threat-arc.threat-left {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 120px;
+  background: radial-gradient(ellipse at left, rgba(235, 40, 40, 0.85) 0%, rgba(200, 20, 20, 0.45) 45%, transparent 75%);
+  border-left: 3px solid #ff2a2a;
+  border-radius: 0 50% 50% 0;
+  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 0.8));
+}
+/* Right Flank Indicator: right screen edge arc */
+.threat-arc.threat-right {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 120px;
+  background: radial-gradient(ellipse at right, rgba(235, 40, 40, 0.85) 0%, rgba(200, 20, 20, 0.45) 45%, transparent 75%);
+  border-right: 3px solid #ff2a2a;
+  border-radius: 50% 0 0 50%;
+  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 0.8));
+}
+
+/* ---- Dedicated Tactical Sniper Optic Overlay ---- */
+#sniper-scope-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 43;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#sniper-scope-overlay.active {
+  opacity: 1;
+}
+#sniper-scope-overlay.hidden {
+  display: none;
+}
+.sniper-reticle-svg {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+.sc-dark-edge {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.95);
+  pointer-events: none;
+}
+.sc-bezel-outer {
+  fill: none;
+  stroke: rgba(12, 18, 20, 0.98);
+  stroke-width: 14;
+}
+.sc-bezel-inner {
+  fill: none;
+  stroke: rgba(45, 60, 55, 0.85);
+  stroke-width: 2.5;
+}
+.sc-line-bg {
+  stroke: rgba(0, 0, 0, 0.9);
+  stroke-width: 2.4;
+}
+.sc-line-fg {
+  stroke: rgba(240, 248, 242, 0.96);
+  stroke-width: 1.0;
+}
+.sc-center-dot-bg {
+  fill: rgba(0, 0, 0, 0.95);
+}
+.sc-center-dot-fg {
+  fill: #ff3b30;
+}
+.sc-hash-bg {
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 2.2;
+}
+.sc-hash-fg {
+  stroke: rgba(235, 245, 238, 0.92);
+  stroke-width: 0.95;
+}
+.sc-dot {
+  fill: rgba(235, 245, 238, 0.95);
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 0.8;
+}
+.sc-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: rgba(210, 230, 220, 0.85);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  dominant-baseline: central;
+}
+.sniper-scope-hud {
+  position: absolute;
+  bottom: calc(var(--sab, 0px) + 36px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  pointer-events: none;
+}
+.sc-telemetry-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(220, 240, 230, 0.88);
+  background: rgba(8, 14, 16, 0.75);
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(80, 110, 100, 0.35);
+  white-space: nowrap;
+}
+.sc-telemetry-badge.hidden {
+  display: none;
+}
+#hitmarker {
+  position: fixed; left: 50%; top: 50%; z-index: 42; transform: translate(-50%, -50%) rotate(45deg);
+  width: 14px; height: 14px; opacity: 0; pointer-events: none;
+}
+#hitmarker.show { opacity: .95; }
+#hitmarker::before, #hitmarker::after { content: ""; position: absolute; background: #fff; }
+#hitmarker::before { left: 6px; top: 0; width: 2px; height: 14px; }
+#hitmarker::after { left: 0; top: 6px; width: 14px; height: 2px; }
+#damage-indicators { position: fixed; inset: 0; z-index: 41; pointer-events: none; }
+
+/* ---- bottom band: vitals left, weapon right, both lifted above thumb zones
+        (thumb zones = bottom ~150px on touch devices) ---- */
+#hud-bottom { display: contents; }
+#hud-vitals {
+  position: fixed; left: calc(var(--sal) + 12px); bottom: calc(var(--sab) + 12px); z-index: 40;
+  width: clamp(160px, 24vw, 220px);
+  display: flex; flex-direction: column; gap: 6px;
+}
+body.touch-on #hud-vitals { bottom: calc(var(--sab) + 158px); }
+.vital-row { display: flex; align-items: center; gap: 8px; }
+.vital-label { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .18em; color: var(--text-dim); width: 44px; flex: 0 0 auto; }
+.vital-num { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text); margin-left: auto; }
+.bar-outer {
+  flex: 1; height: 7px; border-radius: 4px;
+  background: rgba(14, 18, 21, .72);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.bar-inner { height: 100%; width: 100%; border-radius: 3px; }
+#armor-fill { background: #8fb4c9; }
+#health-fill { background: var(--ok); }
+#health-fill.low { background: var(--danger); }
+#stamina-fill { background: var(--accent); }
+.stamina-outer { opacity: .55; }
+body.mobile-stamina-show .stamina-outer, body.touch-on .stamina-outer { opacity: 1; }
+
+/* weapon module — bottom right */
+#hud-weapon {
+  position: fixed; right: calc(var(--sar) + 12px); bottom: calc(var(--sab) + 12px); z-index: 40;
+  min-width: 168px; max-width: 260px;
+  padding: 10px 12px;
+  background: rgba(14, 18, 21, .72);
+  border: 1px solid var(--line); border-radius: 10px;
+  text-align: right;
+}
+body.touch-on #hud-weapon { bottom: calc(var(--sab) + 158px); }
+#weapon-heading { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; }
+#weapon-name { font-size: 15px; font-weight: 700; letter-spacing: .1em; color: var(--text); }
+#weapon-class { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .16em; color: var(--text-faint); text-transform: uppercase; }
+#weapon-mode {
+  margin-top: 6px;
+  min-width: var(--tap); min-height: 32px; padding: 0 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .14em;
+  color: var(--accent);
+  background: rgba(217, 164, 65, .12);
+  border: 1px solid rgba(217, 164, 65, .4); border-radius: 6px;
+  pointer-events: auto; touch-action: manipulation;
+}
+#ammo-row { display: flex; align-items: baseline; justify-content: flex-end; gap: 4px; margin-top: 2px; }
+#ammo-mag { font-size: 26px; font-weight: 700; font-family: var(--font-mono); color: var(--text); }
+#ammo-mag.low { color: var(--danger); }
+.ammo-sep { color: var(--text-faint); }
+#ammo-reserve { font-size: var(--fs-small); font-family: var(--font-mono); color: var(--text-dim); }
+#ammo-total { font-size: var(--fs-micro); font-family: var(--font-mono); color: var(--text-faint); }
+#weapon-state { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .14em; color: var(--text-dim); margin-top: 1px; text-transform: uppercase; }
+#weapon-meta { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+#frag-count { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--accent); }
+#throw-row { display: flex; justify-content: flex-end; gap: 6px; margin-top: 4px; font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-dim); }
+#throw-row.hidden { display: none; }
+#throw-name { color: var(--text); letter-spacing: .1em; }
+
+/* ---- stance indicator: small chip under crosshair ---- */
+#stance-indicator {
+  position: fixed; left: 50%; top: calc(50% + 34px); z-index: 40; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .24em;
+  color: var(--text-faint);
+}
+#stance-indicator.hidden { display: none; }
+
+/* ---- center prompts: interact + hack + bandage ---- */
+#interact-prompt {
+  position: fixed; left: 50%; bottom: 30%; z-index: 44; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: rgba(14, 18, 21, .85);
+  border: 1px solid var(--line-strong); border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  font-size: var(--fs-small); letter-spacing: .08em; color: var(--text);
+}
+#interact-prompt.hidden { display: none; }
+#interact-prompt .key-cap {
+  min-width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 8px;
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+  background: var(--panel-3); border: 1px solid var(--line-strong); border-radius: 6px; color: var(--accent);
+}
+#hack-progress {
+  position: fixed; left: 50%; bottom: 23%; z-index: 44; transform: translateX(-50%);
+  width: min(70vw, 280px);
+}
+#hack-progress.hidden { display: none; }
+#block-hack, #hack-progress { text-align: center; }
+#hack-fill { display: block; height: 6px; border-radius: 3px; overflow: hidden; background: var(--panel-3); }
+#hack-fill > span, #hack-fill::after { display: block; height: 100%; background: var(--accent); }
+#hack-label { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .18em; color: var(--text-dim); }
+#bandage-bar { position: fixed; left: 50%; bottom: 18%; z-index: 44; transform: translateX(-50%); width: min(60vw, 240px); }
+#bandage-bar.hidden { display: none; }
+
+/* ---- objective toast / radio / suppression / subtitles ---- */
+#objective-toast {
+  position: fixed; top: calc(var(--sat) + 96px); left: 50%; z-index: 45; transform: translateX(-50%);
+  max-width: min(86vw, 380px);
+  padding: 10px 16px;
+  background: rgba(14, 18, 21, .88);
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  text-align: center;
+}
+#objective-toast.hidden { display: none; }
+#toast-label { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .22em; color: var(--accent); }
+#toast-text { font-size: var(--fs-small); color: var(--text); margin-top: 1px; }
+#radio-line {
+  position: fixed; top: calc(var(--sat) + 42px); left: 50%; z-index: 39; transform: translateX(-50%);
+  max-width: min(80vw, 420px);
+  padding: 6px 12px;
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .1em; color: var(--text-dim);
+  background: rgba(14, 18, 21, .6);
+  border-radius: 999px;
+  opacity: 0; transition: opacity .3s;
+}
+#radio-line.show { opacity: 1; }
+#radio-line.hidden { display: none; }
+#suppress-hint {
+  /* FINAL MOBILE UX FIX: above the subtitle line's 2-line maximum (it sat on it at ≤1366×768) */
+  position: fixed; left: 50%; bottom: max(12%, calc(var(--sab) + 146px)); z-index: 40; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .22em; color: var(--danger);
+}
+#suppress-hint.hidden { display: none; }
+/* FINAL FIX: setPinned() toggles .show — without this rule the hint was ALWAYS visible */
+#suppress-hint { opacity: 0; transition: opacity .25s; pointer-events: none; }
+#suppress-hint.show { opacity: 1; }
+#subtitle-line {
+  position: fixed; left: 50%; bottom: calc(var(--sab) + 86px); z-index: 46; transform: translateX(-50%);
+  max-width: min(88vw, 520px);
+  padding: 8px 14px;
+  background: rgba(10, 13, 15, .9);
+  border-radius: 8px;
+  font-size: var(--fs-small); color: var(--text);
+}
+body.touch-on #subtitle-line { bottom: calc(var(--sab) + 176px); }
+#subtitle-line.hidden { display: none; }
+#subtitle-tag { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .18em; color: var(--accent); margin-right: 8px; }
+
+/* ---- vehicle HUD: bottom-center card (clear of thumbs) ---- */
+#veh-hud {
+  position: fixed; left: 50%; bottom: calc(var(--sab) + 12px); z-index: 43; transform: translateX(-50%);
+  min-width: 230px;
+  padding: 10px 14px;
+  background: rgba(14, 18, 21, .8);
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  text-align: center;
+}
+body.touch-on #veh-hud { bottom: calc(var(--sab) + 158px); }
+#veh-hud.hidden { display: none; }
+#veh-name { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .18em; color: var(--accent); }
+#veh-readouts { display: flex; gap: 14px; justify-content: center; margin-top: 4px; }
+#veh-speed { font-size: 24px; font-weight: 700; font-family: var(--font-mono); color: var(--text); }
+#veh-kmh { font-size: var(--fs-micro); color: var(--text-faint); align-self: flex-end; }
+#veh-hint { font-size: var(--fs-micro); color: var(--text-dim); margin-top: 2px; }
+#veh-controls { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-faint); margin-top: 4px; }
+.veh-inner { height: 5px; border-radius: 3px; background: var(--ok); }
+
+/* readability overrides — legacy id-level tiny-text rules (8px era) end here */
+#hud .vital-label, #hud .vital-num { font-size: var(--fs-micro); font-family: var(--font-mono); letter-spacing: .16em; }
+#hud #frag-count, #hud #throw-row, #hud #throw-name, #hud #throw-count { font-size: var(--fs-micro); font-family: var(--font-mono); }
+#hud #veh-alt, #hud #veh-load, #hud #veh-gear, #hud #veh-kmh { font-size: var(--fs-micro); font-family: var(--font-mono); color: var(--text-dim); }
+#hud #ammo-reserve { font-size: var(--fs-small); }
+#hud #ammo-total { font-size: var(--fs-micro); }
+
+/* ---- equipment wheel: centered canvas card ---- */
+#eq-wheel {
+  position: fixed; left: 50%; top: 50%; z-index: 48; transform: translate(-50%, -50%);
+  pointer-events: auto;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, .6));
+}
+#eq-wheel.hidden { display: none; }
+
+/* ---- tactical map overlay: full modal, safe-area framed ---- */
+#tacmap {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(6, 8, 10, .9);
+  display: flex; flex-direction: column;
+  padding: calc(var(--sat) + 8px) calc(var(--sar) + 8px) calc(var(--sab) + 8px) calc(var(--sal) + 8px);
+}
+#tacmap.hidden { display: none; }
+#tacmap-frame { display: flex; flex-direction: column; flex: 1; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-2); }
+#tacmap-topbar {
+  display: flex; align-items: center; gap: var(--gap-3);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+#tacmap-title { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .22em; color: var(--accent); }
+#tacmap-controls { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.tac-btn {
+  min-width: var(--tap); min-height: var(--tap);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: var(--fs-small);
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--line-strong); border-radius: 8px;
+  pointer-events: auto; touch-action: manipulation;
+}
+.tac-val { min-width: 44px; text-align: center; align-self: center; font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-dim); }
+#tacmap-canvas { flex: 1; min-height: 42vh; width: 100%; height: auto; background: var(--bg-1); image-rendering: auto; touch-action: none; cursor: grab; }
+#tacmap-canvas:active { cursor: grabbing; }
+#tacmap-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 8px 12px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-dim); }
+#tac3d-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 8px 12px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-dim); }
+#tacmap-legend.hidden, #tac3d-legend.hidden, #map3d-stage.hidden, #tac3d-controls.hidden { display: none; }
+/* Phase 14 · 3D world-map view */
+#map3d-stage { position: relative; flex: 1; display: flex; min-height: 0; background: #0a0e12; }
+#map3dcanvas { width: 100%; height: 100%; display: block; touch-action: none; }
+#tac3d-controls { position: absolute; right: 10px; bottom: 10px; display: flex; gap: 6px; }
+#tac3d-controls .tac-btn { opacity: 0.92; }
+#tacmap-canvas.hidden { display: none; }
+.c-door::before, .c-foe::before, .c-friend::before, .c-item::before, .c-obj::before, .c-opt::before, .c-veh::before {
+  content: "■"; margin-right: 6px; color: var(--accent);
+}
+.c-foe::before { color: var(--danger); } .c-friend::before { color: var(--ok); } .c-obj::before { color: var(--accent); }
+.c-item::before { color: #8fb4c9; } .c-opt::before { color: var(--text-dim); } .c-veh::before { color: #b5985a; } .c-door::before { color: var(--text-faint); }
+
+/* ---- touch compaction: corner modules must never collide ----
+   Secondary ammo info (frag count / throw row / weapon meta) is redundant on
+   touch: the action tray already carries throw counts. Dropping it keeps the
+   weapon card narrow enough to coexist with vitals at 320 px. */
+body.touch-on #hud-weapon #weapon-meta,
+body.touch-on #hud-weapon #throw-row { display: none; }
+body.touch-on #hud-weapon { min-width: 0; max-width: 44vw; padding: 8px 10px; }
+body.touch-on #hud-weapon #ammo-mag { font-size: 22px; }
+body.touch-on #hud-vitals { width: clamp(128px, 34vw, 190px); }
+
+/* ============================= TOUCH-COARSE HUD =============================
+   On coarse-pointer gameplay the HUD rеstructures deliberately in BOTH
+   orientations so the 15 editable controls get collision-free lanes:
+   - minimap & its toggle hide (MAP touch button → fullscreen tacmap survives
+     as the real map action)
+   - objective becomes a compact top-center chip below the compass
+   - vitals become a slim top-left strip
+   - weapon card becomes a compact pill (bottom-right landscape / top-left
+     stack portrait)                                                    */
+@media (pointer: coarse) {
+  body.touch-on #minimap, body.touch-on #hud-mapbtn { display: none !important; }
+}
+
+@media (pointer: coarse) {
+  body.touch-on #minimap, body.touch-on #hud-mapbtn { display: none !important; }
+  /* compact metrics shared by every coarse-mode HUD module */
+  body.touch-on #hud-vitals {
+    padding: 5px 8px 6px; gap: 2px;
+    max-height: 56px; overflow: hidden;   /* status chips stay discoverable via
+                                               the central status readouts */
+  }
+  body.touch-on #hud-vitals .vital-row { gap: 4px; margin: 1px 0; }
+  body.touch-on #hud-vitals .vital-label { font-size: 9px; letter-spacing: .04em; width: 44px; }
+  body.touch-on #hud-vitals .bar-outer { height: 4px; }
+  body.touch-on #hud-vitals .vital-num { font-size: 9px; min-width: 20px; }
+  body.touch-on #hud-weapon {
+    padding: 5px 10px 6px;
+    display: block; text-align: left; min-width: 0;
+  }
+  body.touch-on #hud-weapon #weapon-heading { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; }
+  body.touch-on #hud-weapon #weapon-name { white-space: nowrap; max-width: 96px; overflow: hidden; text-overflow: ellipsis; }
+  body.touch-on #hud-weapon .weapon-meta { display: flex; flex-wrap: nowrap; white-space: nowrap; gap: 5px; align-items: center; margin-top: 1px; }
+  body.touch-on #hud-weapon #ammo-row { position: absolute; right: 10px; top: 5px; margin-top: 0; }
+  body.touch-on #hud-weapon #weapon-name { font-size: 13px; }
+  body.touch-on #hud-weapon #weapon-class { font-size: 9px; }
+  body.touch-on #hud-weapon #weapon-mode { font-size: 9px; padding: 1px 5px; min-height: 0; height: auto; }
+  body.touch-on #hud-weapon #ammo-row { margin-top: 2px; }
+  body.touch-on #hud-weapon #ammo-mag { font-size: 20px; }
+  body.touch-on #hud-weapon .ammo-sep, body.touch-on #hud-weapon #ammo-reserve { font-size: 11px; }
+  body.touch-on #hud-weapon #ammo-total { font-size: 9px; }
+  body.touch-on #hud-weapon #frag-count, body.touch-on #hud-weapon #throw-row { font-size: 9px; margin-top: 1px; }
+  /* reload/state banner overlays above the card so it costs no height */
+  body.touch-on #hud-weapon { position: absolute; }
+  body.touch-on #hud-weapon #weapon-state {
+    position: absolute; bottom: calc(100% + 4px); left: 0; right: 0;
+    font-size: 9px; text-align: right; pointer-events: none;
+  }
+}
+
+/* FINAL MOBILE UX FIX — coarse-pointer LANDSCAPE lanes (phones AND tablets).
+   Measured before (tests/p17/layout-audit.mjs): the weapon card sat at left 58 %
+   over ADS/JMP, the objective chip over the BAR/LGT/EQ row, the intro toast on
+   the objective, vitals on STK, and briefs at screen centre. Each module now
+   owns a lane that matches the v2 default control table (js/layout.js):
+     top band ........ compass; transient toast (one line) over the compass only
+     under compass ... compact objective chip (1 title line + 1 sub line)
+     row (y .27) ..... ABL · BAR · LGT · EQ◄ · EQP · WPN (touch buttons)
+     left middle ..... vitals, alert state, suppression hint (right of CRC/SPR)
+     centre .......... sight zone — nothing persistent
+     bottom right .... weapon card under FIRE, kit chips in rows
+     bottom left band  brief / comms line and radio pill (between the sticks)
+   The block is written for landscape; the PORTRAIT block that follows only
+   re-positions the same compact modules (see its own lane map). */
+@media (pointer: coarse) {   /* compact module styling: both orientations; portrait re-positions below */
+  body.touch-on #compass-wrap { width: min(60vw, 360px, calc(64vw - 64px)); }   /* clear of MAP/II and MED */
+  body.touch-on #hud-objective {
+    left: 50%; right: auto; transform: translateX(-50%);
+    top: calc(var(--sat) + 35px); bottom: auto;
+    width: max-content; max-width: min(50vw, 440px); min-width: 0;
+    padding: 3px 10px 3px 12px;
+  }
+  body.touch-on #obj-label { display: none; }     /* the accent rail already marks the chip */
+  body.touch-on #obj-text, body.touch-on #obj-sub {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+  }
+  body.touch-on #obj-text { font-size: 11px; line-height: 15px; margin-top: 0; }
+  body.touch-on #obj-sub { display: block; font-size: 10px; line-height: 13px; margin-top: 0; }
+  body.touch-on #lockdown-timer {                  /* rides beside the chip, never adds a line */
+    position: absolute; left: calc(100% + 6px); top: 0; margin-top: 0; white-space: nowrap;
+    padding: 3px 8px; border-radius: 6px; background: rgba(14, 18, 21, .82); font-size: 11px;
+  }
+  body.touch-on #objective-toast {
+    top: calc(var(--sat) + 2px);
+    max-width: min(calc(64vw - 64px), 560px);   /* between the II and MED buttons */
+    padding: 4px 12px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  body.touch-on #objective-toast #toast-label,
+  body.touch-on #objective-toast #toast-text { display: inline; margin-top: 0; }
+  body.touch-on #objective-toast #toast-label::after { content: ' · '; color: var(--text-faint); }
+  body.touch-on #hud-vitals {
+    left: calc(var(--sal) + max(92px, 12.5vw)); right: auto;
+    top: 40vh; bottom: auto;
+    width: 148px;
+  }
+  body.touch-on #alert-chip {           /* style.css centres it with left/right 0 + auto margins */
+    left: calc(var(--sal) + max(92px, 12.5vw)); right: auto; margin-inline: 0; transform: none;
+    top: calc(40vh + 62px);
+  }
+  /* one wrapping flow: [name][mode] ……… [ammo] / [chips…][FRAG] — the heading,
+     meta and kit wrappers dissolve (display: contents) so nothing stacks */
+  body.touch-on #hud-weapon {
+    left: auto; right: calc(var(--sar) + 8px); bottom: calc(var(--sab) + 6px); top: auto;
+    width: 190px; max-width: 190px; min-width: 0;
+    padding: 3px 8px 4px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 3px 4px;
+  }
+  body.touch-on #hud-weapon #weapon-heading,
+  body.touch-on #hud-weapon .weapon-meta,
+  body.touch-on #hud-weapon #tac-kit { display: contents; }
+  body.touch-on #hud-weapon #tac-kit.hidden > * { display: none; }
+  body.touch-on #hud-weapon #weapon-name { order: 1; line-height: 20px; }
+  body.touch-on #hud-weapon #weapon-class { display: none; }   /* AUTO · B mode stays */
+  body.touch-on #hud-weapon #weapon-mode { order: 2; margin-top: 0; }
+  body.touch-on #hud-weapon #ammo-row { order: 3; position: static; margin: 0 0 0 auto; line-height: 20px; }
+  body.touch-on #hud-weapon #ammo-row #ammo-mag { line-height: 20px; }
+  body.touch-on #hud-weapon #ammo-total { display: none; }     /* = mag + reserve, both shown */
+  body.touch-on #hud-weapon::after { content: ''; order: 4; flex-basis: 100%; height: 0; }
+  body.touch-on #hud-weapon .kit-chip { order: 5; font-size: 9px; line-height: 11px; padding: 1px 5px; letter-spacing: .06em; }
+  body.touch-on #hud-weapon #frag-count { order: 6; margin: 0 0 0 auto; line-height: 14px; }
+  body.touch-on #hud-weapon #throw-row { display: none; }
+  body.touch-on #subtitle-line,
+  body.touch-on #radio-line {
+    left: calc(var(--sal) + 16vw + 46px); right: auto; transform: none;
+    top: auto; bottom: calc(var(--sab) + 8px);
+    max-width: calc(46vw - 96px);
+    padding: 6px 10px; border-radius: 8px;
+  }
+  body.touch-on #suppress-hint {         /* vitals column, under the alert chip (≤2 short lines) */
+    left: calc(var(--sal) + max(92px, 12.5vw)); transform: none;
+    top: calc(40vh + 91px); bottom: auto;
+    max-width: 150px; letter-spacing: .06em; line-height: 13px;
+  }
+  /* an interact prompt (beside USE) owns the space just below: the hint then
+     keeps to ONE line so the two never collide on 360-tall phones */
+  body.touch-on:has(#interact-prompt:not(.hidden)) #suppress-hint {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* contextual prompt sits BESIDE the USE button it belongs to (USE = x .50,
+     y .76): vertically centred on it, right edge 6 px left of it — below the
+     sight zone, right of the move stick, above the brief line */
+  body.touch-on #interact-prompt {
+    left: auto; right: calc(var(--sar) + 50vw + 34px); transform: translateY(50%);
+    bottom: calc(var(--sab) + 24vh); max-width: calc(34vw - 80px);
+    padding: 5px 10px; gap: 8px;
+  }
+  body.touch-on #interact-prompt .key-cap { min-width: 24px; height: 24px; padding: 0 6px; }
+  body.touch-on #veh-hud { bottom: calc(var(--sab) + 8px); }
+}
+
+/* FINAL MOBILE UX FIX — coarse-pointer PORTRAIT lanes (phones and tablets;
+   portrait is reachable after "continue" on the rotate prompt). Matches the v2
+   portrait control table: top row MAP·II | compass | LGT·MED at y .055, side
+   columns (x .08/.25 and .75/.92, rows y .46/.55/.64) flank the narrow sight
+   column, thumbs + FIRE/ADS/JMP at the bottom, weapon card bottom-left.
+   Lanes from the top (5.5vh = the top-row centre line), measured heights:
+     +30  toast, one line (31 px) — over the alert chip while it shows (≤3.2 s)
+     +64  objective chip (34)            +104 brief / comms, ≤2 lines (50)
+     +158 vitals (left, 56) · suppress hint (right, one line)
+     +178 interact prompt (right of the sight column, ≤2 lines)          */
+/* FINAL MOBILE UX FIX — 360–380-tall landscape phones (640×360, 667×375): a
+   long brief wraps to 3 lines in the band between the sticks and its top edge
+   reached the interact prompt above it. In this height class the brief line
+   sits on the bottom edge with tighter padding/leading — SAME font size.
+   (Unconditional on purpose: a body:has(#interact-prompt…) version measurably
+   stalled the loading screen during mission load in Battery A — 3/3 runs.) */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 380px) {
+  body.touch-on #subtitle-line {
+    bottom: calc(var(--sab) + 2px); padding: 3px 10px; line-height: 17px;
+  }
+  /* the prompt column beside USE is only ~140 px wide here: a real prompt
+     ("HOLD [F] — OPEN SERVICE DOOR") wrapped to 3 lines + key-cap, and centred
+     on USE it grew up into the sight zone and down into the brief. Anchor its
+     BOTTOM just above the brief line (it grows upward, beside USE), tighter
+     leading, same font. The F key-cap glyph is a keyboard hint — on touch the
+     control is the USE button right next to it — so it is dropped here only. */
+  body.touch-on #interact-prompt {
+    transform: none; bottom: calc(var(--sab) + 62px);
+    padding: 4px 9px; line-height: 16px;
+  }
+  body.touch-on #interact-prompt .key-cap { display: none; }
+}
+
+@media (pointer: coarse) and (orientation: portrait) {
+  body.touch-on #compass-wrap { width: calc(52vw - 60px); }      /* between II and LGT */
+  body.touch-on #objective-toast { top: calc(var(--sat) + 5.5vh + 30px); max-width: 94vw; }
+  body.touch-on #alert-chip {
+    left: 50%; right: auto; transform: translateX(-50%);
+    top: calc(var(--sat) + 5.5vh + 33px);
+  }
+  body.touch-on #hud-objective { top: calc(var(--sat) + 5.5vh + 64px); max-width: 94vw; }
+  body.touch-on #subtitle-line,
+  body.touch-on #radio-line {
+    left: 50%; right: auto; transform: translateX(-50%);
+    top: calc(var(--sat) + 5.5vh + 104px); bottom: auto;
+    width: max-content; max-width: 94vw;
+  }
+  body.touch-on #hud-vitals {
+    left: calc(var(--sal) + 12px); right: auto;
+    top: calc(var(--sat) + 5.5vh + 158px); bottom: auto;
+    width: 104px;                       /* stays left of the sight column at 360 px */
+  }
+  body.touch-on #suppress-hint {
+    left: auto; right: calc(var(--sar) + 12px); transform: none;
+    top: calc(var(--sat) + 5.5vh + 160px); bottom: auto;
+    max-width: calc(100vw - 148px); letter-spacing: .02em; white-space: nowrap;   /* one line, ~200 px */
+  }
+  body.touch-on #interact-prompt {      /* right edge zone: never across the sight column */
+    left: auto; right: calc(var(--sar) + 12px); transform: none;
+    top: calc(var(--sat) + 5.5vh + 180px); bottom: auto;
+    max-width: calc(50vw - 72px);
+  }
+  body.touch-on #hud-weapon {
+    left: calc(var(--sal) + 6px); right: auto; bottom: calc(var(--sab) + 6px);
+  }
+}
+@media (max-width: 700px) {
+  #hud-objective { max-width: 44vw; }
+  #obj-sub { display: none; }   /* long sub-copy yields to the minimap on phones */
+}
+
+/* ---- settings-visibility classes (contracts from game.js) ---- */
+body.hide-touch-compass #compass-wrap,
+body.hide-touch-objective #hud-objective,
+body.hide-touch-vitals #hud-vitals,
+body.hide-touch-ammo #hud-weapon { display: none; }
+body:not(.touch-on).hide-touch-compass #compass-wrap { display: block; }  /* toggles are touch-scoped */
+
+/* ---- desktop parity: slightly more air, same modules ---- */
+@media (min-width: 960px) {
+  #hud-objective { max-width: 340px; }
+  #hud-vitals { width: 224px; }
+}
+@media (max-height: 460px) and (pointer: fine) {
+  #hud-objective { max-width: 44vw; padding: 6px 10px; }
+  #hud-weapon { padding: 8px 10px; }
+  #veh-hud { min-width: 210px; }
+}
+
+/* ---------- Phase-14 tactical kit chips (barrier + operator ability) ---------- */
+#tac-kit { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 4px; justify-content: flex-end; }
+#tac-kit .kit-chip { white-space: nowrap; }   /* Master upgrade: chips wrap as units, never mid-text */
+.kit-chip {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: .1em;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--text-dim);
+  background: rgba(10, 14, 16, .55);
+}
+.kit-chip.ready { color: var(--accent); border-color: rgba(217, 164, 65, .45); }
+.kit-chip.active { color: #6de2c2; border-color: rgba(109, 226, 194, .5); }
+.kit-chip.cooling { color: var(--text-faint); }
+
+/* ---------- Phase-14 tactical markers (tracker / specialist ping) ---------- */
+#tac-markers { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.tac-marker {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  color: #ff7a59; background: rgba(8, 10, 12, .72);
+  border: 1px solid rgba(255, 122, 89, .75);
+  border-radius: 3px; padding: 2px 6px; white-space: nowrap;
+}
+.tac-marker.passive { color: #ffc46b; border-color: rgba(255, 196, 107, .55); background: rgba(8, 10, 12, .55); }
+
+/* ==========================================================================
+ * Master upgrade P7 — confirmed-elimination feed ("KILLED").
+ * Sits just below the crosshair (never on it), max 3 stacked lines, each a
+ * short pop-in → hold → fade so multiple eliminations stay readable.
+ * Driven only by the authoritative kill branch in EnemyManager.damage().
+ * ========================================================================== */
+#kill-feed {
+  /* left of the crosshair: clear of the sightline, of the weapon card (right),
+     of the interaction/brief prompt band below centre and of mission toasts above */
+  position: fixed; right: calc(50% + 30px); bottom: calc(50% - 10px); z-index: 42;   /* newest line at crosshair level; stack grows UP, away from the prompt band */
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+  pointer-events: none;
+}
+.kill-item {
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px; line-height: 1;
+  letter-spacing: .2em; color: #ff5a4a;
+  padding: 4px 10px 4px 9px;
+  background: rgba(8, 10, 10, .46);
+  border-right: 2px solid #ff5a4a;
+  text-shadow: 0 1px 0 #000, 0 0 6px rgba(0, 0, 0, .85);
+  white-space: nowrap;
+  animation: vsKillIn 1.7s ease-out forwards;
+}
+.kill-item .kill-sub { color: #ffd479; font-size: 10px; letter-spacing: .14em; margin-left: 8px; font-weight: 600; }
+.kill-item .kill-n { color: rgba(230, 240, 232, .7); font-size: 10px; letter-spacing: .1em; margin-left: 8px; font-weight: 500; }
+@keyframes vsKillIn {
+  0%   { opacity: 0; transform: translateY(6px) scale(1.12); }
+  10%  { opacity: 1; transform: none; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-4px); }
+}
+body.reduce-motion .kill-item { animation: vsKillFade 1.7s linear forwards; }
+@keyframes vsKillFade { 0%, 80% { opacity: 1; } 100% { opacity: 0; } }
+body.text-lg .kill-item { font-size: 18px; }
+@media (pointer: coarse) { #kill-feed { right: calc(50% + 26px); } .kill-item { font-size: 14px; } }
+
+/* Master upgrade P3 — observation-zoom vignette edge (purely a frame cue; the
+ * actual magnification is a real camera FOV change). Hidden unless zooming. */
+#zoom-frame {
+  position: fixed; inset: 0; z-index: 39; pointer-events: none; opacity: 0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 62%, rgba(0,0,0,.38) 100%);
+  transition: opacity .15s linear;
+}
+#zoom-frame.on { opacity: 1; }
+
+/* 100-Mission Enemy / Wave Tactical Telemetry Strip */
+.obj-hostiles {
+  margin-top: 3px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #f0b865;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+}
+.obj-hostiles.clear {
+  color: #65d98a;
+}
+
+
+/* ---------------------------------------------------------------------------
+   v4.3 tactical map legend: generated from MAP_LEGEND (js/tacmap.js), so each
+   row carries the same glyph the canvas paints. No blur, no glow — flat shapes.
+   --------------------------------------------------------------------------- */
+/* auto-FILL (not auto-fit) so every column is the same width and a long caption can
+   only ever ellipsise inside its own cell, never across its neighbour's. */
+#tacmap-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 3px 22px; align-content: start; max-height: 32vh; overflow: auto; }
+#tacmap-legend .lg-keys { grid-column: 1 / -1; color: var(--text-mid); letter-spacing: .08em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#tacmap-legend .lg-row { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; }
+#tacmap-legend .lg-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 400; }
+#tacmap-legend .lg-sym { display: inline-block; width: 10px; height: 10px; flex: 0 0 10px; box-sizing: border-box; }
+#tacmap-legend .lg-you { background: #d6f2ff; clip-path: polygon(50% 0, 100% 100%, 50% 74%, 0 100%); }
+#tacmap-legend .lg-objective { background: #3ddc84; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+#tacmap-legend .lg-optional { border: 1.4px solid #c9a24b; transform: rotate(45deg); }
+#tacmap-legend .lg-extraction { border: 1.4px solid #37b8d9; border-radius: 50%; }
+#tacmap-legend .lg-route { height: 0; border-top: 2px solid #e8b64a; width: 14px; flex-basis: 14px; }
+#tacmap-legend .lg-noRoute { height: 0; border-top: 2px solid #ff5c47; width: 14px; flex-basis: 14px; position: relative; }
+#tacmap-legend .lg-noRoute::after { content: "\00d7"; position: absolute; left: 4px; top: -10px; color: #ff5c47; font-size: 11px; }
+#tacmap-legend .lg-enemy { background: #ff5c47; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+#tacmap-legend .lg-enemyOld { border: 1.2px solid #a8544a; border-radius: 50%; }
+#tacmap-legend .lg-friend { background: #6fa8ff; border-radius: 50%; }
+#tacmap-legend .lg-vehicle { background: #9fb0bd; height: 7px; }
+#tacmap-legend .lg-power, #tacmap-legend .lg-charge, #tacmap-legend .lg-intel,
+#tacmap-legend .lg-terminal, #tacmap-legend .lg-contact, #tacmap-legend .lg-observe,
+#tacmap-legend .lg-cache, #tacmap-legend .lg-weapon, #tacmap-legend .lg-ammo,
+#tacmap-legend .lg-supply { border: 1.2px solid #e8d259; background: transparent; }
+#tacmap-legend .lg-ammo, #tacmap-legend .lg-supply { background: #e8d259; }
+#tacmap-legend .lg-terminal { background: #e8d259; }
+#tacmap-legend .lg-door { border: 1.2px solid #59d8e8; }
+#tacmap-legend .lg-building { background: #1f2830; border: 1px solid #48596a; }
+#tacmap-legend .lg-wall { background: #54677a; height: 4px; }
+#tacmap-legend .lg-barrier { background: #3d4a55; height: 4px; border: 1px dashed #48596a; }
+#tacmap-legend .lg-prop { background: #202b33; border: 1px solid #3b4a56; width: 7px; height: 7px; flex-basis: 7px; }
+#tacmap-legend .lg-deck { background: #1d2a34; border: 1px solid #2c3845; height: 5px; }
+#tacmap-legend .lg-room { background: #161f27; border: 1px solid #2c3845; }
+#tacmap-legend .lg-road { background: #1b242d; border: 1px solid #324250; height: 6px; }
+#tacmap-legend .lg-openGround { background: #101922; border: 1px solid #1d2831; height: 6px; }
+#tacmap-legend .lg-path { height: 0; border-top: 2px solid #2f3d47; width: 14px; flex-basis: 14px; }
+#tacmap-legend .lg-cover { height: 0; border-top: 1px solid #3a4a54; width: 9px; flex-basis: 9px; transform: rotate(-45deg); }
+#tacmap-legend .lg-unexplored { background: rgba(5,8,12,.82); border: 1px solid rgba(126,156,176,.3); }
+#tacmap-legend .lg-bounds { border: 1px solid #3c4a55; background: transparent; }
+@media (max-width: 900px) {
+  #tacmap-legend { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); max-height: 26vh; }
+  #tacmap-frame { max-width: 96vw; }
+}
+
+/* ===================== v4.4 · FULLY INTERACTIVE TACTICAL MAP =====================
+   The map is a tool the player manipulates, so it gets the affordances one expects
+   from a navigation application: a viewport that follows the pointer, zoom about the
+   cursor, an explicit recenter/follow control set, selectable markers with a detail
+   card, and layer switches that never move the view. Rules that matter for quality:
+   - the canvas is never scaled by CSS and never filtered: it is drawn in device
+     pixels at the exact box size, so sharpness is structural, not tuned;
+   - no backdrop-filter / box-shadow glow / blur anywhere in this block;
+   - the whole panel opts out of text selection and native image dragging, which is
+     what turns a pan gesture into a rubber-band selection rectangle.
+   ================================================================================ */
+#tacmap {
+  padding: calc(var(--sat) + 10px) calc(var(--sar) + 10px) calc(var(--sab) + 10px) calc(var(--sal) + 10px);
+  background: rgba(5, 7, 9, .93);
+  z-index: 320;                     /* above the shell's 300-layer prompts, below #error-overlay */
+}
+#tacmap, #tacmap * {
+  -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none;
+}
+#tacmap-frame { position: relative; }
+#tacmap.floating {
+  inset: auto;
+  padding: 0;
+  background: transparent;
+}
+#tacmap.floating #tacmap-frame {
+  box-shadow: 0 14px 44px rgba(0, 0, 0, .55);   /* depth only: no blur of map content */
+  border-color: var(--accent-soft, var(--line-strong));
+  max-width: none;            /* the 96vw cap is for the full-screen frame; a floating
+                                 window is sized against itself, and that cap made the
+                                 resize grip grow the window without growing the map */
+}
+/* In float mode the window - not the viewport - is the containing block, so viewport
+   units are the wrong ruler: min-height:42vh on the canvas refused to shrink with the
+   window (the frame's overflow:hidden clipped the map instead), and a legend sized at
+   32vh ate almost half a phone-sized window. */
+#tacmap.floating #tacmap-canvas { min-height: 160px; }
+#tacmap.floating #tacmap-legend { max-height: 26%; }
+#tacmap-topbar {
+  cursor: move;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--bg-1);
+  position: relative;
+}
+#tacmap.chrome-active #tacmap-topbar { border-bottom-color: var(--accent); }
+#tacmap-title { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+#tacmap-controls { gap: 8px; }
+#tacmap-controls .tac-group {
+  display: flex; align-items: center; gap: 5px;
+  padding: 0 8px; border-left: 1px solid var(--line);
+}
+#tacmap-controls .tac-group:first-child { border-left: 0; padding-left: 0; }
+#tacmap-controls .tac-btn.wide { min-width: 62px; padding: 0 8px; letter-spacing: .04em; }
+#tac-compass {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--line-strong); background: var(--panel-2);
+  cursor: pointer; flex: none;
+}
+#tac-compass:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#tac-compass .cmp-ring { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+#tac-compass .cmp-n { fill: var(--danger); }
+#tac-compass .cmp-s { fill: var(--text-faint); }
+#tac-compass-needle { transform-box: fill-box; transform-origin: 50% 50%; }
+
+#tacmap-stage { position: relative; flex: 1; min-height: 0; display: flex; }
+/* THE reason the v4.3 map could not be dragged: #hud > * sets
+   pointer-events: none for the whole HUD, and #tacmap is one of those children.
+   Buttons opted themselves back in, the canvas never did - so every pan, wheel and
+   marker tap was hit-tested straight through the map onto the game canvas. In a
+   headless test that dispatches events at the element, this is invisible. */
+#tacmap { pointer-events: auto; }
+/* A phone held in portrait shows the rotate prompt (menu.css, z-index 300) over the
+   whole shell. The map is a 2D panel and works fine in portrait, so the prompt steps
+   aside while the map is up instead of swallowing its pointer input. */
+body:has(#tacmap:not(.hidden)) #rotate-overlay { display: none; }
+#tacmap-canvas {
+  pointer-events: auto;             /* explicit: the map must receive gestures */
+  flex: 1; width: 100%; height: 100%;
+  min-height: 0;                      /* was 42vh: the map now owns the whole stage */
+  background: var(--bg-1);
+  image-rendering: auto;
+  touch-action: none;                 /* no browser pan/zoom/scroll under our fingers */
+  cursor: grab;
+  display: block;
+}
+#tacmap-canvas.dragging { cursor: grabbing; }
+
+/* layer popover: nine switches, keyboard reachable, no modal trap */
+#tacmap-layers {
+  position: absolute; right: 12px; top: 12px; z-index: 3;
+  width: min(268px, 62vw);
+  display: grid; gap: 4px; align-content: start;
+  padding: 9px 10px 10px;
+  background: rgba(9, 12, 16, .96);
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  font-family: var(--font-mono); font-size: var(--fs-micro);
+}
+#tacmap-layers.hidden { display: none; }
+#tacmap-layers .tl-head { color: var(--accent); letter-spacing: .18em; margin-bottom: 2px; }
+#tacmap-layers .tl-foot { color: var(--text-faint); font-size: 10px; line-height: 1.35; margin-top: 4px; }
+.tac-layer {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px; border-radius: 7px;
+  background: transparent; color: var(--text-dim);
+  border: 1px solid transparent; cursor: pointer;
+  font: inherit; text-align: left; letter-spacing: .04em;
+}
+.tac-layer:hover { border-color: var(--line-strong); color: var(--text); }
+.tac-layer .tl-box {
+  width: 11px; height: 11px; flex: none;
+  border: 1px solid var(--line-strong); border-radius: 3px; background: transparent;
+}
+.tac-layer.on { color: var(--text); }
+.tac-layer.on .tl-box { background: var(--accent); border-color: var(--accent); }
+
+/* marker detail card */
+#tacmap-inspector {
+  position: absolute; left: 12px; bottom: 12px; z-index: 3;
+  width: min(330px, 74vw);
+  padding: 9px 11px 10px;
+  background: rgba(9, 12, 16, .96);
+  border: 1px solid var(--line-strong); border-radius: 12px;
+  display: grid; gap: 3px;
+}
+#tacmap-inspector.hidden { display: none; }
+/* The card is information, the map is the control surface. On a phone the card is a
+   full-width sheet and can sit over the middle of a short canvas: with the container
+   transparent to pointers, a pan or pinch that starts on the card still reaches the map
+   while its buttons stay clickable (they opt back in below). */
+#tacmap-inspector { pointer-events: none; }
+#tacmap-inspector .ti-btn,
+#tacmap-inspector .ti-close,
+#tacmap-inspector a { pointer-events: auto; }
+#tacmap-inspector .ti-title { font-family: var(--font-mono); font-size: var(--fs-small); font-weight: 700; letter-spacing: .06em; color: var(--text); }
+#tacmap-inspector .ti-type { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; color: var(--accent); }
+#tacmap-inspector .ti-info,
+#tacmap-inspector .ti-where { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--text-dim); white-space: pre-wrap; line-height: 1.4; }
+#tacmap-inspector .ti-where { color: var(--text); }
+#tacmap-inspector .ti-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+#tacmap-inspector .ti-btn { min-height: 30px; padding: 0 9px; font-size: 10px; letter-spacing: .08em; }
+
+/* window resize grip (float mode only) */
+#tacmap .tac-grip { display: none; }
+#tacmap.floating #tacmap-stage .tac-grip,
+#tacmap.floating .tac-grip {
+  display: block; position: absolute; right: 3px; bottom: 3px; z-index: 4;
+  width: 18px; height: 18px; cursor: nwse-resize;
+  border-right: 2px solid var(--line-strong); border-bottom: 2px solid var(--line-strong);
+  border-bottom-right-radius: 8px;
+}
+
+/* narrow viewports: the map still gets the room, the chrome gets compact */
+@media (max-width: 860px) {
+  #tacmap { padding: 6px; }
+  /* Nine controls plus compass and CLOSE cannot fit one 412 px row: they used to run off
+     the panel's right edge, taking VIEW / FLOAT / CLOSE with them. Below this width the bar
+     becomes a two-column grid, so every control is inside the frame and legible. */
+  #tacmap-topbar { flex-wrap: wrap; align-items: flex-start; }
+  #tacmap-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 6px; width: 100%; }
+  #tacmap-controls .tac-group { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; }
+  #tacmap-controls .tac-btn,
+  #tacmap-controls .tac-btn.wide { width: 100%; min-width: 0; padding: 8px 5px; white-space: normal; line-height: 1.15; text-align: center; }
+  #tac-close { position: absolute; right: 0; top: 0; }
+  #tacmap-controls .tac-group { border-left: 0; padding: 0; }
+  #tacmap-controls { gap: 5px; }
+  #tacmap-controls .tac-btn.wide { min-width: 46px; font-size: 10px; padding: 0 6px; }
+  #tac-compass { width: 28px; height: 28px; }
+  #tacmap-layers { left: 8px; right: 8px; width: auto; top: 8px; }
+  #tacmap-inspector {
+    left: 8px; right: 8px; width: auto; bottom: 8px;
+    max-height: 34%;                /* never let the sheet eat the map it describes */
+    overflow: hidden;
+  }
+  #tacmap-legend { gap: 6px 10px; padding: 6px 9px; max-height: 26vh; overflow: auto; }
+}
+@media (max-height: 520px) {
+  #tacmap-legend { display: none; }
+}

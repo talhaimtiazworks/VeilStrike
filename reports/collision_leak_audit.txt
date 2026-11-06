@@ -1,0 +1,77 @@
+{
+  "mapsAudited": 112,
+  "sampleSpacing": 1,
+  "totalLeakCells": 0,
+  "totalSamples": 4220734,
+  "leakRatePct": 0,
+  "totalNoFloorCells": 0,
+  "mapsWithLeaks": 0,
+  "worst": [
+    {
+      "map": "facility",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "desert",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "urban",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "snow",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "recon_canyon",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "industrial",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "rural",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "riverside_village",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "canal_market",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "ridge_hold",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "metro",
+      "leakCells": 0,
+      "leakPct": 0
+    },
+    {
+      "map": "foundry_rail",
+      "leakCells": 0,
+      "leakPct": 0
+    }
+  ],
+  "families": []
+}
+
+--- per-map (leaks) ---
+
+WROTE reports/collision_leaks.json
+PASS 112 maps · 4220734 probes · 0 leak cells · 0 no-floor cells

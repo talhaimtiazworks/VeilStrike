@@ -1,0 +1,23 @@
+PASS T1. world→map conversion is exact for real mission coordinates — 83 coordinate assertions across 3 mission types × 2 orientations, all within 1.3 px
+PASS T2. every painted structure maps to a real collider; nothing is invented — 7 ground washes, all traceable to world.vehicleSurfaces (7 records); 102 masses painted, all traceable to 47/47 colliders; 26 fully-visible features all drawn; largest building 168 m2 x h 7.0 m
+PASS T3. no bitmap upscaling, canvas filters or glow anywhere in the render path — 5 zoom levels: 0 drawImage/putImageData/filter/shadowBlur, smoothing writes 1 (all false), no CSS blur on the canvas
+PASS T4. player icon shows position and facing with a small, controlled FOV wedge — chevron + wedge r=38 px (7% of view), 66° arc, tracks yaw 0→90°
+PASS T5. every symbol has a legend entry and the legend reaches the DOM — 33 explained symbols; one DOM row + one CSS glyph each; covers 11 interaction kinds
+PASS T6. hostiles appear only through the detection rules, never through walls — unseen enemy behind a wall: 0 markers; enemy in view: marker drawn; killed: pruned (LOS measured, not assumed)
+PASS T7. the route is walkable in the geometry shown and follows the active objective — 32 routes validated segment-by-segment against the collision grid across 5 missions; 14 stopped at the last walkable cell and 15 of them reported the residual hop
+PASS T8. when there is no walkable path, the map states it instead of drawing one — sealed objective: A* returns null, "NO WALKABLE ROUTE" plate painted, no line to the target, objective still shown
+PASS T9. zoom, fit, pan, rotate, marker select and route cycling behave — open framed the full 164x164 m area; culling 182->180 draw calls, 0 offscreen rects; zoom clamped [0.06, 10]; "EXTRACTION — 120 m NE"; labels synced; wheel/drag/touch wired
+PASS T10. labels keep a constant screen size and never cover features or each other — 7 labels at fit zoom on 10–11 px type at every zoom; 0 plate overlaps, 0 over the player icon or route line
+PASS T11. all 100 campaign missions supply map geometry, a nav grid and a route verdict — 100/100 operations mapped from 100 unique layouts (min 42 features/map, 32.9 ms build+routing, worst 61 ms); 100 routed, 0 honestly reported no path; 8 layouts repainted in ≤ 1.7 ms / 595 draw calls
+PASS T12. the HUD mini-map draws the same geometry, without clutter, on a cadence — minimap: 18 vector rects on the same classified geometry, no bitmaps, no labels, cadence gate held
+PASS T13. opening the map does not disturb gameplay state; stale geometry is detected — player state untouched across 6 repaints; cache key reacts to added (47→48) and destroyed (48→47) geometry
+PASS T14. fog reveal and route cost stay inside a frame budget — fog grows locally (0 -> 354 cells of 3364); long route none in 0 ms; repaint 0.37 ms / 229 calls
+PASS T15. roads are the mission data, painted as washes, and never block a route — 10 ground surfaces from world.vehicleSurfaces (10 paved), 10 painted at fit zoom, none invented, none blocking
+PASS T16. zoom lands under the cursor, pan tracks the finger, and the mission can never be lost — min 0.06x / max 10x clamps, 2.00x pinch, cursor slide 0.00 px on a wheel zoom, pan bounded to the mission box
+PASS T17. every marker is selectable, the card explains it, and navigation routes to it — 42 tap targets, min radius 12 px; card "EXTRACTION" / "120 m NE  ·  PLANNED"; 128 m walk to the waypoint; empty click leaves the view exactly where it was
+PASS T18. layer switches change what is drawn and never what is true — 11 switches wired 1:1; buildings 36 -> 30 fills; route lines 1 -> 0 -> 1 with the verdict still printed; bare paint 17 ops; route length 48 m unchanged
+PASS T19. recentre, follow and the keyboard drive the map and nothing else — RESET/ME/OBJECTIVE centre to <1 px; follow held through a 49 m move; 12 keys routed, W/E untouched, 9 keys inert while closed and the view restored on reopen
+PASS T20. the map window floats and resizes without touching the view, and the canvas stays pixel-exact — float 381x414 -> 641x594 with the view untouched; 4096x2880 backing store for a 2560x1440 box at dpr 2; 25 dynamic ids all defined
+PASS T21. the interaction layer owns one set of listeners and still paints inside budget — 1 handler per gesture type across 4 opens (46 listeners, 0 re-binds); worst interactive repaint 0.3 ms / 97 calls -> 15 calls with the layers down
+
+21/21 tacmap tests passed

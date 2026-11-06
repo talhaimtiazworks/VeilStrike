@@ -1,0 +1,19 @@
+PASS music registry: exactly 3 existing-ID mappings; selector/rotation/fallback validated
+PASS campaign progression behavior: 100+ missions; progressive unlock from Mission 1 onward; failure does not unlock next; prerequisite persists; range is separate
+PASS mission contract — facility: PASS — facility layout, facility archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — desert: PASS — desert layout, desert archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — urban: PASS — urban layout, urban archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — snow: PASS — snow layout, snow archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — recon_desert: PASS — recon_canyon layout, desert archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — sabotage_industrial: PASS — industrial layout, industrial archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — investigate_rural: PASS — rural layout, rural archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — rescue_rural: PASS — riverside_village layout, rural archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — defense_urban: PASS — canal_market layout, urban archive key, authored objective chain, interactables, and LZ contract present
+PASS mission contract — hold_snow: PASS — ridge_hold layout, snow archive key, authored objective chain, interactables, and LZ contract present
+PASS spawn, grenade, damage-once, extraction, and helicopter gating source contracts
+PASS v3 contracts: 300-round continuous VX-4/HUD, Y zoom aim-ray path, swept fall collision/recovery, reduced live enemy pressure, and three-track file diagnostics
+PASS canonical soundtrack audio present:
+  PRESENT: /assets/music/MORTALS.mp3
+  PRESENT: /assets/music/FEARLESS-PT-II.mp3
+  PRESENT: /assets/music/KREZUS-SKINS.mp3
+NOTE These are focused structural checks, not full in-browser mission play-throughs.

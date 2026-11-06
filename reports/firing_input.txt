@@ -1,0 +1,20 @@
+PASS F1. one mouse click produces exactly one shot, every weapon × mode × click length — 220 click cases — one firing event per click (one shot, or exactly one configured burst), never more
+PASS F2. one click charges ammunition exactly once — one charge point, no per-pellet or per-effect debit — 12 weapons: charges === shots === rounds; ST-12 1 discharge, 1 shell, 9 pellets
+PASS F3. the reported ladder, counted in clicks: 300 → 299 → 298 → 290 → 280 → 200 — semi:1→299 semi:2→298 semi:10→290 semi:20→280 semi:100→200 auto:1→299 auto:2→298 auto:10→290 auto:20→280 auto:100→200 VX-4/semi:300→200 in 100 VX-4/auto:300→200 in 100 MR-7/semi:300→200 in 100 PX-9/semi:300→200 in 100 PX-9/auto:300→200 in 100 ST-12/semi:300→200 in 100 VEKTOR P/semi:300→200 in 100 VEKTOR P/auto:300→200 in 100 LB-9 LONGBOW/semi:300→200 in 100 HMG-9 SENTINEL/semi:300→200 in 100 HMG-9 SENTINEL/auto:300→200 in 100
+PASS F4. twenty separate clicks = twenty shots and twenty rounds — verified for 9 weapon/mode pairs (vx4/semi, vx4/auto, p9/semi, p9/auto, cr9/semi, cr9/auto, st12/semi, mpx5/semi, mpx5/auto)
+PASS F5. repeated initialization cannot multiply listeners or fire events — mousedown/mouseup/mousemove/keydown stayed at 1/1/1/1 across 3 bind calls, 1 shot
+PASS F6. a duplicate or stuck mousedown for a held button adds no second event — press() is idempotent per physical press (deduped by source)
+PASS F7. mouse, touch and aim-assist inputs cannot double-fire the same action — one firing event per physical press, whatever the number of input sources
+PASS F8. a semi-automatic click cannot repeat, however long the button is held — P9 semi: 1 shot per press; a 10 s hold is still 1 shot; 10 presses → 10 shots
+PASS F9. holding automatic fire keeps firing at the weapon RPM; releasing stops it — 200 ms click → 1 shot · 1 s hold → 9 shots (expect ~9) · release stops at 7
+PASS F10. an empty magazine cannot fire, and a click on empty is free — 5 clicks on empty: 0 shots, 0 rounds, 3 dry-click sounds
+PASS F11. a shot that cannot happen consumes nothing and is not banked for later — reload, knockdown and pause each swallow the click outright — 0 rounds, nothing banked
+PASS F12. reload accounting survives the new pipeline: dry press → reload → exact transfer — P9: 15 clicks → 15 rounds, reload moved 15/15 with 45 in hand
+PASS F13. rapid clicking: never more shots than clicks, and no click lost when spaced at the cadence — spaced: 24/24 · 40 clicks at 33 ms → 14 shots, 14 rounds, never more shots than clicks
+PASS F14. fire modes and RPM are unchanged by the input fix — 12 weapons keep their modes; auto rates still track RPM (vekp 14.3/s @ 920 RPM, mpx5 11.3/s @ 850 RPM, p9 10.3/s @ 720 RPM)
+PASS F15. a stoppage (jam) blocks the shot and costs no round; racking clears it — 5 clicks while jammed: 0 shots, 0 rounds; R clears it; the next click fires
+PASS F16. a click on an open tactical map cannot fire the weapon or steal the cursor — mousedown while the map was open: no trigger press, no pointer-lock grab; first click after closing fires once
+
+==================================================================
+16/16 firing-input tests passed
+==================================================================

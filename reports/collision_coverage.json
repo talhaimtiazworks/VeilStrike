@@ -1,0 +1,2669 @@
+{
+  "summary": {
+    "mapsAudited": 110,
+    "totalSolidMeshes": 24524,
+    "totalCovered": 23947,
+    "coveragePct": 97.65,
+    "mapsBelow100": 108,
+    "worstOffenders": [
+      {
+        "name": "boxgeometry",
+        "count": 289,
+        "maps": 91,
+        "size": "0.9x0.6x0.12"
+      },
+      {
+        "name": "buffergeometry",
+        "count": 200,
+        "maps": 90,
+        "size": "44x18.79x261.12"
+      },
+      {
+        "name": "conegeometry",
+        "count": 76,
+        "maps": 6,
+        "size": "0.65x0.3x0.68"
+      },
+      {
+        "name": "cylindergeometry",
+        "count": 10,
+        "maps": 2,
+        "size": "58x0.18x0.18"
+      },
+      {
+        "name": "environment-pine-canopies",
+        "count": 2,
+        "maps": 1,
+        "size": "22.07x2.65x40.34"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "label": "legacy:facility",
+      "map": "facility",
+      "colliders": 291,
+      "colliderCells": 1681,
+      "meshesSolid": 405,
+      "meshesCovered": 364,
+      "meshesDecorative": 233,
+      "coveragePct": 89.88,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 19,
+          "size": "0.9x0.6x0.12",
+          "at": "12.1,4.8,-42.6"
+        },
+        {
+          "name": "conegeometry",
+          "count": 18,
+          "size": "0.65x0.3x0.68",
+          "at": "8.7,3.2,61.3"
+        },
+        {
+          "name": "cylindergeometry",
+          "count": 4,
+          "size": "58x0.18x0.18",
+          "at": "-29.0,9.0,9.9"
+        }
+      ]
+    },
+    {
+      "label": "legacy:desert",
+      "map": "desert",
+      "colliders": 61,
+      "colliderCells": 961,
+      "meshesSolid": 77,
+      "meshesCovered": 66,
+      "meshesDecorative": 59,
+      "coveragePct": 85.71,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "10.6,7.7,26.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 4,
+          "size": "0.65x0.3x0.68",
+          "at": "-6.3,3.4,-4.3"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        }
+      ]
+    },
+    {
+      "label": "legacy:urban",
+      "map": "urban",
+      "colliders": 64,
+      "colliderCells": 961,
+      "meshesSolid": 89,
+      "meshesCovered": 75,
+      "meshesDecorative": 65,
+      "coveragePct": 84.27,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 9,
+          "size": "0.7x0.14x0.34",
+          "at": "-1.4,7.7,10.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 3,
+          "size": "0.65x0.3x0.68",
+          "at": "-6.3,2.4,23.7"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        }
+      ]
+    },
+    {
+      "label": "legacy:snow",
+      "map": "snow",
+      "colliders": 67,
+      "colliderCells": 961,
+      "meshesSolid": 73,
+      "meshesCovered": 61,
+      "meshesDecorative": 108,
+      "coveragePct": 83.56,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "18.6,7.7,-14.2"
+        },
+        {
+          "name": "conegeometry",
+          "count": 4,
+          "size": "0.65x0.3x0.68",
+          "at": "-22.3,2.6,-2.5"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        },
+        {
+          "name": "cylindergeometry",
+          "count": 1,
+          "size": "8.4x0.08x8.4",
+          "at": "-30.2,0.0,7.8"
+        }
+      ]
+    },
+    {
+      "label": "legacy:recon_canyon",
+      "map": "recon_canyon",
+      "colliders": 47,
+      "colliderCells": 484,
+      "meshesSolid": 51,
+      "meshesCovered": 47,
+      "meshesDecorative": 14,
+      "coveragePct": 92.16,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.7x0.14x0.34",
+          "at": "24.6,7.7,-36.2"
+        }
+      ]
+    },
+    {
+      "label": "legacy:industrial",
+      "map": "industrial",
+      "colliders": 155,
+      "colliderCells": 288,
+      "meshesSolid": 178,
+      "meshesCovered": 159,
+      "meshesDecorative": 148,
+      "coveragePct": 89.33,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 8,
+          "size": "0.7x0.14x0.34",
+          "at": "24.6,7.7,17.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 8,
+          "size": "0.84x0.34x0.84",
+          "at": "-0.4,6.5,-28.4"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 3,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "legacy:rural",
+      "map": "rural",
+      "colliders": 128,
+      "colliderCells": 400,
+      "meshesSolid": 111,
+      "meshesCovered": 106,
+      "meshesDecorative": 106,
+      "coveragePct": 95.5,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.7x0.14x0.34",
+          "at": "5.6,7.7,45.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "legacy:riverside_village",
+      "map": "riverside_village",
+      "colliders": 56,
+      "colliderCells": 462,
+      "meshesSolid": 64,
+      "meshesCovered": 59,
+      "meshesDecorative": 56,
+      "coveragePct": 92.19,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.7x0.14x0.34",
+          "at": "46.6,7.7,18.8"
+        },
+        {
+          "name": "environment-pine-canopies",
+          "count": 1,
+          "size": "22.07x2.65x40.34",
+          "at": "-54.0,0.9,-2.1"
+        }
+      ]
+    },
+    {
+      "label": "legacy:canal_market",
+      "map": "canal_market",
+      "colliders": 60,
+      "colliderCells": 440,
+      "meshesSolid": 79,
+      "meshesCovered": 71,
+      "meshesDecorative": 49,
+      "coveragePct": 89.87,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "49.6,7.7,-43.2"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "conegeometry",
+          "count": 1,
+          "size": "0.65x0.3x0.68",
+          "at": "-14.3,3.3,-12.3"
+        }
+      ]
+    },
+    {
+      "label": "legacy:ridge_hold",
+      "map": "ridge_hold",
+      "colliders": 42,
+      "colliderCells": 484,
+      "meshesSolid": 54,
+      "meshesCovered": 48,
+      "meshesDecorative": 18,
+      "coveragePct": 88.89,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 4,
+          "size": "0.7x0.14x0.34",
+          "at": "22.6,7.7,-20.2"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "op001",
+      "map": "facility",
+      "colliders": 291,
+      "colliderCells": 1681,
+      "meshesSolid": 405,
+      "meshesCovered": 364,
+      "meshesDecorative": 233,
+      "coveragePct": 89.88,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 19,
+          "size": "0.9x0.6x0.12",
+          "at": "12.1,4.8,-42.6"
+        },
+        {
+          "name": "conegeometry",
+          "count": 18,
+          "size": "0.65x0.3x0.68",
+          "at": "8.7,3.2,61.3"
+        },
+        {
+          "name": "cylindergeometry",
+          "count": 4,
+          "size": "58x0.18x0.18",
+          "at": "-29.0,9.0,9.9"
+        }
+      ]
+    },
+    {
+      "label": "op002",
+      "map": "desert",
+      "colliders": 61,
+      "colliderCells": 961,
+      "meshesSolid": 77,
+      "meshesCovered": 66,
+      "meshesDecorative": 59,
+      "coveragePct": 85.71,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "10.6,7.7,26.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 4,
+          "size": "0.65x0.3x0.68",
+          "at": "-6.3,3.4,-4.3"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        }
+      ]
+    },
+    {
+      "label": "op003",
+      "map": "urban",
+      "colliders": 64,
+      "colliderCells": 961,
+      "meshesSolid": 89,
+      "meshesCovered": 75,
+      "meshesDecorative": 65,
+      "coveragePct": 84.27,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 9,
+          "size": "0.7x0.14x0.34",
+          "at": "-1.4,7.7,10.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 3,
+          "size": "0.65x0.3x0.68",
+          "at": "-6.3,2.4,23.7"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        }
+      ]
+    },
+    {
+      "label": "op004",
+      "map": "snow",
+      "colliders": 67,
+      "colliderCells": 961,
+      "meshesSolid": 73,
+      "meshesCovered": 61,
+      "meshesDecorative": 108,
+      "coveragePct": 83.56,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "18.6,7.7,-14.2"
+        },
+        {
+          "name": "conegeometry",
+          "count": 4,
+          "size": "0.65x0.3x0.68",
+          "at": "-22.3,2.6,-2.5"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        },
+        {
+          "name": "cylindergeometry",
+          "count": 1,
+          "size": "8.4x0.08x8.4",
+          "at": "-30.2,0.0,7.8"
+        }
+      ]
+    },
+    {
+      "label": "op005",
+      "map": "recon_canyon",
+      "colliders": 47,
+      "colliderCells": 484,
+      "meshesSolid": 51,
+      "meshesCovered": 47,
+      "meshesDecorative": 14,
+      "coveragePct": 92.16,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.7x0.14x0.34",
+          "at": "24.6,7.7,-36.2"
+        }
+      ]
+    },
+    {
+      "label": "op006",
+      "map": "industrial",
+      "colliders": 155,
+      "colliderCells": 288,
+      "meshesSolid": 178,
+      "meshesCovered": 159,
+      "meshesDecorative": 148,
+      "coveragePct": 89.33,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 8,
+          "size": "0.7x0.14x0.34",
+          "at": "24.6,7.7,17.8"
+        },
+        {
+          "name": "conegeometry",
+          "count": 8,
+          "size": "0.84x0.34x0.84",
+          "at": "-0.4,6.5,-28.4"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 3,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "op007",
+      "map": "rural",
+      "colliders": 128,
+      "colliderCells": 400,
+      "meshesSolid": 111,
+      "meshesCovered": 106,
+      "meshesDecorative": 106,
+      "coveragePct": 95.5,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.7x0.14x0.34",
+          "at": "5.6,7.7,45.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "op008",
+      "map": "riverside_village",
+      "colliders": 56,
+      "colliderCells": 462,
+      "meshesSolid": 64,
+      "meshesCovered": 59,
+      "meshesDecorative": 56,
+      "coveragePct": 92.19,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.7x0.14x0.34",
+          "at": "46.6,7.7,18.8"
+        },
+        {
+          "name": "environment-pine-canopies",
+          "count": 1,
+          "size": "22.07x2.65x40.34",
+          "at": "-54.0,0.9,-2.1"
+        }
+      ]
+    },
+    {
+      "label": "op009",
+      "map": "canal_market",
+      "colliders": 60,
+      "colliderCells": 440,
+      "meshesSolid": 79,
+      "meshesCovered": 71,
+      "meshesDecorative": 49,
+      "coveragePct": 89.87,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 5,
+          "size": "0.7x0.14x0.34",
+          "at": "49.6,7.7,-43.2"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "conegeometry",
+          "count": 1,
+          "size": "0.65x0.3x0.68",
+          "at": "-14.3,3.3,-12.3"
+        }
+      ]
+    },
+    {
+      "label": "op010",
+      "map": "ridge_hold",
+      "colliders": 42,
+      "colliderCells": 484,
+      "meshesSolid": 54,
+      "meshesCovered": 48,
+      "meshesDecorative": 18,
+      "coveragePct": 88.89,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 4,
+          "size": "0.7x0.14x0.34",
+          "at": "22.6,7.7,-20.2"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "op011",
+      "map": "convoy_valley",
+      "colliders": 237,
+      "colliderCells": 728,
+      "meshesSolid": 185,
+      "meshesCovered": 183,
+      "meshesDecorative": 145,
+      "coveragePct": 98.92,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x222.72",
+          "at": "-160.0,-0.4,-111.4"
+        }
+      ]
+    },
+    {
+      "label": "op012",
+      "map": "wadi_outpost",
+      "colliders": 252,
+      "colliderCells": 784,
+      "meshesSolid": 225,
+      "meshesCovered": 223,
+      "meshesDecorative": 105,
+      "coveragePct": 99.11,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        }
+      ]
+    },
+    {
+      "label": "op013",
+      "map": "glacier_pass",
+      "colliders": 168,
+      "colliderCells": 729,
+      "meshesSolid": 131,
+      "meshesCovered": 129,
+      "meshesDecorative": 100,
+      "coveragePct": 98.47,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x218.88",
+          "at": "-158.0,-0.4,-109.4"
+        }
+      ]
+    },
+    {
+      "label": "op014",
+      "map": "harbor_boulevard",
+      "colliders": 564,
+      "colliderCells": 728,
+      "meshesSolid": 513,
+      "meshesCovered": 511,
+      "meshesDecorative": 384,
+      "coveragePct": 99.61,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x222.72",
+          "at": "-160.0,-0.4,-111.4"
+        }
+      ]
+    },
+    {
+      "label": "op015",
+      "map": "foundry_rail",
+      "colliders": 138,
+      "colliderCells": 784,
+      "meshesSolid": 140,
+      "meshesCovered": 138,
+      "meshesDecorative": 170,
+      "coveragePct": 98.57,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x222.72",
+          "at": "-160.0,-0.4,-111.4"
+        }
+      ]
+    },
+    {
+      "label": "op016",
+      "map": "rowhouse_grid",
+      "colliders": 495,
+      "colliderCells": 676,
+      "meshesSolid": 449,
+      "meshesCovered": 447,
+      "meshesDecorative": 386,
+      "coveragePct": 99.55,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        }
+      ]
+    },
+    {
+      "label": "op017",
+      "map": "kestrel_annex",
+      "colliders": 355,
+      "colliderCells": 676,
+      "meshesSolid": 331,
+      "meshesCovered": 328,
+      "meshesDecorative": 203,
+      "coveragePct": 99.09,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x215.04",
+          "at": "-156.0,-0.4,-107.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "0.9x0.6x0.12",
+          "at": "1.6,4.5,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op018",
+      "map": "metro",
+      "colliders": 71,
+      "colliderCells": 2116,
+      "meshesSolid": 82,
+      "meshesCovered": 74,
+      "meshesDecorative": 107,
+      "coveragePct": 90.24,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 8,
+          "size": "0.7x0.14x0.34",
+          "at": "72.6,7.7,-96.2"
+        }
+      ]
+    },
+    {
+      "label": "op019",
+      "map": "sector_019_redgate_crossing",
+      "colliders": 294,
+      "colliderCells": 870,
+      "meshesSolid": 278,
+      "meshesCovered": 274,
+      "meshesDecorative": 207,
+      "coveragePct": 98.56,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x247.68",
+          "at": "-173.0,-0.4,-123.8"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.4x0.7x2.4",
+          "at": "49.8,1.2,-23.7"
+        }
+      ]
+    },
+    {
+      "label": "op020",
+      "map": "sector_020_pinewatch_battery",
+      "colliders": 302,
+      "colliderCells": 728,
+      "meshesSolid": 257,
+      "meshesCovered": 253,
+      "meshesDecorative": 206,
+      "coveragePct": 98.44,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x224.64",
+          "at": "-161.0,-0.4,-112.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-11.8"
+        }
+      ]
+    },
+    {
+      "label": "op021",
+      "map": "sector_021_seawall_bastion",
+      "colliders": 276,
+      "colliderCells": 728,
+      "meshesSolid": 253,
+      "meshesCovered": 250,
+      "meshesDecorative": 147,
+      "coveragePct": 98.81,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x220.8",
+          "at": "-159.0,-0.4,-110.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.4x0.7x2.4",
+          "at": "-72.0,1.2,-30.6"
+        }
+      ]
+    },
+    {
+      "label": "op022",
+      "map": "sector_022_gantries_at_dusk",
+      "colliders": 263,
+      "colliderCells": 676,
+      "meshesSolid": 256,
+      "meshesCovered": 251,
+      "meshesDecorative": 135,
+      "coveragePct": 98.05,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-11.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x216.96",
+          "at": "-157.0,-0.4,-108.5"
+        }
+      ]
+    },
+    {
+      "label": "op023",
+      "map": "sector_023_highwater_lock",
+      "colliders": 315,
+      "colliderCells": 728,
+      "meshesSolid": 308,
+      "meshesCovered": 304,
+      "meshesDecorative": 147,
+      "coveragePct": 98.7,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.38x0.7x2.38",
+          "at": "46.2,1.2,68.7"
+        }
+      ]
+    },
+    {
+      "label": "op024",
+      "map": "sector_024_silent_turbine",
+      "colliders": 168,
+      "colliderCells": 728,
+      "meshesSolid": 160,
+      "meshesCovered": 157,
+      "meshesDecorative": 109,
+      "coveragePct": 98.13,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x226.56",
+          "at": "-162.0,-0.4,-113.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-11.8"
+        }
+      ]
+    },
+    {
+      "label": "op025",
+      "map": "sector_025_amber_flare",
+      "colliders": 178,
+      "colliderCells": 728,
+      "meshesSolid": 167,
+      "meshesCovered": 163,
+      "meshesDecorative": 88,
+      "coveragePct": 97.6,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x222.72",
+          "at": "-160.0,-0.4,-111.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.37x0.7x2.37",
+          "at": "32.6,1.2,-5.5"
+        }
+      ]
+    },
+    {
+      "label": "op026",
+      "map": "sector_026_volt_switch",
+      "colliders": 311,
+      "colliderCells": 702,
+      "meshesSolid": 293,
+      "meshesCovered": 288,
+      "meshesDecorative": 169,
+      "coveragePct": 98.29,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "2.7,0.8,-10.9"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x218.88",
+          "at": "-158.0,-0.4,-109.4"
+        }
+      ]
+    },
+    {
+      "label": "op027",
+      "map": "sector_027_tarmac_spear",
+      "colliders": 164,
+      "colliderCells": 900,
+      "meshesSolid": 160,
+      "meshesCovered": 156,
+      "meshesDecorative": 76,
+      "coveragePct": 97.5,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x247.68",
+          "at": "-173.0,-0.4,-123.8"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-14.8"
+        }
+      ]
+    },
+    {
+      "label": "op028",
+      "map": "sector_028_cryo_wing",
+      "colliders": 305,
+      "colliderCells": 756,
+      "meshesSolid": 278,
+      "meshesCovered": 275,
+      "meshesDecorative": 185,
+      "coveragePct": 98.92,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op029",
+      "map": "sector_029_sublevel_zero",
+      "colliders": 186,
+      "colliderCells": 624,
+      "meshesSolid": 194,
+      "meshesCovered": 191,
+      "meshesDecorative": 76,
+      "coveragePct": 98.45,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-3.2,0.8,-10.8"
+        }
+      ]
+    },
+    {
+      "label": "op030",
+      "map": "sector_030_casemate_nine",
+      "colliders": 186,
+      "colliderCells": 600,
+      "meshesSolid": 183,
+      "meshesCovered": 183,
+      "meshesDecorative": 73,
+      "coveragePct": 100,
+      "uncovered": []
+    },
+    {
+      "label": "op031",
+      "map": "sector_031_freight_spur",
+      "colliders": 288,
+      "colliderCells": 729,
+      "meshesSolid": 278,
+      "meshesCovered": 274,
+      "meshesDecorative": 333,
+      "coveragePct": 98.56,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x218.88",
+          "at": "-158.0,-0.4,-109.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.4x0.7x2.4",
+          "at": "55.2,1.2,33.3"
+        }
+      ]
+    },
+    {
+      "label": "op032",
+      "map": "sector_032_tollgate_iron",
+      "colliders": 239,
+      "colliderCells": 756,
+      "meshesSolid": 224,
+      "meshesCovered": 221,
+      "meshesDecorative": 213,
+      "coveragePct": 98.66,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x232.32",
+          "at": "-165.0,-0.4,-116.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.32x0.7x2.32",
+          "at": "-53.0,1.2,-54.5"
+        }
+      ]
+    },
+    {
+      "label": "op033",
+      "map": "sector_033_orchard_hollow",
+      "colliders": 291,
+      "colliderCells": 784,
+      "meshesSolid": 264,
+      "meshesCovered": 260,
+      "meshesDecorative": 202,
+      "coveragePct": 98.48,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x228.48",
+          "at": "-163.0,-0.4,-114.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.37x0.7x2.37",
+          "at": "-48.2,1.2,11.9"
+        }
+      ]
+    },
+    {
+      "label": "op034",
+      "map": "sector_034_garrison_vanguard",
+      "colliders": 320,
+      "colliderCells": 784,
+      "meshesSolid": 298,
+      "meshesCovered": 294,
+      "meshesDecorative": 187,
+      "coveragePct": 98.66,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x224.64",
+          "at": "-161.0,-0.4,-112.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.38x0.7x2.38",
+          "at": "-23.0,1.2,5.1"
+        }
+      ]
+    },
+    {
+      "label": "op035",
+      "map": "sector_035_broken_foundry",
+      "colliders": 467,
+      "colliderCells": 784,
+      "meshesSolid": 427,
+      "meshesCovered": 424,
+      "meshesDecorative": 335,
+      "coveragePct": 99.3,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x220.8",
+          "at": "-159.0,-0.4,-110.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.35x0.7x2.35",
+          "at": "61.5,1.2,17.9"
+        }
+      ]
+    },
+    {
+      "label": "op036",
+      "map": "sector_036_breakwater_dock",
+      "colliders": 279,
+      "colliderCells": 728,
+      "meshesSolid": 258,
+      "meshesCovered": 254,
+      "meshesDecorative": 146,
+      "coveragePct": 98.45,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x220.8",
+          "at": "-159.0,-0.4,-110.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.16x0.7x2.16",
+          "at": "27.1,1.2,-61.1"
+        }
+      ]
+    },
+    {
+      "label": "op037",
+      "map": "sector_037_drydock_shadow",
+      "colliders": 264,
+      "colliderCells": 784,
+      "meshesSolid": 250,
+      "meshesCovered": 246,
+      "meshesDecorative": 145,
+      "coveragePct": 98.4,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.96x0.7x1.96",
+          "at": "27.8,1.2,-19.6"
+        }
+      ]
+    },
+    {
+      "label": "op038",
+      "map": "sector_038_timber_ambush",
+      "colliders": 261,
+      "colliderCells": 784,
+      "meshesSolid": 224,
+      "meshesCovered": 220,
+      "meshesDecorative": 192,
+      "coveragePct": 98.21,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x228.48",
+          "at": "-163.0,-0.4,-114.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op039",
+      "map": "sector_039_span_breaker",
+      "colliders": 238,
+      "colliderCells": 784,
+      "meshesSolid": 228,
+      "meshesCovered": 224,
+      "meshesDecorative": 209,
+      "coveragePct": 98.25,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x224.64",
+          "at": "-161.0,-0.4,-112.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.4x0.7x2.4",
+          "at": "-48.1,1.2,16.6"
+        }
+      ]
+    },
+    {
+      "label": "op040",
+      "map": "sector_040_outpost_scorpion",
+      "colliders": 316,
+      "colliderCells": 784,
+      "meshesSolid": 291,
+      "meshesCovered": 287,
+      "meshesDecorative": 200,
+      "coveragePct": 98.63,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x222.72",
+          "at": "-160.0,-0.4,-111.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "2.7,0.8,-11.9"
+        }
+      ]
+    },
+    {
+      "label": "op041",
+      "map": "sector_041_slag_corridor",
+      "colliders": 171,
+      "colliderCells": 812,
+      "meshesSolid": 169,
+      "meshesCovered": 165,
+      "meshesDecorative": 92,
+      "coveragePct": 97.63,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.4x0.7x2.4",
+          "at": "-56.8,1.2,-12.4"
+        }
+      ]
+    },
+    {
+      "label": "op042",
+      "map": "sector_042_dead_loom",
+      "colliders": 280,
+      "colliderCells": 784,
+      "meshesSolid": 258,
+      "meshesCovered": 254,
+      "meshesDecorative": 213,
+      "coveragePct": 98.45,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op043",
+      "map": "sector_043_black_cracker",
+      "colliders": 179,
+      "colliderCells": 784,
+      "meshesSolid": 171,
+      "meshesCovered": 167,
+      "meshesDecorative": 98,
+      "coveragePct": 97.66,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x226.56",
+          "at": "-162.0,-0.4,-113.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.89x0.7x1.89",
+          "at": "-38.3,1.2,44.6"
+        }
+      ]
+    },
+    {
+      "label": "op044",
+      "map": "sector_044_gridlock_seven",
+      "colliders": 169,
+      "colliderCells": 784,
+      "meshesSolid": 164,
+      "meshesCovered": 160,
+      "meshesDecorative": 91,
+      "coveragePct": 97.56,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x224.64",
+          "at": "-161.0,-0.4,-112.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op045",
+      "map": "sector_045_deep_archive",
+      "colliders": 186,
+      "colliderCells": 624,
+      "meshesSolid": 189,
+      "meshesCovered": 187,
+      "meshesDecorative": 75,
+      "coveragePct": 98.94,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-3.2,0.8,-11.8"
+        }
+      ]
+    },
+    {
+      "label": "op046",
+      "map": "sector_046_iron_gallery",
+      "colliders": 188,
+      "colliderCells": 676,
+      "meshesSolid": 194,
+      "meshesCovered": 192,
+      "meshesDecorative": 68,
+      "coveragePct": 98.97,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.71x0.7x1.71",
+          "at": "-45.0,1.2,15.6"
+        }
+      ]
+    },
+    {
+      "label": "op047",
+      "map": "sector_047_isotope_vault",
+      "colliders": 311,
+      "colliderCells": 784,
+      "meshesSolid": 290,
+      "meshesCovered": 285,
+      "meshesDecorative": 191,
+      "coveragePct": 98.28,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-3.2,0.8,-12.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x228.48",
+          "at": "-163.0,-0.4,-114.2"
+        }
+      ]
+    },
+    {
+      "label": "op048",
+      "map": "sector_048_dune_radar",
+      "colliders": 291,
+      "colliderCells": 784,
+      "meshesSolid": 260,
+      "meshesCovered": 257,
+      "meshesDecorative": 229,
+      "coveragePct": 98.85,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x226.56",
+          "at": "-162.0,-0.4,-113.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.4x0.7x2.4",
+          "at": "44.5,1.2,-61.0"
+        }
+      ]
+    },
+    {
+      "label": "op049",
+      "map": "sector_049_frost_citadel",
+      "colliders": 227,
+      "colliderCells": 784,
+      "meshesSolid": 207,
+      "meshesCovered": 204,
+      "meshesDecorative": 83,
+      "coveragePct": 98.55,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x226.56",
+          "at": "-162.0,-0.4,-113.3"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "1.8x0.7x1.8",
+          "at": "16.0,1.2,-57.4"
+        }
+      ]
+    },
+    {
+      "label": "op050",
+      "map": "sector_050_roundhouse_siege",
+      "colliders": 294,
+      "colliderCells": 840,
+      "meshesSolid": 284,
+      "meshesCovered": 279,
+      "meshesDecorative": 343,
+      "coveragePct": 98.24,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x236.16",
+          "at": "-167.0,-0.4,-118.1"
+        }
+      ]
+    },
+    {
+      "label": "op051",
+      "map": "sector_051_checkpoint_viper",
+      "colliders": 292,
+      "colliderCells": 960,
+      "meshesSolid": 273,
+      "meshesCovered": 269,
+      "meshesDecorative": 206,
+      "coveragePct": 98.53,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x251.52",
+          "at": "-175.0,-0.4,-125.8"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-14.8"
+        }
+      ]
+    },
+    {
+      "label": "op052",
+      "map": "sector_052_crossroads_mill",
+      "colliders": 298,
+      "colliderCells": 900,
+      "meshesSolid": 273,
+      "meshesCovered": 269,
+      "meshesDecorative": 202,
+      "coveragePct": 98.53,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x247.68",
+          "at": "-173.0,-0.4,-123.8"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.24x0.7x2.24",
+          "at": "80.0,1.2,-37.1"
+        }
+      ]
+    },
+    {
+      "label": "op053",
+      "map": "sector_053_camp_centurion",
+      "colliders": 283,
+      "colliderCells": 784,
+      "meshesSolid": 259,
+      "meshesCovered": 256,
+      "meshesDecorative": 213,
+      "coveragePct": 98.84,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x228.48",
+          "at": "-163.0,-0.4,-114.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.38x0.7x2.38",
+          "at": "-68.8,1.2,-53.9"
+        }
+      ]
+    },
+    {
+      "label": "op054",
+      "map": "sector_054_midtown_overpass",
+      "colliders": 472,
+      "colliderCells": 784,
+      "meshesSolid": 426,
+      "meshesCovered": 423,
+      "meshesDecorative": 328,
+      "coveragePct": 99.3,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x228.48",
+          "at": "-163.0,-0.4,-114.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.14x0.7x2.14",
+          "at": "-55.4,1.2,-24.8"
+        }
+      ]
+    },
+    {
+      "label": "op055",
+      "map": "sector_055_headland_battery",
+      "colliders": 229,
+      "colliderCells": 812,
+      "meshesSolid": 214,
+      "meshesCovered": 211,
+      "meshesDecorative": 97,
+      "coveragePct": 98.6,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "1.88x0.7x1.88",
+          "at": "53.0,1.2,18.1"
+        }
+      ]
+    },
+    {
+      "label": "op056",
+      "map": "sector_056_bunkering_pier",
+      "colliders": 269,
+      "colliderCells": 784,
+      "meshesSolid": 249,
+      "meshesCovered": 246,
+      "meshesDecorative": 163,
+      "coveragePct": 98.8,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.19x0.7x2.19",
+          "at": "-28.2,1.2,22.9"
+        }
+      ]
+    },
+    {
+      "label": "op057",
+      "map": "sector_057_apron_thunder",
+      "colliders": 163,
+      "colliderCells": 1024,
+      "meshesSolid": 162,
+      "meshesCovered": 159,
+      "meshesDecorative": 72,
+      "coveragePct": 98.15,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x259.2",
+          "at": "-179.0,-0.4,-129.6"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.27x0.7x2.27",
+          "at": "3.4,1.2,-83.6"
+        }
+      ]
+    },
+    {
+      "label": "op058",
+      "map": "sector_058_canopy_watch",
+      "colliders": 304,
+      "colliderCells": 784,
+      "meshesSolid": 253,
+      "meshesCovered": 251,
+      "meshesDecorative": 214,
+      "coveragePct": 99.21,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x230.4",
+          "at": "-164.0,-0.4,-115.2"
+        }
+      ]
+    },
+    {
+      "label": "op059",
+      "map": "sector_059_gorge_powerhouse",
+      "colliders": 323,
+      "colliderCells": 840,
+      "meshesSolid": 310,
+      "meshesCovered": 305,
+      "meshesDecorative": 140,
+      "coveragePct": 98.39,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-12.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        }
+      ]
+    },
+    {
+      "label": "op060",
+      "map": "sector_060_bastion_kronos",
+      "colliders": 315,
+      "colliderCells": 812,
+      "meshesSolid": 291,
+      "meshesCovered": 287,
+      "meshesDecorative": 185,
+      "coveragePct": 98.63,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "2.7,0.8,-11.9"
+        }
+      ]
+    },
+    {
+      "label": "op061",
+      "map": "sector_061_crosswind_runway",
+      "colliders": 162,
+      "colliderCells": 1024,
+      "meshesSolid": 169,
+      "meshesCovered": 164,
+      "meshesDecorative": 78,
+      "coveragePct": 97.04,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-15.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        }
+      ]
+    },
+    {
+      "label": "op062",
+      "map": "sector_062_rotor_base",
+      "colliders": 168,
+      "colliderCells": 1024,
+      "meshesSolid": 163,
+      "meshesCovered": 160,
+      "meshesDecorative": 73,
+      "coveragePct": 98.16,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "1.83x0.7x1.83",
+          "at": "67.4,1.2,-72.7"
+        }
+      ]
+    },
+    {
+      "label": "op063",
+      "map": "sector_063_steel_junction",
+      "colliders": 297,
+      "colliderCells": 784,
+      "meshesSolid": 283,
+      "meshesCovered": 279,
+      "meshesDecorative": 355,
+      "coveragePct": 98.59,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x232.32",
+          "at": "-165.0,-0.4,-116.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.35x0.7x2.35",
+          "at": "68.6,1.2,-6.2"
+        }
+      ]
+    },
+    {
+      "label": "op064",
+      "map": "sector_064_borderlock_north",
+      "colliders": 214,
+      "colliderCells": 840,
+      "meshesSolid": 216,
+      "meshesCovered": 211,
+      "meshesDecorative": 105,
+      "coveragePct": 97.69,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x236.16",
+          "at": "-167.0,-0.4,-118.1"
+        }
+      ]
+    },
+    {
+      "label": "op065",
+      "map": "sector_065_pipeline_zero",
+      "colliders": 281,
+      "colliderCells": 784,
+      "meshesSolid": 261,
+      "meshesCovered": 257,
+      "meshesDecorative": 144,
+      "coveragePct": 98.47,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x232.32",
+          "at": "-165.0,-0.4,-116.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.33x0.7x2.33",
+          "at": "-33.2,1.2,-56.3"
+        }
+      ]
+    },
+    {
+      "label": "op066",
+      "map": "sector_066_dark_reactor",
+      "colliders": 309,
+      "colliderCells": 784,
+      "meshesSolid": 289,
+      "meshesCovered": 285,
+      "meshesDecorative": 172,
+      "coveragePct": 98.62,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x232.32",
+          "at": "-165.0,-0.4,-116.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "2.7,0.8,-12.9"
+        }
+      ]
+    },
+    {
+      "label": "op067",
+      "map": "sector_067_avionics_dome",
+      "colliders": 167,
+      "colliderCells": 1024,
+      "meshesSolid": 172,
+      "meshesCovered": 167,
+      "meshesDecorative": 81,
+      "coveragePct": 97.09,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-15.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x263.04",
+          "at": "-181.0,-0.4,-131.5"
+        }
+      ]
+    },
+    {
+      "label": "op068",
+      "map": "sector_068_subterranean_spur",
+      "colliders": 187,
+      "colliderCells": 728,
+      "meshesSolid": 184,
+      "meshesCovered": 184,
+      "meshesDecorative": 77,
+      "coveragePct": 100,
+      "uncovered": []
+    },
+    {
+      "label": "op069",
+      "map": "sector_069_bunker_complex_delta",
+      "colliders": 185,
+      "colliderCells": 676,
+      "meshesSolid": 193,
+      "meshesCovered": 190,
+      "meshesDecorative": 75,
+      "coveragePct": 98.45,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-3.2,0.8,-11.8"
+        }
+      ]
+    },
+    {
+      "label": "op070",
+      "map": "sector_070_chemical_row",
+      "colliders": 173,
+      "colliderCells": 812,
+      "meshesSolid": 170,
+      "meshesCovered": 166,
+      "meshesDecorative": 92,
+      "coveragePct": 97.65,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.93x0.7x1.93",
+          "at": "-78.7,1.2,-28.0"
+        }
+      ]
+    },
+    {
+      "label": "op071",
+      "map": "sector_071_rusted_turbine",
+      "colliders": 171,
+      "colliderCells": 812,
+      "meshesSolid": 163,
+      "meshesCovered": 160,
+      "meshesDecorative": 101,
+      "coveragePct": 98.16,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.25x0.7x2.25",
+          "at": "-17.4,1.2,73.6"
+        }
+      ]
+    },
+    {
+      "label": "op072",
+      "map": "sector_072_wadi_citadel",
+      "colliders": 323,
+      "colliderCells": 812,
+      "meshesSolid": 294,
+      "meshesCovered": 290,
+      "meshesDecorative": 198,
+      "coveragePct": 98.64,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x234.24",
+          "at": "-166.0,-0.4,-117.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op073",
+      "map": "sector_073_whiteeout_ridge",
+      "colliders": 230,
+      "colliderCells": 900,
+      "meshesSolid": 216,
+      "meshesCovered": 212,
+      "meshesDecorative": 85,
+      "coveragePct": 98.15,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.8x0.7x1.8",
+          "at": "-44.4,1.2,68.8"
+        }
+      ]
+    },
+    {
+      "label": "op074",
+      "map": "sector_074_darkwater_woods",
+      "colliders": 308,
+      "colliderCells": 870,
+      "meshesSolid": 265,
+      "meshesCovered": 260,
+      "meshesDecorative": 217,
+      "coveragePct": 98.11,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x236.16",
+          "at": "-167.0,-0.4,-118.1"
+        }
+      ]
+    },
+    {
+      "label": "op075",
+      "map": "sector_075_amphibious_gate",
+      "colliders": 276,
+      "colliderCells": 840,
+      "meshesSolid": 250,
+      "meshesCovered": 247,
+      "meshesDecorative": 148,
+      "coveragePct": 98.8,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x236.16",
+          "at": "-167.0,-0.4,-118.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "1.88x0.7x1.88",
+          "at": "60.9,1.2,49.8"
+        }
+      ]
+    },
+    {
+      "label": "op076",
+      "map": "sector_076_port_sovereign",
+      "colliders": 258,
+      "colliderCells": 840,
+      "meshesSolid": 248,
+      "meshesCovered": 244,
+      "meshesDecorative": 144,
+      "coveragePct": 98.39,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x236.16",
+          "at": "-167.0,-0.4,-118.1"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op077",
+      "map": "sector_077_floodgate_locks",
+      "colliders": 313,
+      "colliderCells": 900,
+      "meshesSolid": 296,
+      "meshesCovered": 293,
+      "meshesDecorative": 142,
+      "coveragePct": 98.99,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x240",
+          "at": "-169.0,-0.4,-120.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.39x0.7x2.39",
+          "at": "62.4,1.2,-57.8"
+        }
+      ]
+    },
+    {
+      "label": "op078",
+      "map": "sector_078_valley_settlement",
+      "colliders": 257,
+      "colliderCells": 900,
+      "meshesSolid": 230,
+      "meshesCovered": 226,
+      "meshesDecorative": 198,
+      "coveragePct": 98.26,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.18x0.7x2.18",
+          "at": "50.4,1.2,66.9"
+        }
+      ]
+    },
+    {
+      "label": "op079",
+      "map": "sector_079_fob_vanguard",
+      "colliders": 318,
+      "colliderCells": 870,
+      "meshesSolid": 298,
+      "meshesCovered": 294,
+      "meshesDecorative": 193,
+      "coveragePct": 98.66,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.71x0.7x1.71",
+          "at": "26.5,1.2,10.4"
+        }
+      ]
+    },
+    {
+      "label": "op080",
+      "map": "sector_080_hightower_keep",
+      "colliders": 473,
+      "colliderCells": 840,
+      "meshesSolid": 425,
+      "meshesCovered": 422,
+      "meshesDecorative": 353,
+      "coveragePct": 99.29,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op081",
+      "map": "sector_081_downtown_siege",
+      "colliders": 471,
+      "colliderCells": 840,
+      "meshesSolid": 430,
+      "meshesCovered": 426,
+      "meshesDecorative": 331,
+      "coveragePct": 99.07,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x238.08",
+          "at": "-168.0,-0.4,-119.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op082",
+      "map": "sector_082_smelter_titan",
+      "colliders": 298,
+      "colliderCells": 900,
+      "meshesSolid": 279,
+      "meshesCovered": 276,
+      "meshesDecorative": 361,
+      "coveragePct": 98.92,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x240",
+          "at": "-169.0,-0.4,-120.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.24x0.7x2.24",
+          "at": "-62.9,1.2,-34.9"
+        }
+      ]
+    },
+    {
+      "label": "op083",
+      "map": "sector_083_hollow_arsenal",
+      "colliders": 321,
+      "colliderCells": 900,
+      "meshesSolid": 298,
+      "meshesCovered": 294,
+      "meshesDecorative": 190,
+      "coveragePct": 98.66,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x240",
+          "at": "-169.0,-0.4,-120.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.13x0.7x2.13",
+          "at": "-61.2,1.2,-51.2"
+        }
+      ]
+    },
+    {
+      "label": "op084",
+      "map": "sector_084_red_mirage",
+      "colliders": 174,
+      "colliderCells": 1088,
+      "meshesSolid": 172,
+      "meshesCovered": 168,
+      "meshesDecorative": 78,
+      "coveragePct": 97.67,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x270.72",
+          "at": "-185.0,-0.4,-135.4"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "2.4x0.7x2.4",
+          "at": "-92.1,1.2,46.8"
+        }
+      ]
+    },
+    {
+      "label": "op085",
+      "map": "sector_085_summit_battery",
+      "colliders": 232,
+      "colliderCells": 840,
+      "meshesSolid": 214,
+      "meshesCovered": 210,
+      "meshesDecorative": 96,
+      "coveragePct": 98.13,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x240",
+          "at": "-169.0,-0.4,-120.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op086",
+      "map": "sector_086_shadow_timber",
+      "colliders": 315,
+      "colliderCells": 1024,
+      "meshesSolid": 264,
+      "meshesCovered": 261,
+      "meshesDecorative": 200,
+      "coveragePct": 98.86,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x261.12",
+          "at": "-180.0,-0.4,-130.6"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-15.8"
+        }
+      ]
+    },
+    {
+      "label": "op087",
+      "map": "sector_087_iron_headland",
+      "colliders": 279,
+      "colliderCells": 900,
+      "meshesSolid": 259,
+      "meshesCovered": 254,
+      "meshesDecorative": 153,
+      "coveragePct": 98.07,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-13.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x240",
+          "at": "-169.0,-0.4,-120.0"
+        }
+      ]
+    },
+    {
+      "label": "op088",
+      "map": "sector_088_terminal_zulu",
+      "colliders": 268,
+      "colliderCells": 900,
+      "meshesSolid": 257,
+      "meshesCovered": 253,
+      "meshesDecorative": 167,
+      "coveragePct": 98.44,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x241.92",
+          "at": "-170.0,-0.4,-121.0"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.99x0.7x1.99",
+          "at": "-58.3,1.2,68.4"
+        }
+      ]
+    },
+    {
+      "label": "op089",
+      "map": "sector_089_skyline_runway",
+      "colliders": 173,
+      "colliderCells": 1088,
+      "meshesSolid": 172,
+      "meshesCovered": 167,
+      "meshesDecorative": 74,
+      "coveragePct": 97.09,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-16.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x272.64",
+          "at": "-186.0,-0.4,-136.3"
+        }
+      ]
+    },
+    {
+      "label": "op090",
+      "map": "sector_090_abyss_vault",
+      "colliders": 185,
+      "colliderCells": 728,
+      "meshesSolid": 193,
+      "meshesCovered": 190,
+      "meshesDecorative": 75,
+      "coveragePct": 98.45,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op091",
+      "map": "sector_091_aegis_tunnels",
+      "colliders": 187,
+      "colliderCells": 784,
+      "meshesSolid": 195,
+      "meshesCovered": 192,
+      "meshesDecorative": 78,
+      "coveragePct": 98.46,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-12.8"
+        }
+      ]
+    },
+    {
+      "label": "op092",
+      "map": "sector_092_omega_labs",
+      "colliders": 314,
+      "colliderCells": 900,
+      "meshesSolid": 292,
+      "meshesCovered": 287,
+      "meshesDecorative": 189,
+      "coveragePct": 98.29,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x241.92",
+          "at": "-170.0,-0.4,-121.0"
+        }
+      ]
+    },
+    {
+      "label": "op093",
+      "map": "sector_093_hv_core_prime",
+      "colliders": 171,
+      "colliderCells": 870,
+      "meshesSolid": 166,
+      "meshesCovered": 162,
+      "meshesDecorative": 101,
+      "coveragePct": 97.59,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x243.84",
+          "at": "-171.0,-0.4,-121.9"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-13.8"
+        }
+      ]
+    },
+    {
+      "label": "op094",
+      "map": "sector_094_inferno_terminal",
+      "colliders": 181,
+      "colliderCells": 840,
+      "meshesSolid": 167,
+      "meshesCovered": 164,
+      "meshesDecorative": 93,
+      "coveragePct": 98.2,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x243.84",
+          "at": "-171.0,-0.4,-121.9"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 1,
+          "size": "2.14x0.7x2.14",
+          "at": "42.4,1.2,-52.2"
+        }
+      ]
+    },
+    {
+      "label": "op095",
+      "map": "sector_095_stonebridge_town",
+      "colliders": 250,
+      "colliderCells": 900,
+      "meshesSolid": 226,
+      "meshesCovered": 222,
+      "meshesDecorative": 213,
+      "coveragePct": 98.23,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x243.84",
+          "at": "-171.0,-0.4,-121.9"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "1.88x0.7x1.88",
+          "at": "-47.3,1.2,4.9"
+        }
+      ]
+    },
+    {
+      "label": "op096",
+      "map": "sector_096_titan_spillway",
+      "colliders": 316,
+      "colliderCells": 900,
+      "meshesSolid": 306,
+      "meshesCovered": 301,
+      "meshesDecorative": 155,
+      "coveragePct": 98.37,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-13.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x243.84",
+          "at": "-171.0,-0.4,-121.9"
+        }
+      ]
+    },
+    {
+      "label": "op097",
+      "map": "sector_097_iron_gateway",
+      "colliders": 296,
+      "colliderCells": 1024,
+      "meshesSolid": 272,
+      "meshesCovered": 268,
+      "meshesDecorative": 203,
+      "coveragePct": 98.53,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x263.04",
+          "at": "-181.0,-0.4,-131.5"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-15.8"
+        }
+      ]
+    },
+    {
+      "label": "op098",
+      "map": "sector_098_central_depot",
+      "colliders": 291,
+      "colliderCells": 870,
+      "meshesSolid": 275,
+      "meshesCovered": 271,
+      "meshesDecorative": 366,
+      "coveragePct": 98.55,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x245.76",
+          "at": "-172.0,-0.4,-122.9"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-14.8"
+        }
+      ]
+    },
+    {
+      "label": "op099",
+      "map": "sector_099_garrison_prime",
+      "colliders": 165,
+      "colliderCells": 1088,
+      "meshesSolid": 162,
+      "meshesCovered": 158,
+      "meshesDecorative": 82,
+      "coveragePct": 97.53,
+      "uncovered": [
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x276.48",
+          "at": "-188.0,-0.4,-138.2"
+        },
+        {
+          "name": "boxgeometry",
+          "count": 2,
+          "size": "0.9x0.6x0.12",
+          "at": "-4.4,0.8,-16.8"
+        }
+      ]
+    },
+    {
+      "label": "op100",
+      "map": "sector_100_iron_citadel",
+      "colliders": 318,
+      "colliderCells": 900,
+      "meshesSolid": 297,
+      "meshesCovered": 292,
+      "meshesDecorative": 187,
+      "coveragePct": 98.32,
+      "uncovered": [
+        {
+          "name": "boxgeometry",
+          "count": 3,
+          "size": "0.9x0.6x0.12",
+          "at": "3.6,0.8,-14.8"
+        },
+        {
+          "name": "buffergeometry",
+          "count": 2,
+          "size": "44x18.79x245.76",
+          "at": "-172.0,-0.4,-122.9"
+        }
+      ]
+    }
+  ]
+}

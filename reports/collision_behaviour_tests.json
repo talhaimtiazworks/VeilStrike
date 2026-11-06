@@ -1,0 +1,172 @@
+{
+  "generatedAt": "2026-11-05T16:34:19.827Z",
+  "passed": 33,
+  "total": 33,
+  "results": [
+    {
+      "name": "A. player cannot walk through an enemy soldier",
+      "ok": true,
+      "detail": "closest approach 0.66 m · overlap -0.001 m · walked 1.54 m of 4 s at 3.6 m/s"
+    },
+    {
+      "name": "A3. a free soldier who sidesteps still never lets bodies interpenetrate",
+      "ok": true,
+      "detail": "closest 0.66 m · overlap -0.001 m · soldier state combat"
+    },
+    {
+      "name": "A2. a standing soldier is a wall in both directions (enemy cannot walk through the player)",
+      "ok": true,
+      "detail": "worst overlap -2.340 m · no pass-through over 5 s of forced charging"
+    },
+    {
+      "name": "C. sprinting into a soldier staggers/knocks him down and the player reacts too",
+      "ok": true,
+      "detail": "impact at frame 59 · soldier went standing → knocked_down → recovering · player=staggered"
+    },
+    {
+      "name": "B. a charging soldier knocks the player down, then gets up again",
+      "ok": true,
+      "detail": "downBlend peaked at 1.00 · recovered to standing after the knockdown timer"
+    },
+    {
+      "name": "A3. incidental contact never knocks anyone down (no knockdown spam, no loop)",
+      "ok": true,
+      "detail": "600 frames of resting contact · 0 knockdowns · separation held"
+    },
+    {
+      "name": "A4. a soldier can never shove the player through a wall",
+      "ok": true,
+      "detail": "600 frames of a heavy charging the player into real wall geometry · worst penetration into the wall -0.026 m · player stayed outside"
+    },
+    {
+      "name": "A5. a fallen soldier is visually down and gets back up",
+      "ok": true,
+      "detail": "peak tilt 1.43 rad · box lowered to 0.98 m · recovered"
+    },
+    {
+      "name": "D/E/F. sprinting into walls, buildings and barriers never penetrates (sampled maps)",
+      "ok": true,
+      "detail": "135 wall/barrier faces sprinted into across 7 maps · 0 penetrations · 0 skipped (no floor at probe)"
+    },
+    {
+      "name": "D2. thin-geometry tunnelling at high speed is prevented",
+      "ok": true,
+      "detail": "180 mm panel vs 50 ms hitched sprint frames · blocked on every frame (27.56 of target 30.56)"
+    },
+    {
+      "name": "F2. floors and ceilings: no falling through, standing on real surfaces",
+      "ok": true,
+      "detail": "14 floor/roof slabs dropped onto · all landed on the surface"
+    },
+    {
+      "name": "F3. doors: passable only when their state permits",
+      "ok": true,
+      "detail": "6 doors on map; 6 exercised in the doorway: solid while closed 12, passable while open 5, solid again after closing (same probe)"
+    },
+    {
+      "name": "F4. decorative geometry stays non-solid (grass/tufts/paint create no invisible walls)",
+      "ok": true,
+      "detail": "rural open-ground sprint unobstructed · coverage pass authored=146 synthesized=0 skippedDecor=69"
+    },
+    {
+      "name": "G. the player cannot walk through a parked truck (all four sides)",
+      "ok": true,
+      "detail": "driver door side blocked (worst overlap -0.001 m) · far side blocked (worst overlap -0.001 m) · bow blocked (worst overlap -0.001 m) · stern blocked (worst overlap -0.001 m)"
+    },
+    {
+      "name": "G2. a moving vehicle keeps its collision in lock-step with the hull",
+      "ok": true,
+      "detail": "drove 7.47 m · collider followed within 0.0 mm"
+    },
+    {
+      "name": "G3. a driven vehicle bowls a soldier over (and pins him without launch)",
+      "ok": true,
+      "detail": "knockdown from a driven truck at 23.5 m/s · peak victim speed 0.77 m/s (capped, no launch) · never inside the hull"
+    },
+    {
+      "name": "H. boarding: at the driver door, prompt reads PRESS [F] — ENTER VEHICLE, F seats the player",
+      "ok": true,
+      "detail": "door point approach ok · prompt exact · seated within 2.06 m of hull centre · driver='player'"
+    },
+    {
+      "name": "I. boarding is refused from the opposite side and from an arbitrary distance",
+      "ok": true,
+      "detail": "far side → \"NEAR_DOOR\" · 3.4 m away → \"NEAR_DOOR\" · no prompt, no entry in either case"
+    },
+    {
+      "name": "J. exiting places the operator beside the door and never inside an obstruction",
+      "ok": true,
+      "detail": "wall built flush against the driver's door → egress relocated to the clear side, 3.52 m from the doorway · box free of statics · never inside the hull · on ground"
+    },
+    {
+      "name": "J2. exiting into a crowd of soldiers is refused rather than overlapping them",
+      "ok": true,
+      "detail": "egress relocated to a gap between bodies at 60.7,39.7 with no overlap"
+    },
+    {
+      "name": "J3. driving a vehicle still works (throttle, steering, camera) — nothing regressed",
+      "ok": true,
+      "detail": "drove 18.4 m · speed 0.0 m/s · camera finite · exited cleanly"
+    },
+    {
+      "name": "K. soldiers path around a wall and a vehicle instead of grinding into them",
+      "ok": true,
+      "detail": "avoided wall and hull for 1500 frames · travelled 3.8 m · closed to 11.7 m · longest hold 0 frames"
+    },
+    {
+      "name": "K2. soldiers never spawn inside geometry, and never inside a vehicle",
+      "ok": true,
+      "detail": "9 buried spawn attempts (8 inside a vehicle hull, 1 inside a wall) · 9 relocated · 0 left embedded"
+    },
+    {
+      "name": "K3. enemy-vs-enemy contact: a squad does not occupy the same space",
+      "ok": true,
+      "detail": "8-man squad converging on one point · worst sustained overlap 0.01 m (resolved)"
+    },
+    {
+      "name": "L. collision behaviour holds in representative operations from all five acts",
+      "ok": true,
+      "detail": "op   1 (facility): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m | op  21 (sector_021_seawall_bastion): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m | op  41 (sector_041_slag_corridor): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m | op  61 (sector_061_crosswind_runway): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m | op  81 (sector_081_downtown_siege): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m | op 100 (sector_100_iron_citadel): 5 faces, 0 penetrations, 1 actor(s) live, body overlap -0.001 m"
+    },
+    {
+      "name": "L2. weapons, aim and mission HUD paths stay live while knocked down (no lock-up)",
+      "ok": true,
+      "detail": "39 impaired frames · spread/speed models stayed valid · both actors alive"
+    },
+    {
+      "name": "L3. wave streaming and mission budgets are unaffected by actor bodies",
+      "ok": true,
+      "detail": "40 hostiles streamed · 41 bodies registered (1:1, no duplicates) · 64 static colliders unchanged"
+    },
+    {
+      "name": "M. a downed operator cannot fire and loses his aim; the trigger must be re-pressed",
+      "ok": true,
+      "detail": "12 round(s) fired upright · 0 while down (120 frames of held trigger) · adsT 0.00 after recovery · re-press restores fire"
+    },
+    {
+      "name": "B2. slow contact is a brush, knockdowns cannot be farmed in a loop, and a fall settles",
+      "ok": true,
+      "detail": "shuffling brush: 0 reactions over 173 contact frames at 1.2 m/s · 1 knockdown in 10 s of 7.5 m/s ramming (player standing 76% of it, closest pair — frames, cycle floor 100) · fall settles within 0.00 m, residual speed 0.00 m/s · 3 chargers kept the player off-balance 26% of 15 s"
+    },
+    {
+      "name": "N. no parked or driven vehicle can be walked through, on every map family",
+      "ok": true,
+      "detail": "facility: 540 sprint/run/crouch approaches, 0 hull entries | desert: 540 sprint/run/crouch approaches, 0 hull entries | urban: 540 sprint/run/crouch approaches, 0 hull entries | snow: 540 sprint/run/crouch approaches, 0 hull entries | industrial: 540 sprint/run/crouch approaches, 0 hull entries | rural: 540 sprint/run/crouch approaches, 0 hull entries | canal_market: 540 sprint/run/crouch approaches, 0 hull entries | ridge_hold: 540 sprint/run/crouch approaches, 0 hull entries"
+    },
+    {
+      "name": "O. every authored spawn on a map sweep lands clear of geometry and of vehicles",
+      "ok": true,
+      "detail": "143 authored spawn points across 8 maps · 9 relocated by spawn repair · 0 embedded | facility: 23 pts, 1 relocated, 0 embedded | desert: 19 pts, 0 relocated, 0 embedded | urban: 18 pts, 3 relocated, 0 embedded | snow: 20 pts, 2 relocated, 0 embedded | industrial: 17 pts, 0 relocated, 0 embedded | rural: 14 pts, 0 relocated, 0 embedded | canal_market: 16 pts, 3 relocated, 0 embedded | ridge_hold: 16 pts, 0 relocated, 0 embedded"
+    },
+    {
+      "name": "P2. the impact state machine runs to completion for every actor kind",
+      "ok": true,
+      "detail": "stagger 35 f · knockdown phases knocked_down→recovering→standing · box back to 1.82 m · no body left after death"
+    },
+    {
+      "name": "P. per-frame collision cost stays cheap at campaign scale",
+      "ok": true,
+      "detail": "200 actors + vehicles: 0.86 ms/frame of AI+collision+vehicle integration (300 frames)"
+    }
+  ]
+}

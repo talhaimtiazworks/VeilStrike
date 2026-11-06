@@ -1,0 +1,154 @@
+{
+  "mapsAudited": 110,
+  "totalSolidMeshes": 24524,
+  "totalCovered": 23947,
+  "coveragePct": 97.65,
+  "mapsBelow100": 108,
+  "worstOffenders": [
+    {
+      "name": "boxgeometry",
+      "count": 289,
+      "maps": 91,
+      "size": "0.9x0.6x0.12"
+    },
+    {
+      "name": "buffergeometry",
+      "count": 200,
+      "maps": 90,
+      "size": "44x18.79x261.12"
+    },
+    {
+      "name": "conegeometry",
+      "count": 76,
+      "maps": 6,
+      "size": "0.65x0.3x0.68"
+    },
+    {
+      "name": "cylindergeometry",
+      "count": 10,
+      "maps": 2,
+      "size": "58x0.18x0.18"
+    },
+    {
+      "name": "environment-pine-canopies",
+      "count": 2,
+      "maps": 1,
+      "size": "22.07x2.65x40.34"
+    }
+  ]
+}
+
+--- per-map ---
+facility                   cov= 89.88%  solid=   405  colliders=  291  top-uncovered=boxgeometry×19
+desert                     cov= 85.71%  solid=    77  colliders=   61  top-uncovered=boxgeometry×5
+urban                      cov= 84.27%  solid=    89  colliders=   64  top-uncovered=boxgeometry×9
+snow                       cov= 83.56%  solid=    73  colliders=   67  top-uncovered=boxgeometry×5
+recon_canyon               cov= 92.16%  solid=    51  colliders=   47  top-uncovered=buffergeometry×2
+industrial                 cov= 89.33%  solid=   178  colliders=  155  top-uncovered=boxgeometry×8
+rural                      cov=  95.5%  solid=   111  colliders=  128  top-uncovered=boxgeometry×3
+riverside_village          cov= 92.19%  solid=    64  colliders=   56  top-uncovered=buffergeometry×2
+canal_market               cov= 89.87%  solid=    79  colliders=   60  top-uncovered=boxgeometry×5
+ridge_hold                 cov= 88.89%  solid=    54  colliders=   42  top-uncovered=boxgeometry×4
+facility                   cov= 89.88%  solid=   405  colliders=  291  top-uncovered=boxgeometry×19
+desert                     cov= 85.71%  solid=    77  colliders=   61  top-uncovered=boxgeometry×5
+urban                      cov= 84.27%  solid=    89  colliders=   64  top-uncovered=boxgeometry×9
+snow                       cov= 83.56%  solid=    73  colliders=   67  top-uncovered=boxgeometry×5
+recon_canyon               cov= 92.16%  solid=    51  colliders=   47  top-uncovered=buffergeometry×2
+industrial                 cov= 89.33%  solid=   178  colliders=  155  top-uncovered=boxgeometry×8
+rural                      cov=  95.5%  solid=   111  colliders=  128  top-uncovered=boxgeometry×3
+riverside_village          cov= 92.19%  solid=    64  colliders=   56  top-uncovered=buffergeometry×2
+canal_market               cov= 89.87%  solid=    79  colliders=   60  top-uncovered=boxgeometry×5
+ridge_hold                 cov= 88.89%  solid=    54  colliders=   42  top-uncovered=boxgeometry×4
+convoy_valley              cov= 98.92%  solid=   185  colliders=  237  top-uncovered=buffergeometry×2
+wadi_outpost               cov= 99.11%  solid=   225  colliders=  252  top-uncovered=buffergeometry×2
+glacier_pass               cov= 98.47%  solid=   131  colliders=  168  top-uncovered=buffergeometry×2
+harbor_boulevard           cov= 99.61%  solid=   513  colliders=  564  top-uncovered=buffergeometry×2
+foundry_rail               cov= 98.57%  solid=   140  colliders=  138  top-uncovered=buffergeometry×2
+rowhouse_grid              cov= 99.55%  solid=   449  colliders=  495  top-uncovered=buffergeometry×2
+kestrel_annex              cov= 99.09%  solid=   331  colliders=  355  top-uncovered=buffergeometry×2
+metro                      cov= 90.24%  solid=    82  colliders=   71  top-uncovered=boxgeometry×8
+sector_019_redgate_crossing cov= 98.56%  solid=   278  colliders=  294  top-uncovered=buffergeometry×2
+sector_020_pinewatch_battery cov= 98.44%  solid=   257  colliders=  302  top-uncovered=buffergeometry×2
+sector_021_seawall_bastion cov= 98.81%  solid=   253  colliders=  276  top-uncovered=buffergeometry×2
+sector_022_gantries_at_dusk cov= 98.05%  solid=   256  colliders=  263  top-uncovered=boxgeometry×3
+sector_023_highwater_lock  cov=  98.7%  solid=   308  colliders=  315  top-uncovered=buffergeometry×2
+sector_024_silent_turbine  cov= 98.13%  solid=   160  colliders=  168  top-uncovered=buffergeometry×2
+sector_025_amber_flare     cov=  97.6%  solid=   167  colliders=  178  top-uncovered=buffergeometry×2
+sector_026_volt_switch     cov= 98.29%  solid=   293  colliders=  311  top-uncovered=boxgeometry×3
+sector_027_tarmac_spear    cov=  97.5%  solid=   160  colliders=  164  top-uncovered=buffergeometry×2
+sector_028_cryo_wing       cov= 98.92%  solid=   278  colliders=  305  top-uncovered=buffergeometry×2
+sector_029_sublevel_zero   cov= 98.45%  solid=   194  colliders=  186  top-uncovered=boxgeometry×3
+sector_030_casemate_nine   cov=   100%  solid=   183  colliders=  186  top-uncovered=-
+sector_031_freight_spur    cov= 98.56%  solid=   278  colliders=  288  top-uncovered=buffergeometry×2
+sector_032_tollgate_iron   cov= 98.66%  solid=   224  colliders=  239  top-uncovered=buffergeometry×2
+sector_033_orchard_hollow  cov= 98.48%  solid=   264  colliders=  291  top-uncovered=buffergeometry×2
+sector_034_garrison_vanguard cov= 98.66%  solid=   298  colliders=  320  top-uncovered=buffergeometry×2
+sector_035_broken_foundry  cov=  99.3%  solid=   427  colliders=  467  top-uncovered=buffergeometry×2
+sector_036_breakwater_dock cov= 98.45%  solid=   258  colliders=  279  top-uncovered=buffergeometry×2
+sector_037_drydock_shadow  cov=  98.4%  solid=   250  colliders=  264  top-uncovered=buffergeometry×2
+sector_038_timber_ambush   cov= 98.21%  solid=   224  colliders=  261  top-uncovered=buffergeometry×2
+sector_039_span_breaker    cov= 98.25%  solid=   228  colliders=  238  top-uncovered=buffergeometry×2
+sector_040_outpost_scorpion cov= 98.63%  solid=   291  colliders=  316  top-uncovered=buffergeometry×2
+sector_041_slag_corridor   cov= 97.63%  solid=   169  colliders=  171  top-uncovered=buffergeometry×2
+sector_042_dead_loom       cov= 98.45%  solid=   258  colliders=  280  top-uncovered=buffergeometry×2
+sector_043_black_cracker   cov= 97.66%  solid=   171  colliders=  179  top-uncovered=buffergeometry×2
+sector_044_gridlock_seven  cov= 97.56%  solid=   164  colliders=  169  top-uncovered=buffergeometry×2
+sector_045_deep_archive    cov= 98.94%  solid=   189  colliders=  186  top-uncovered=boxgeometry×2
+sector_046_iron_gallery    cov= 98.97%  solid=   194  colliders=  188  top-uncovered=boxgeometry×2
+sector_047_isotope_vault   cov= 98.28%  solid=   290  colliders=  311  top-uncovered=boxgeometry×3
+sector_048_dune_radar      cov= 98.85%  solid=   260  colliders=  291  top-uncovered=buffergeometry×2
+sector_049_frost_citadel   cov= 98.55%  solid=   207  colliders=  227  top-uncovered=buffergeometry×2
+sector_050_roundhouse_siege cov= 98.24%  solid=   284  colliders=  294  top-uncovered=boxgeometry×3
+sector_051_checkpoint_viper cov= 98.53%  solid=   273  colliders=  292  top-uncovered=buffergeometry×2
+sector_052_crossroads_mill cov= 98.53%  solid=   273  colliders=  298  top-uncovered=buffergeometry×2
+sector_053_camp_centurion  cov= 98.84%  solid=   259  colliders=  283  top-uncovered=buffergeometry×2
+sector_054_midtown_overpass cov=  99.3%  solid=   426  colliders=  472  top-uncovered=buffergeometry×2
+sector_055_headland_battery cov=  98.6%  solid=   214  colliders=  229  top-uncovered=buffergeometry×2
+sector_056_bunkering_pier  cov=  98.8%  solid=   249  colliders=  269  top-uncovered=buffergeometry×2
+sector_057_apron_thunder   cov= 98.15%  solid=   162  colliders=  163  top-uncovered=buffergeometry×2
+sector_058_canopy_watch    cov= 99.21%  solid=   253  colliders=  304  top-uncovered=buffergeometry×2
+sector_059_gorge_powerhouse cov= 98.39%  solid=   310  colliders=  323  top-uncovered=boxgeometry×3
+sector_060_bastion_kronos  cov= 98.63%  solid=   291  colliders=  315  top-uncovered=buffergeometry×2
+sector_061_crosswind_runway cov= 97.04%  solid=   169  colliders=  162  top-uncovered=boxgeometry×3
+sector_062_rotor_base      cov= 98.16%  solid=   163  colliders=  168  top-uncovered=buffergeometry×2
+sector_063_steel_junction  cov= 98.59%  solid=   283  colliders=  297  top-uncovered=buffergeometry×2
+sector_064_borderlock_north cov= 97.69%  solid=   216  colliders=  214  top-uncovered=boxgeometry×3
+sector_065_pipeline_zero   cov= 98.47%  solid=   261  colliders=  281  top-uncovered=buffergeometry×2
+sector_066_dark_reactor    cov= 98.62%  solid=   289  colliders=  309  top-uncovered=buffergeometry×2
+sector_067_avionics_dome   cov= 97.09%  solid=   172  colliders=  167  top-uncovered=boxgeometry×3
+sector_068_subterranean_spur cov=   100%  solid=   184  colliders=  187  top-uncovered=-
+sector_069_bunker_complex_delta cov= 98.45%  solid=   193  colliders=  185  top-uncovered=boxgeometry×3
+sector_070_chemical_row    cov= 97.65%  solid=   170  colliders=  173  top-uncovered=buffergeometry×2
+sector_071_rusted_turbine  cov= 98.16%  solid=   163  colliders=  171  top-uncovered=buffergeometry×2
+sector_072_wadi_citadel    cov= 98.64%  solid=   294  colliders=  323  top-uncovered=buffergeometry×2
+sector_073_whiteeout_ridge cov= 98.15%  solid=   216  colliders=  230  top-uncovered=buffergeometry×2
+sector_074_darkwater_woods cov= 98.11%  solid=   265  colliders=  308  top-uncovered=boxgeometry×3
+sector_075_amphibious_gate cov=  98.8%  solid=   250  colliders=  276  top-uncovered=buffergeometry×2
+sector_076_port_sovereign  cov= 98.39%  solid=   248  colliders=  258  top-uncovered=buffergeometry×2
+sector_077_floodgate_locks cov= 98.99%  solid=   296  colliders=  313  top-uncovered=buffergeometry×2
+sector_078_valley_settlement cov= 98.26%  solid=   230  colliders=  257  top-uncovered=buffergeometry×2
+sector_079_fob_vanguard    cov= 98.66%  solid=   298  colliders=  318  top-uncovered=buffergeometry×2
+sector_080_hightower_keep  cov= 99.29%  solid=   425  colliders=  473  top-uncovered=buffergeometry×2
+sector_081_downtown_siege  cov= 99.07%  solid=   430  colliders=  471  top-uncovered=buffergeometry×2
+sector_082_smelter_titan   cov= 98.92%  solid=   279  colliders=  298  top-uncovered=buffergeometry×2
+sector_083_hollow_arsenal  cov= 98.66%  solid=   298  colliders=  321  top-uncovered=buffergeometry×2
+sector_084_red_mirage      cov= 97.67%  solid=   172  colliders=  174  top-uncovered=buffergeometry×2
+sector_085_summit_battery  cov= 98.13%  solid=   214  colliders=  232  top-uncovered=buffergeometry×2
+sector_086_shadow_timber   cov= 98.86%  solid=   264  colliders=  315  top-uncovered=buffergeometry×2
+sector_087_iron_headland   cov= 98.07%  solid=   259  colliders=  279  top-uncovered=boxgeometry×3
+sector_088_terminal_zulu   cov= 98.44%  solid=   257  colliders=  268  top-uncovered=buffergeometry×2
+sector_089_skyline_runway  cov= 97.09%  solid=   172  colliders=  173  top-uncovered=boxgeometry×3
+sector_090_abyss_vault     cov= 98.45%  solid=   193  colliders=  185  top-uncovered=boxgeometry×3
+sector_091_aegis_tunnels   cov= 98.46%  solid=   195  colliders=  187  top-uncovered=boxgeometry×3
+sector_092_omega_labs      cov= 98.29%  solid=   292  colliders=  314  top-uncovered=boxgeometry×3
+sector_093_hv_core_prime   cov= 97.59%  solid=   166  colliders=  171  top-uncovered=buffergeometry×2
+sector_094_inferno_terminal cov=  98.2%  solid=   167  colliders=  181  top-uncovered=buffergeometry×2
+sector_095_stonebridge_town cov= 98.23%  solid=   226  colliders=  250  top-uncovered=buffergeometry×2
+sector_096_titan_spillway  cov= 98.37%  solid=   306  colliders=  316  top-uncovered=boxgeometry×3
+sector_097_iron_gateway    cov= 98.53%  solid=   272  colliders=  296  top-uncovered=buffergeometry×2
+sector_098_central_depot   cov= 98.55%  solid=   275  colliders=  291  top-uncovered=buffergeometry×2
+sector_099_garrison_prime  cov= 97.53%  solid=   162  colliders=  165  top-uncovered=buffergeometry×2
+sector_100_iron_citadel    cov= 98.32%  solid=   297  colliders=  318  top-uncovered=boxgeometry×3
+
+WROTE reports/collision_coverage.json + reports/COLLISION_COVERAGE.md
+PASS solid-mesh coverage 97.65% (23947/24524 across 110 maps) ≥ 95% floor

@@ -1,0 +1,234 @@
+browser_map_tests — 226/226 checks passed in 6 environments
+  desktop-1080p    clean
+  hidpi-laptop     clean
+  narrow-laptop    clean
+  ultrawide        clean
+  tablet-touch     clean
+  phone-touch      clean
+
+PASS desktop-1080p · mission deployed — facility: state playing, world n/a
+PASS desktop-1080p · M opens the map — panel 1920x1080 in a 1920x1080 viewport
+PASS desktop-1080p · the map viewport receives real pointer input — 960,502 -> tacmap-canvas  51,110 -> tacmap-canvas  1849,874 -> tacmap-canvas
+PASS desktop-1080p · backing store is the CSS box x devicePixelRatio — 1898x864 device px for a 1898x864 CSS box at dpr 1
+PASS desktop-1080p · fit frames the whole mission area — zoom 0.931 = fit 0.931
+PASS desktop-1080p · the map is painted, not blank or transparent — 165 distinct colours over 409968 samples, 0 non-opaque
+PASS desktop-1080p · contrast stays in the field-manual range — mean luminance 13.2, std dev 9.4
+PASS desktop-1080p · no resampling: pixels come from the map palette — 99.8% of samples within 40/255 of a declared map colour
+PASS desktop-1080p · wheel zoom magnifies the map — 0.93x -> 2.77x from a -300 wheel at the cursor; readout "2.8×"
+PASS desktop-1080p · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS desktop-1080p · the zoom readout tracks the eased view — readout "2.8×" against zoom 2.775x - the readout is refreshed while the view eases, not only on press
+PASS desktop-1080p · an axis the whole mission fits inside stays centred — centre-lock holds on no axis at 2.77x; view centre -32.4,-7.4 vs mission 0,0
+PASS desktop-1080p · zoom pivots on the world point under the cursor — at 2.77x -> 5.18x (deeper than the centre-lock, 1.91x) the point under the pointer moved 0.00 px
+PASS desktop-1080p · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS desktop-1080p · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 960,502 moved the view -90.0,60.0 px (want -90,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 108.2 px; centre-lock on neither axis; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 11,70 1898x864; released cleanly
+PASS desktop-1080p · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS desktop-1080p · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "52 m NW  ·  PLANNED"; clicked 811,703 for "extraction" (layout settled, canvas under the point: true, canvas box 11,70 1898x864)
+PASS desktop-1080p · the card is on screen and legible — 330x260 at 23,661
+PASS desktop-1080p · NAVIGATE plans a route to the selection — routeSel extraction, 3 path points, walk 61 m, button "ROUTE: EXTRACTION"
+PASS desktop-1080p · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS desktop-1080p · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS desktop-1080p · a layer switch changes the paint, not the plan — draw calls 644 -> 614 with BUILDINGS off
+PASS desktop-1080p · the popover stays inside the viewport
+PASS desktop-1080p · FOLLOW keeps the player centred while the world moves — player sat 0.0,0.3 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS desktop-1080p · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS desktop-1080p · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS desktop-1080p · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS desktop-1080p · FLOAT detaches the map into a smaller window — 1180x799 window inside 1920x1080; button "MAXIMIZE"
+PASS desktop-1080p · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 370,141 -> 310,181; bar box 371,142 1178x111; zoom/pan untouched: true
+PASS desktop-1080p · the floating window opens somewhere usable — placed at 370,141 sizing 1180x799 in 1920x1080
+PASS desktop-1080p · the resize grip grows the canvas and the canvas keeps pace — canvas 1178 -> 1302x594 CSS px (window 1180 -> 1304) backed by 1302 device px at render dpr 1; view preserved: true
+PASS desktop-1080p · double-clicking the bar restores the full frame — 1920 px wide again; button "FLOAT"
+PASS desktop-1080p · mouse wheel and drag cover the pointer path — touch pinch asserted on the two touch environments
+PASS desktop-1080p · the map closes back to the game cleanly — state playing, HUD restored
+PASS desktop-1080p · reopening restores the view you left — 2.79x at (-5,0) came back as 2.79x at (-5,0)
+PASS desktop-1080p · an interactive repaint fits the 45 ms budget — avg 1.4 ms, p95 5.1 ms, 204 draw calls per frame
+PASS desktop-1080p · the page stays quiet — no page errors, no console errors, no failed requests
+PASS hidpi-laptop · mission deployed — desert: state playing, world n/a
+PASS hidpi-laptop · M opens the map — panel 1440x900 in a 1440x900 viewport
+PASS hidpi-laptop · the map viewport receives real pointer input — 720,392 -> tacmap-canvas  51,110 -> tacmap-canvas  1369,653 -> tacmap-canvas
+PASS hidpi-laptop · backing store is the CSS box x devicePixelRatio — 2836x1286 device px for a 1418x643 CSS box at dpr 2
+PASS hidpi-laptop · fit frames the whole mission area — zoom 0.693 = fit 0.693
+PASS hidpi-laptop · the map is painted, not blank or transparent — 206 distinct colours over 911774 samples, 0 non-opaque
+PASS hidpi-laptop · contrast stays in the field-manual range — mean luminance 12.4, std dev 10.4
+PASS hidpi-laptop · no resampling: pixels come from the map palette — 99.8% of samples within 40/255 of a declared map colour
+PASS hidpi-laptop · wheel zoom magnifies the map — 0.69x -> 1.40x from a -300 wheel at the cursor; readout "1.4×"
+PASS hidpi-laptop · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS hidpi-laptop · the zoom readout tracks the eased view — readout "1.4×" against zoom 1.398x - the readout is refreshed while the view eases, not only on press
+PASS hidpi-laptop · an axis the whole mission fits inside stays centred — centre-lock holds on no axis at 1.40x; view centre -7.2,-4.4 vs mission 0,0
+PASS hidpi-laptop · zoom pivots on the world point under the cursor — at 1.43x -> 1.95x (deeper than the centre-lock, 1.43x) the point under the pointer moved 0.00 px
+PASS hidpi-laptop · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS hidpi-laptop · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 720,392 moved the view -90.0,60.0 px (want -90,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 108.2 px; centre-lock on neither axis; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 11,70 1418x643; released cleanly
+PASS hidpi-laptop · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS hidpi-laptop · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "28 m E  ·  PLANNED"; clicked 792,486 for "extraction" (layout settled, canvas under the point: true, canvas box 11,70 1418x643)
+PASS hidpi-laptop · the card is on screen and legible — 330x260 at 23,441
+PASS hidpi-laptop · NAVIGATE plans a route to the selection — routeSel extraction, 2 path points, walk 28 m, button "ROUTE: EXTRACTION"
+PASS hidpi-laptop · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS hidpi-laptop · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS hidpi-laptop · a layer switch changes the paint, not the plan — draw calls 284 -> 274 with BUILDINGS off
+PASS hidpi-laptop · the popover stays inside the viewport
+PASS hidpi-laptop · FOLLOW keeps the player centred while the world moves — player sat 0.0,0.0 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS hidpi-laptop · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS hidpi-laptop · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS hidpi-laptop · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS hidpi-laptop · FLOAT detaches the map into a smaller window — 979x666 window inside 1440x900; button "MAXIMIZE"
+PASS hidpi-laptop · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 231,117 -> 171,157; bar box 232,118 977x111; zoom/pan untouched: true
+PASS hidpi-laptop · the floating window opens somewhere usable — placed at 231,117 sizing 979x666 in 1440x900
+PASS hidpi-laptop · the resize grip grows the canvas and the canvas keeps pace — canvas 977 -> 1101x443 CSS px (window 979 -> 1103) backed by 2202 device px at render dpr 2; view preserved: true
+PASS hidpi-laptop · double-clicking the bar restores the full frame — 1440 px wide again; button "FLOAT"
+PASS hidpi-laptop · mouse wheel and drag cover the pointer path — touch pinch asserted on the two touch environments
+PASS hidpi-laptop · the map closes back to the game cleanly — state playing, HUD restored
+PASS hidpi-laptop · reopening restores the view you left — 1.91x at (-8,0) came back as 1.91x at (-8,0)
+PASS hidpi-laptop · an interactive repaint fits the 45 ms budget — avg 2.2 ms, p95 6.6 ms, 262 draw calls per frame
+PASS hidpi-laptop · the page stays quiet — no page errors, no console errors, no failed requests
+PASS narrow-laptop · mission deployed — urban: state playing, world n/a
+PASS narrow-laptop · M opens the map — panel 1024x640 in a 1024x640 viewport
+PASS narrow-laptop · the map viewport receives real pointer input — 512,273 -> tacmap-canvas  51,162 -> tacmap-canvas  953,364 -> tacmap-canvas
+PASS narrow-laptop · backing store is the CSS box x devicePixelRatio — 1002x302 device px for a 1002x302 CSS box at dpr 1
+PASS narrow-laptop · fit frames the whole mission area — zoom 0.325 = fit 0.325
+PASS narrow-laptop · the map is painted, not blank or transparent — 190 distinct colours over 75651 samples, 0 non-opaque
+PASS narrow-laptop · contrast stays in the field-manual range — mean luminance 12.9, std dev 14.2
+PASS narrow-laptop · no resampling: pixels come from the map palette — 99.5% of samples within 40/255 of a declared map colour
+PASS narrow-laptop · wheel zoom magnifies the map — 0.33x -> 0.97x from a -300 wheel at the cursor; readout "0.97×"
+PASS narrow-laptop · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS narrow-laptop · the zoom readout tracks the eased view — readout "0.97×" against zoom 0.970x - the readout is refreshed while the view eases, not only on press
+PASS narrow-laptop · an axis the whole mission fits inside stays centred — centre-lock holds on no axis at 0.97x; view centre -4.9,-7.3 vs mission 0,0
+PASS narrow-laptop · zoom pivots on the world point under the cursor — at 1.01x -> 1.88x (deeper than the centre-lock, 1.01x) the point under the pointer moved 0.00 px
+PASS narrow-laptop · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS narrow-laptop · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 512,273 moved the view 0.0,60.0 px (want 0,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 60.0 px; centre-lock on X; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 11,122 1002x302; released cleanly
+PASS narrow-laptop · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS narrow-laptop · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "30 m SE  ·  PLANNED"; clicked 476,317 for "extraction" (layout settled, canvas under the point: true, canvas box 11,122 1002x302)
+PASS narrow-laptop · the card is on screen and legible — 330x260 at 23,152
+PASS narrow-laptop · NAVIGATE plans a route to the selection — routeSel extraction, 2 path points, walk 30 m, button "ROUTE: EXTRACTION"
+PASS narrow-laptop · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS narrow-laptop · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS narrow-laptop · a layer switch changes the paint, not the plan — draw calls 301 -> 291 with BUILDINGS off
+PASS narrow-laptop · the popover stays inside the viewport
+PASS narrow-laptop · FOLLOW keeps the player centred while the world moves — player sat 0.0,-0.1 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS narrow-laptop · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS narrow-laptop · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS narrow-laptop · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS narrow-laptop · FLOAT detaches the map into a smaller window — 696x474 window inside 1024x640; button "MAXIMIZE"
+PASS narrow-laptop · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 164,83 -> 104,123; bar box 165,84 694x215; zoom/pan untouched: true
+PASS narrow-laptop · the floating window opens somewhere usable — placed at 164,83 sizing 696x474 in 1024x640
+PASS narrow-laptop · the resize grip grows the canvas and the canvas keeps pace — canvas 694 -> 818x248 CSS px (window 696 -> 820) backed by 818 device px at render dpr 1; view preserved: true
+PASS narrow-laptop · double-clicking the bar restores the full frame — 1024 px wide again; button "FLOAT"
+PASS narrow-laptop · mouse wheel and drag cover the pointer path — touch pinch asserted on the two touch environments
+PASS narrow-laptop · the map closes back to the game cleanly — state playing, HUD restored
+PASS narrow-laptop · reopening restores the view you left — 0.98x at (-2,0) came back as 0.98x at (-2,0)
+PASS narrow-laptop · an interactive repaint fits the 45 ms budget — avg 2.1 ms, p95 6.3 ms, 285 draw calls per frame
+PASS narrow-laptop · the page stays quiet — no page errors, no console errors, no failed requests
+PASS ultrawide · mission deployed — snow: state playing, world n/a
+PASS ultrawide · M opens the map — panel 2560x1080 in a 2560x1080 viewport
+PASS ultrawide · the map viewport receives real pointer input — 1280,512 -> tacmap-canvas  51,110 -> tacmap-canvas  2489,894 -> tacmap-canvas
+PASS ultrawide · backing store is the CSS box x devicePixelRatio — 2538x884 device px for a 2538x884 CSS box at dpr 1
+PASS ultrawide · fit frames the whole mission area — zoom 0.953 = fit 0.953
+PASS ultrawide · the map is painted, not blank or transparent — 153 distinct colours over 560898 samples, 0 non-opaque
+PASS ultrawide · contrast stays in the field-manual range — mean luminance 11.7, std dev 5.9
+PASS ultrawide · no resampling: pixels come from the map palette — 99.9% of samples within 40/255 of a declared map colour
+PASS ultrawide · wheel zoom magnifies the map — 0.95x -> 2.84x from a -300 wheel at the cursor; readout "2.8×"
+PASS ultrawide · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS ultrawide · the zoom readout tracks the eased view — readout "2.8×" against zoom 2.839x - the readout is refreshed while the view eases, not only on press
+PASS ultrawide · an axis the whole mission fits inside stays centred — centre-lock holds on no axis at 2.84x; view centre -22.2,-7.5 vs mission 0,0
+PASS ultrawide · zoom pivots on the world point under the cursor — at 2.84x -> 5.30x (deeper than the centre-lock, 2.56x) the point under the pointer moved 0.00 px
+PASS ultrawide · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS ultrawide · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 1280,512 moved the view -7.5,60.0 px (want -7.5,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 60.5 px; centre-lock on neither axis; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 11,70 2538x884; released cleanly
+PASS ultrawide · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS ultrawide · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "44 m NW  ·  PLANNED"; clicked 1181,558 for "extraction" (layout settled, canvas under the point: true, canvas box 11,70 2538x884)
+PASS ultrawide · the card is on screen and legible — 330x260 at 23,682
+PASS ultrawide · NAVIGATE plans a route to the selection — routeSel extraction, 3 path points, walk 47 m, button "ROUTE: EXTRACTION"
+PASS ultrawide · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS ultrawide · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS ultrawide · a layer switch changes the paint, not the plan — draw calls 292 -> 286 with BUILDINGS off
+PASS ultrawide · the popover stays inside the viewport
+PASS ultrawide · FOLLOW keeps the player centred while the world moves — player sat 0.0,0.1 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS ultrawide · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS ultrawide · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS ultrawide · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS ultrawide · FLOAT detaches the map into a smaller window — 1180x799 window inside 2560x1080; button "MAXIMIZE"
+PASS ultrawide · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 690,141 -> 630,181; bar box 691,142 1178x111; zoom/pan untouched: true
+PASS ultrawide · the floating window opens somewhere usable — placed at 690,141 sizing 1180x799 in 2560x1080
+PASS ultrawide · the resize grip grows the canvas and the canvas keeps pace — canvas 1178 -> 1302x594 CSS px (window 1180 -> 1304) backed by 1302 device px at render dpr 1; view preserved: true
+PASS ultrawide · double-clicking the bar restores the full frame — 2560 px wide again; button "FLOAT"
+PASS ultrawide · mouse wheel and drag cover the pointer path — touch pinch asserted on the two touch environments
+PASS ultrawide · the map closes back to the game cleanly — state playing, HUD restored
+PASS ultrawide · reopening restores the view you left — 2.86x at (-15,0) came back as 2.86x at (-15,0)
+PASS ultrawide · an interactive repaint fits the 45 ms budget — avg 1.1 ms, p95 1.2 ms, 258 draw calls per frame
+PASS ultrawide · the page stays quiet — no page errors, no console errors, no failed requests
+PASS tablet-touch · mission deployed — recon_desert: state playing, world n/a
+PASS tablet-touch · M opens the map — panel 1024x768 in a 1024x768 viewport
+PASS tablet-touch · the map viewport receives real pointer input — 512,317 -> tacmap-canvas  51,162 -> tacmap-canvas  953,451 -> tacmap-canvas
+PASS tablet-touch · a raw touch pointer reaches the map canvas — touch at 512,317: canvas saw pointerdown 1, touchstart 1 (pointerType "touch")
+PASS tablet-touch · backing store is the CSS box x devicePixelRatio — 2004x779 device px for a 1002x389 CSS box at dpr 2
+PASS tablet-touch · fit frames the whole mission area — zoom 0.593 = fit 0.593
+PASS tablet-touch · the map is painted, not blank or transparent — 183 distinct colours over 390279 samples, 0 non-opaque
+PASS tablet-touch · contrast stays in the field-manual range — mean luminance 12.4, std dev 14.1
+PASS tablet-touch · no resampling: pixels come from the map palette — 99.7% of samples within 40/255 of a declared map colour
+PASS tablet-touch · wheel zoom magnifies the map — 0.59x -> 1.20x from a -300 wheel at the cursor; readout "1.2×"
+PASS tablet-touch · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS tablet-touch · the zoom readout tracks the eased view — readout "1.2×" against zoom 1.197x - the readout is refreshed while the view eases, not only on press
+PASS tablet-touch · an axis the whole mission fits inside stays centred — centre-lock holds on X at 1.20x; view centre 0,-3.2 vs mission 0,0
+PASS tablet-touch · zoom pivots on the world point under the cursor — at 1.35x -> 1.85x (deeper than the centre-lock, 1.35x) the point under the pointer moved 0.00 px
+PASS tablet-touch · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS tablet-touch · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 512,317 moved the view -90.0,60.0 px (want -90,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 108.2 px; centre-lock on neither axis; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 11,122 1002x389; released cleanly from touch pointer events
+PASS tablet-touch · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS tablet-touch · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "120 m NE  ·  PLANNED"; clicked 645,236 for "extraction" (layout settled, canvas under the point: true, canvas box 11,122 1002x389)
+PASS tablet-touch · the card is on screen and legible — 330x260 at 23,239
+PASS tablet-touch · NAVIGATE plans a route to the selection — routeSel extraction, 5 path points, walk 129 m, button "ROUTE: EXTRACTION"
+PASS tablet-touch · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS tablet-touch · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS tablet-touch · a layer switch changes the paint, not the plan — draw calls 233 -> 221 with BUILDINGS off
+PASS tablet-touch · the popover stays inside the viewport
+PASS tablet-touch · FOLLOW keeps the player centred while the world moves — player sat 0.0,-0.1 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS tablet-touch · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS tablet-touch · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS tablet-touch · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS tablet-touch · FLOAT detaches the map into a smaller window — 696x568 window inside 1024x768; button "MAXIMIZE"
+PASS tablet-touch · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 164,100 -> 104,140; bar box 165,101 694x215; zoom/pan untouched: true
+PASS tablet-touch · the floating window opens somewhere usable — placed at 164,100 sizing 696x568 in 1024x768
+PASS tablet-touch · the resize grip grows the canvas and the canvas keeps pace — canvas 694 -> 818x318 CSS px (window 696 -> 820) backed by 1636 device px at render dpr 2; view preserved: true
+PASS tablet-touch · double-clicking the bar restores the full frame — 1024 px wide again; button "FLOAT"
+PASS tablet-touch · a two-finger spread zooms the map in — 1.78x -> 10.00x via two raw CDP touch points; mid-gesture the map held 3 pointers (spread 66 px, target 5.34x); 0 pointers left captured; readout "10.0×"; canvas totals pointerdown 7 / touchstart 4
+PASS tablet-touch · a tap selects a marker on touch — tapped 907,158 -> mass:prop:30.0,30.5,38.0,33.5 (was clear); same point through selectAt(896,36) -> mass:prop:30.0,30.5,38.0,33.5; events pointerdown#6 touchstart pointerup#6 lostpointercapture#6 touchend; canvas pointerdown total 8
+PASS tablet-touch · the map closes back to the game cleanly — state playing, HUD restored
+PASS tablet-touch · reopening restores the view you left — 10.00x at (-14,-14) came back as 10.00x at (-14,-14)
+PASS tablet-touch · an interactive repaint fits the 45 ms budget — avg 0.4 ms, p95 0.6 ms, 54 draw calls per frame
+PASS tablet-touch · the page stays quiet — no page errors, no console errors, no failed requests
+PASS phone-touch · mission deployed — sabotage_industrial: state playing, world n/a
+PASS phone-touch · M opens the map — panel 412x915 in a 412x915 viewport
+PASS phone-touch · the map viewport receives real pointer input — 204,455 -> tacmap-canvas  47,280 -> tacmap-canvas  341,610 -> tacmap-canvas
+PASS phone-touch · a raw touch pointer reaches the map canvas — touch at 204,455: canvas saw pointerdown 1, touchstart 1 (pointerType "touch")
+PASS phone-touch · backing store is the CSS box x devicePixelRatio — 787x860 device px for a 394x430 CSS box at dpr 3 (the map renders at 2x on a 3x phone: no legibility gain, 2.25x the fill rate)
+PASS phone-touch · fit frames the whole mission area — zoom 0.714 = fit 0.714
+PASS phone-touch · the map is painted, not blank or transparent — 200 distinct colours over 135364 samples, 0 non-opaque
+PASS phone-touch · contrast stays in the field-manual range — mean luminance 15.4, std dev 23.5
+PASS phone-touch · no resampling: pixels come from the map palette — 98.9% of samples within 40/255 of a declared map colour
+PASS phone-touch · wheel zoom magnifies the map — 0.71x -> 1.26x from a -300 wheel at the cursor; readout "1.3×"
+PASS phone-touch · the wheel is not also a page scroll — the map calls preventDefault on the wheel event
+PASS phone-touch · the zoom readout tracks the eased view — readout "1.3×" against zoom 1.265x - the readout is refreshed while the view eases, not only on press
+PASS phone-touch · an axis the whole mission fits inside stays centred — centre-lock holds on no axis at 1.26x; view centre -3.8,3 vs mission 0,5
+PASS phone-touch · zoom pivots on the world point under the cursor — at 1.26x -> 1.56x (deeper than the centre-lock, 0.67x) the point under the pointer moved 0.06 px
+PASS phone-touch · zoom clamps hold at both ends — target reached 0.06 / 10 against 0.06..10, and the view settled onto the clamp (10.00x)
+PASS phone-touch · drag pans 1:1 on every free axis, and a centre-locked axis stays put — a 90,-60 px drag from 204,455 moved the view -90.0,60.0 px (want -90,60 - that is the drag truncated by the mission boundary, not a dead axis); screen movement 108.2 px; centre-lock on neither axis; press reached the map: 1 pointerdown; owner chain canvas#tacmap-canvas > div#tacmap-stage > div#tacmap-frame; canvas box 7,240 394x430; released cleanly from touch pointer events
+PASS phone-touch · the view cannot be panned off the mission — centre stayed inside the mission area + air
+PASS phone-touch · clicking a marker opens its card — selected extraction; title "EXTRACTION"; where "47 m W  ·  PLANNED"; clicked 73,607 for "extraction" (layout settled, canvas under the point: true, canvas box 7,240 394x430)
+PASS phone-touch · the card is on screen and legible — 378x146 at 15,516
+PASS phone-touch · NAVIGATE plans a route to the selection — routeSel extraction, 2 path points, walk 47 m, button "ROUTE: EXTRACTION"
+PASS phone-touch · layer popover lists every layer, tappable — 11 rows (BUILDINGS / WALLS & OBSTACLES / ROADS & PATHS...), row height 27 px, "LAYERS: 11/11"
+PASS phone-touch · every layer row is a real touch target — 11/11 rows >= 40x20 px
+PASS phone-touch · a layer switch changes the paint, not the plan — draw calls 425 -> 399 with BUILDINGS off
+PASS phone-touch · the popover stays inside the viewport
+PASS phone-touch · FOLLOW keeps the player centred while the world moves — player sat 0.2,0.1 px from centre after a 44 m move; button "FOLLOW: ON"
+PASS phone-touch · a grab takes the view over from follow — "FOLLOW: OFF"
+PASS phone-touch · gameplay keys do nothing while the map is up — player position, facing, health and trigger untouched through W/A/D/Shift/R/3
+PASS phone-touch · the 3D view opens and hands back a working 2D map — 3D stage shown: true; back to "VIEW: 2D"
+PASS phone-touch · FLOAT detaches the map into a smaller window — 340x677 window inside 412x915; button "MAXIMIZE"
+PASS phone-touch · the title bar moves the window, never the map — dragged -60,40 px from the free bar point found: window 36,119 -> -24,159; bar box 37,120 338x233; zoom/pan untouched: true
+PASS phone-touch · the floating window opens somewhere usable — placed at 36,119 sizing 340x677 in 412x915
+PASS phone-touch · the resize grip grows the canvas and the canvas keeps pace — canvas 338 -> 462x328 CSS px (window 340 -> 464) backed by 924 device px at render dpr 2; view preserved: true
+PASS phone-touch · double-clicking the bar restores the full frame — 412 px wide again; button "FLOAT"
+PASS phone-touch · a two-finger spread zooms the map in — 2.14x -> 10.00x via two raw CDP touch points; mid-gesture the map held 3 pointers (spread 66 px, target 6.42x); 0 pointers left captured; readout "10.0×"; canvas totals pointerdown 7 / touchstart 4
+PASS phone-touch · a tap selects a marker on touch — tapped 311,538 -> mass:barrier:30.0,23.8,32.7,24.2 (was clear); same point through selectAt(304,298) -> mass:barrier:30.0,23.8,32.7,24.2; events pointerdown#6 touchstart pointerup#6 lostpointercapture#6 touchend; canvas pointerdown total 8
+PASS phone-touch · the map closes back to the game cleanly — state playing, HUD restored
+PASS phone-touch · reopening restores the view you left — 10.00x at (-9,-22) came back as 10.00x at (-9,-22)
+PASS phone-touch · an interactive repaint fits the 45 ms budget — avg 0.6 ms, p95 0.9 ms, 99 draw calls per frame
+PASS phone-touch · the page stays quiet — no page errors, no console errors, no failed requests

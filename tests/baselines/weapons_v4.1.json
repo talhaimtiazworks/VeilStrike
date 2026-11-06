@@ -1,0 +1,138 @@
+{
+  "_meta": {
+    "note": "Weapon settings as shipped in the accepted v4.1 build (VeilStrike_v4.1_CollisionVehicles_Fixed.zip). tests/ammunition_tests.mjs M10 compares the current table against this file, so the \"no weapon setting was touched\" guard works from an extracted archive too, with no git checkout.",
+    "source": "js/weapons.js @ v4.1 archive",
+    "source_sha256": "dc96c964109c5ae39875e29e7b2416c82d6215cd9f8d25d8e99a21a04ccc9d30",
+    "generated": "2026-11-05",
+    "fields": [
+      "magSize",
+      "reserveMax",
+      "startReserve",
+      "rpm",
+      "pellets",
+      "reloadTime"
+    ]
+  },
+  "weapons": {
+    "vx4": {
+      "magSize": 300,
+      "reserveMax": 0,
+      "startReserve": 0,
+      "rpm": 660,
+      "fireModes": [
+        "semi",
+        "auto"
+      ]
+    },
+    "mr7": {
+      "magSize": 10,
+      "reserveMax": 60,
+      "startReserve": 40,
+      "rpm": 150,
+      "fireModes": [
+        "semi"
+      ]
+    },
+    "p9": {
+      "magSize": 15,
+      "reserveMax": 105,
+      "startReserve": 60,
+      "rpm": 720,
+      "fireModes": [
+        "semi",
+        "auto"
+      ]
+    },
+    "st12": {
+      "magSize": 8,
+      "reserveMax": 56,
+      "startReserve": 32,
+      "rpm": 180,
+      "pellets": 9,
+      "fireModes": [
+        "semi"
+      ]
+    },
+    "vekp": {
+      "magSize": 30,
+      "reserveMax": 210,
+      "startReserve": 150,
+      "rpm": 920,
+      "fireModes": [
+        "semi",
+        "burst",
+        "auto"
+      ]
+    },
+    "vx12": {
+      "magSize": 6,
+      "reserveMax": 42,
+      "startReserve": 24,
+      "rpm": 70,
+      "pellets": 8,
+      "fireModes": [
+        "semi"
+      ]
+    },
+    "mpx5": {
+      "magSize": 30,
+      "reserveMax": 210,
+      "startReserve": 150,
+      "rpm": 850,
+      "fireModes": [
+        "semi",
+        "auto"
+      ]
+    },
+    "cr9": {
+      "magSize": 25,
+      "reserveMax": 175,
+      "startReserve": 125,
+      "rpm": 700,
+      "fireModes": [
+        "semi",
+        "burst",
+        "auto"
+      ]
+    },
+    "rk4": {
+      "magSize": 25,
+      "reserveMax": 175,
+      "startReserve": 125,
+      "rpm": 600,
+      "fireModes": [
+        "semi",
+        "burst"
+      ]
+    },
+    "sz8": {
+      "magSize": 30,
+      "reserveMax": 210,
+      "startReserve": 150,
+      "rpm": 620,
+      "fireModes": [
+        "semi",
+        "burst"
+      ]
+    },
+    "lb9": {
+      "magSize": 5,
+      "reserveMax": 35,
+      "startReserve": 20,
+      "rpm": 52,
+      "fireModes": [
+        "semi"
+      ]
+    },
+    "hmg9": {
+      "magSize": 60,
+      "reserveMax": 180,
+      "startReserve": 120,
+      "rpm": 600,
+      "fireModes": [
+        "semi",
+        "auto"
+      ]
+    }
+  }
+}

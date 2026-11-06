@@ -1,0 +1,16 @@
+PASS M1. one discharge = one round, for every weapon × mode × 60/144 Hz × click length — 176 cases, 0 mismatches (single-charge point verified per case)
+PASS M2. the reported ladder: 300 → 299 → 298 → (10) 290 → (50) 250 → (100) 200 — semi:1→299 semi:2→298 semi:10→290 semi:50→250 semi:100→200 auto:1→299 auto:2→298 auto:10→290 auto:50→250 auto:100→200
+PASS M3. a blocked, early or rejected shot consumes nothing
+PASS M4. an empty magazine prevents firing and cannot go negative
+PASS M5. reload transfers exactly what both stores can hold, once
+PASS M6. the HUD number is the same arithmetic the model holds
+PASS M7. exactly one firing entry point and one charge point in the shipped code
+PASS M8. side effects (flash, sound, recoil, hitscan, projectiles) do not charge ammo
+PASS M9. a shotgun blast is one round, many pellets
+PASS M10. no weapon setting was touched: table is byte-identical to the pre-fix baseline — 12 weapons, 5 settings each — 0 changes vs the recorded v4.1 baseline and vs git HEAD (file edited, settings identical)
+PASS M11. the lb9 mission allowance decrements once per shot (secondary writer audit)
+PASS M12. resupply routes through the same owner and cannot zero a loadout
+
+==================================================================
+12/12 ammunition accounting tests passed
+==================================================================
