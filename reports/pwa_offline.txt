@@ -1,0 +1,11 @@
+PASS release precache is versioned and includes all required modules, styles and runtime assets
+PASS only the bundled soundtrack is registered, present and precached with no music diagnostic requests
+PASS manifest icon variants and browser favicon paths exist
+PASS official logo appears at menu, loading, campaign select, pause, HUD and shell-avatar surfaces
+PASS service worker installs atomically, keeps the current cache on failure, and waits for player consent
+PASS controlled gameplay never falls through to runtime network; cache misses fail closed
+PASS online update checks, offline status, and mission-safe reload deferral are present
+PASS mocked SW install caches all required assets without skipWaiting and preserves previous cache until activation
+PASS mocked interrupted install deletes incomplete new cache and leaves previous version usable
+
+PWA/offline static + mocked checks: 9 passed, 0 failed.

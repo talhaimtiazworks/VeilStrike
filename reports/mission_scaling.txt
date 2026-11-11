@@ -1,0 +1,31 @@
+PASS OP 001 formula target is 50
+PASS OP 002 formula target is 52
+PASS OP 003 formula target is 54
+PASS OP 004 formula target is 56
+PASS OP 010 formula target is 68
+PASS OP 050 formula target is 148
+PASS OP 100 formula target is 248
+PASS OP 001 actual streamed spawns stay 50 on attempt 1
+PASS OP 001 actual streamed spawns stay 50 on attempt 2
+PASS OP 001 actual streamed spawns stay 50 on attempt 3
+PASS OP 001 actual streamed spawns stay 50 on attempt 4
+PASS OP 002 actual streamed spawns stay 52 on attempt 1
+PASS OP 002 actual streamed spawns stay 52 on attempt 2
+PASS OP 003 actual streamed total is 54
+PASS OP 050 actual streamed total is 148
+PASS OP 100 actual streamed total is 248
+PASS campaign progression alone advances OP 001 target to OP 002
+PASS failure save/load and mission re-entry do not change target
+PASS HUD total and completion/progression remain tied to the authoritative mission contract
+PASS actual Enemy actors OP 001 total 50 after attempt 1
+PASS actual Enemy actors OP 001 total 50 after attempt 2
+PASS actual Enemy actors OP 001 total 50 after attempt 3
+PASS actual Enemy actors OP 001 total 50 after attempt 4
+PASS actual Enemy actors OP 002 total 52 after attempt 1
+PASS actual Enemy actors OP 002 total 52 after attempt 2
+PASS actual Enemy actors OP 003 total 54
+PASS actual Enemy actors OP 050 total 148
+PASS actual Enemy actors OP 100 total 248
+PASS actual checkpoint restart clears a completed attempt ledger and respawns OP 001 from 50
+
+Mission scaling checks: 29 passed, 0 failed.

@@ -1,0 +1,141 @@
+/* ============================================================================
+   VEILSTRIKE — Phase 13 design system: touch.css
+   On-screen gameplay controls + CONTROL EDITOR. Loaded AFTER hud.css.
+   The legacy ~900-line touch zone in style.css is retired this stage.
+   Architecture:
+   - Geometry (left/top/width/height/opacity) is owned by js/layout.js via
+     inline styles; this file owns ONLY appearance.
+   - #touch-controls renders only when .enabled; per-control visibility rules
+     are classes (ctx-hidden, hidden) — never layout math.
+   ============================================================================ */
+
+#touch-controls {
+  position: fixed; inset: 0; z-index: 35;
+  display: none;
+  pointer-events: none;                 /* controls re-enable individually */
+  touch-action: none;
+}
+#touch-controls.enabled { display: block; }
+#touch-controls.editing { pointer-events: none !important; }  /* stage takes events */
+
+/* ---- buttons ---- */
+.tbtn {
+  position: absolute; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px;
+  border: 1.5px solid rgba(247, 246, 242, .55);
+  background: rgba(24, 28, 31, .34);
+  color: rgba(247, 246, 242, .92);
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.15vh, 13px);
+  letter-spacing: .08em;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none; -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: none;                /* audit-flagged GPU cost: no blur */
+}
+.tbtn.active { background: rgba(247, 246, 242, .18); }
+.tbtn.on { border-color: var(--accent); color: var(--accent); }
+.tbtn-accent {
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, rgba(209, 92, 72, .55), rgba(150, 55, 42, .4));
+  border-color: rgba(240, 176, 160, .8);
+  font-size: clamp(13px, 1.6vh, 16px);
+  font-weight: 700;
+}
+.tbtn-accent.active { background: radial-gradient(circle at 38% 32%, rgba(214, 110, 90, .75), rgba(158, 62, 49, .55)); }
+.ctx-hidden { display: none; }          /* e.g. INTERACT only when a prompt is live */
+
+/* ---- sticks ---- */
+.tstick {
+  position: absolute; transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: auto;
+  touch-action: none;
+}
+.tstick-base {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid rgba(247, 246, 242, .35);
+  background: radial-gradient(circle at 50% 45%, rgba(36, 44, 49, .30), rgba(18, 22, 25, .18));
+}
+.tstick-knob {
+  position: absolute; left: 50%; top: 50%;
+  width: 46%; height: 46%;
+  margin: -23% 0 0 -23%;
+  border-radius: 50%;
+  background: rgba(247, 246, 242, .34);
+  border: 1.5px solid rgba(247, 246, 242, .55);
+  transition: transform .04s linear;
+  display: none;
+}
+.tstick-knob.show { display: block; }
+.tstick.active .tstick-base { border-color: var(--accent); }
+
+/* ============================================================================
+   CONTROL EDITOR (#screen-controls)
+   ============================================================================ */
+#screen-controls {
+  z-index: 120;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(120% 90% at 50% 30%, rgba(30, 40, 48, .45), rgba(6, 8, 10, .94) 75%),
+    var(--bg);
+  overflow: hidden;                       /* editor itself never scrolls */
+}
+body.hud-customizing #hud { display: none; }  /* legacy contract kept */
+body.controls-editing #hud { display: none; } /* Phase-13 editing key: HUD off */
+
+#ces-topbar {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: calc(var(--sat) + 12px) calc(var(--sar) + 16px) 8px calc(var(--sal) + 16px);
+  gap: var(--gap-3);
+}
+.ces-kicker { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .26em; color: var(--accent); }
+#ces-name { font-size: var(--fs-body); font-weight: 600; letter-spacing: .1em; color: var(--text); margin-top: 2px; }
+#ces-flash { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--ok); opacity: 0; transition: opacity .2s; }
+#ces-flash.show { opacity: 1; }
+
+#ces-stage {
+  position: relative; flex: 1;
+  min-height: 200px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background-image:
+    linear-gradient(rgba(223, 233, 226, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(223, 233, 226, .06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  touch-action: none;
+  overflow: hidden;
+}
+#ces-stage .ces-stage-hint {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .3em;
+  color: var(--text-faint); pointer-events: none;
+}
+/* while editing, controls are always visible + outlined; selected = amber ring */
+#ces-stage #touch-controls { pointer-events: none; }
+#ces-stage .tbtn, #ces-stage .tstick { outline: 1px dashed rgba(223, 233, 226, .4); outline-offset: 3px; }
+#ces-stage .tbtn.selected, #ces-stage .tstick.selected {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(217, 164, 65, .14);
+}
+#ces-stage .ctx-hidden { display: flex; opacity: .35; }   /* contextual controls editable too */
+
+#ces-adjust {
+  display: flex; gap: var(--gap-6); align-items: center;
+  padding: 10px calc(var(--sar) + 16px) 10px calc(var(--sal) + 16px);
+}
+#ces-adjust label { flex: 1; display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: .16em; color: var(--text-dim); }
+#ces-adjust input[type="range"] { width: 100%; width: 100%; accent-color: var(--accent); height: var(--tap); flex: none; }
+
+#ces-actions {
+  display: flex; gap: var(--gap-3);
+  padding: 10px calc(var(--sar) + 16px) calc(var(--sab) + 14px) calc(var(--sal) + 16px);
+}
+#ces-actions .menu-btn { flex: 1; min-height: var(--tap-lg); }
+
+@media (max-width: 620px) {
+  #ces-actions { flex-wrap: wrap; }
+  #ces-actions .menu-btn { flex: 1 1 45%; }
+}

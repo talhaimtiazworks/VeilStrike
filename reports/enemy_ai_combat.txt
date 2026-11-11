@@ -1,0 +1,31 @@
+PASS A1. an operator standing in the open at 18 m is recognised within 2.5 s
+PASS A2. detection is line-of-sight based: a solid wall means never
+PASS A3. visual range is a real limit (rifleman) and is archetype-configurable
+PASS A4. the tuning block is a live knob (AI_SENSE.BASE_GAIN speeds recognition)
+PASS A5. stance changes how fast a clear-sight target is noticed
+PASS A6. gunfire draws attention: a distant enemy reacts to the report
+PASS B1. a soldier in contact engages, fires and damages the player
+PASS B2. soldiers orient before firing (no snap-shot mid-turn)
+PASS B3. enemies never shoot through solid geometry
+PASS B4. fire rate is weapon-specific and burst-paced
+PASS B5. ammo is finite: they reload, and a dry soldier stops firing
+PASS B6. accuracy is not perfect: some rounds miss a stationary target
+PASS B7. firing stops when the player dies
+PASS B8. losing contact goes to the last known position, not back to patrol
+PASS B9. DEAD: a killed soldier stops moving, aiming and shooting
+PASS C1. acceleration and deceleration are ramped, not instantaneous
+PASS C2. rendered turning rate stays inside the AI turn caps (no spin)
+PASS C3. heading does not oscillate while pursuing
+PASS C4. strafing keeps the target in front (no sideways glide facing nowhere)
+PASS C5. obstacles are routed around, never penetrated
+PASS C6. a soldier pinned against geometry recovers instead of grinding forever
+PASS C7. squad spacing: soldiers do not stack inside one another
+PASS C8. state transitions do not teleport the body
+PASS D1. detection and engagement work the same way across campaign operations — op1 (facility): spot 1.6s, shots 9, hp 100→87 | op25 (sector_025_amber_flare): spot 1.6s, shots 6, hp 100→87 | op50 (sector_050_roundhouse_siege): spot 1.6s, shots 9, hp 100→87 | op77 (sector_077_floodgate_locks): spot 1.6s, shots 9, hp 100→87 | op100 (sector_100_iron_citadel): spot 1.6s, shots 9, hp 100→87
+PASS D2. cover blocks sight in campaign maps too (no shooting through buildings) — op12: 0 shots | op44: 0 shots | op88: 0 shots
+PASS A7. reaction speed is a real difficulty setting, not a label — recruit 8.25s | standard 5.18s | hard 3.92s | veteran 3.72s
+PASS B10. enemy fire consumes exactly one round per shot and must reload — 24 shots / 24 rounds, 5 reload(s)
+
+==================================================================
+27/27 enemy AI / combat / movement tests passed
+==================================================================

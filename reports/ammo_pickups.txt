@@ -1,0 +1,31 @@
+PASS P1. every one of the 100 campaign missions offers typed ammunition supplies
+PASS P2. pack values come from the fixed table and families from the mapping
+PASS P3. longer / harder missions carry more and larger supplies
+PASS P4. no pack is buried in, or clipping, solid geometry
+PASS P5. no pack floats: solid ground is directly beneath it
+PASS P6. every pack can actually be stood next to and faced
+PASS P7. missions with room for it hide a share off the direct lines
+PASS P8. packs keep clear of the vehicle parking and of each other
+PASS P9. legacy hand-built maps keep their crates and gain nothing broken
+PASS B1. collecting adds exactly the pack value, magazine first
+PASS B2. notification reads "+N FAMILY AMMO" and the HUD total follows
+PASS B3. families are isolated: shell packs never feed a rifle (and vice versa)
+PASS B4. caps hold: never above magazine + reserve, never invented capacity
+PASS B5. a pack can only be collected once, ever
+PASS B6. an unusable pack stays available instead of being silently eaten
+PASS B7. grantPack is the single owner: direct API agrees with the pickup
+PASS B8. pickup reset contract: single-use per attempt, restored on retry
+PASS B9. weapon-case ammo path uses the same accounting (no reserve truncation)
+PASS B10. every family in the mapping has a visual identity and a crate name
+PASS B11. field crates are a bounded allocation, not an unlimited top-up
+
+ECONOMY  531 packs over 100 missions (5.3/mission), 15000 rounds of ammunition total
+         by family: marksman 39, precision 21, rifle 207, shell 37, smg 206, support 21
+         by size:   10 51, 20 139, 30 200, 40 134, 50 7
+         off-the-route: 133 · packs in ops 1-10: 33 · ops 91-100: 62
+         crates: 450 field crates across the campaign (bounded allocation each)
+
+
+==================================================================
+20/20 ammunition pickup tests passed
+==================================================================

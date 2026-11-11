@@ -1,0 +1,2320 @@
+/* =========================================================
+   VEILSTRIKE — UI styles
+   Minimal, restrained tactical presentation.
+   ========================================================= */
+
+:root {
+  --hud-color: #cfe3d8;
+  --hud-dim: rgba(207, 227, 216, 0.55);
+  --hud-faint: rgba(207, 227, 216, 0.25);
+  --accent: #d9a441;
+  --danger: #c94f3d;
+  --ok: #7fb069;
+  --bg: #07090b;
+  --panel-bg: rgba(10, 13, 16, 0.92);
+  --font-ui: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Consolas", "SF Mono", "Menlo", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--font-ui);
+  color: var(--hud-color);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#game-container, #game-container canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+
+.hidden { display: none !important; }
+
+/* ============ SCREENS ============ */
+.screen {
+  position: absolute; inset: 0;
+  z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(24, 32, 40, 0.55), rgba(4, 6, 8, 0.96) 70%),
+    var(--bg);
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid rgba(207, 227, 216, 0.18);
+  border-top: 2px solid var(--accent);
+  padding: clamp(16px, 3.4vh, 34px) clamp(14px, 3.6vw, 44px);
+  width: min(560px, calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+  max-width: 560px;
+  max-height: calc(100dvh - 20px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.7);
+  backdrop-filter: blur(2px);
+}
+
+.panel-title {
+  font-size: 20px;
+  letter-spacing: 6px;
+  font-weight: 600;
+  margin-bottom: 22px;
+  color: var(--hud-color);
+}
+
+/* ============ MAIN MENU ============ */
+.menu-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(10px, 2.4vh, 30px);
+  width: 100%;
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(10px + env(safe-area-inset-top)) calc(8px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));
+}
+
+.menu-brand { text-align: center; }
+
+.brand-endorse {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: var(--hud-dim);
+  margin-top: clamp(6px, 1.2vh, 12px);
+}
+
+.brand-line {
+  height: 1px; width: min(460px, 78vw); margin: clamp(8px, 1.6vh, 14px) auto;
+  background: linear-gradient(90deg, transparent, rgba(217,164,65,0.7), transparent);
+}
+
+.title-main {
+  font-size: clamp(24px, 6.4vw, 44px);
+  letter-spacing: clamp(4px, 1.3vw, 10px);
+  font-weight: 700;
+  color: #e8efe9;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.9);
+}
+
+.title-accent {
+  display: block;
+  color: var(--accent);
+  font-size: clamp(28px, 7.6vw, 52px);
+  letter-spacing: clamp(5px, 1.8vw, 14px);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--hud-dim);
+}
+
+.menu-buttons {
+  display: flex; flex-direction: column; gap: 10px;
+  width: min(340px, calc(100vw - 36px));
+}
+
+.menu-btn {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 4px;
+  padding: 13px 20px;
+  color: var(--hud-color);
+  background: rgba(207, 227, 216, 0.04);
+  border: 1px solid rgba(207, 227, 216, 0.22);
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
+  text-align: center;
+}
+
+.menu-btn:hover, .menu-btn:focus-visible {
+  background: rgba(217, 164, 65, 0.12);
+  border-color: var(--accent);
+  color: #fff;
+  outline: none;
+}
+
+.menu-btn.wide { width: 100%; margin-top: 8px; }
+
+.menu-footer {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--hud-faint);
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--hud-faint);
+  line-height: 1.7;
+}
+
+/* ============ LOADING ============ */
+.loading-wrap { text-align: center; width: min(520px, 92vw); }
+.loading-wrap .title-main { font-size: 28px; letter-spacing: 8px; }
+
+.loading-bar-outer {
+  margin: clamp(14px, 3vh, 26px) auto 12px;
+  width: min(420px, 78vw); height: 3px;
+  background: rgba(207,227,216,0.12);
+}
+.loading-bar-inner {
+  height: 100%; width: 0%;
+  background: var(--accent);
+  transition: width 200ms ease-out;
+}
+.loading-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--hud-dim);
+}
+
+/* ============ SETTINGS ============ */
+.setting-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 190px) minmax(0, 1fr) minmax(56px, 130px);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.setting-row label { color: var(--hud-dim); }
+.setting-val { color: var(--accent); text-align: right; font-size: 10px; }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 2px;
+  background: rgba(207,227,216,0.25);
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border-radius: 0;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px; border: none;
+  background: var(--accent); border-radius: 0;
+}
+select {
+  background: #10151a; color: var(--hud-color);
+  border: 1px solid rgba(207,227,216,0.25);
+  font-family: var(--font-mono); font-size: 11px;
+  padding: 5px; letter-spacing: 1px;
+}
+input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; }
+
+.credits-body p { margin-bottom: 12px; font-size: 13px; line-height: 1.6; color: var(--hud-dim); }
+.credits-body .dim { font-size: 11px; color: var(--hud-faint); }
+.credits-body .credit-creator {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  color: var(--hud-color);
+}
+.credits-body .cc-name { color: var(--accent); font-weight: 700; }
+
+/* death / complete / failed */
+.death-panel { border-top-color: var(--danger); }
+.death-title { color: var(--danger); }
+.death-cause { font-family: var(--font-mono); font-size: 12px; color: var(--hud-dim); margin-bottom: 18px; line-height: 1.6; }
+.complete-panel { border-top-color: var(--ok); }
+.complete-title { color: var(--ok); }
+.complete-summary { font-family: var(--font-mono); font-size: 12px; color: var(--hud-dim); margin-bottom: 14px; }
+.complete-stats { font-family: var(--font-mono); font-size: 12px; color: var(--hud-color); margin-bottom: 18px; line-height: 1.9; }
+.failed-panel { border-top-color: var(--danger); }
+.failed-title { color: var(--danger); }
+
+.error-panel { border-top-color: var(--danger); max-width: 640px; }
+.glitch-title { color: var(--danger); font-size: 26px; letter-spacing: 6px; margin-bottom: 16px; }
+#error-message { font-family: var(--font-mono); font-size: 13px; color: var(--hud-color); margin-bottom: 14px; line-height: 1.6; }
+
+/* ============ HUD ============ */
+
+
+
+
+/* compass */
+#compass {
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: min(340px, 62vw); height: 26px;
+  overflow: hidden;
+  opacity: 0.85;
+  mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
+}
+#compass-strip {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+
+
+#compass-marker {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px; height: 20px;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+
+/* objective */
+
+
+
+
+
+
+/* crosshair */
+
+
+
+
+
+
+
+
+
+
+
+
+.dmg-indicator {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 130px; height: 130px;
+  transform-origin: center;
+  pointer-events: none;
+}
+.dmg-indicator::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 10px;
+  background: radial-gradient(ellipse at center, rgba(201,79,61,0.9), transparent 70%);
+  border-radius: 50%;
+}
+
+/* vitals */
+
+
+
+
+
+
+.health-inner { background: linear-gradient(90deg, #6d945f, #9dc183); }
+.health-inner.critical { background: linear-gradient(90deg, #8f2f22, #c94f3d); }
+.stamina-outer { height: 3px; }
+.stamina-inner { background: rgba(207,227,216,0.55); }
+.stamina-inner.exhausted { background: rgba(217,164,65,0.7); }
+
+/* weapon / ammo */
+
+
+
+
+
+
+
+/* interaction */
+
+.key-cap {
+  display: inline-block;
+  border: 1px solid rgba(207,227,216,0.55);
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(0,0,0,0.35);
+}
+
+
+
+
+/* objective toast */
+
+
+
+
+
+
+
+
+/* ---- theater select ---- */
+.menu-wrap.wide { max-width: 1060px; }
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0 10px;
+}
+.mission-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 16px 18px;
+  text-align: left;
+  background: rgba(10, 14, 12, 0.72);
+  border: 1px solid rgba(207, 227, 216, 0.22);
+  color: var(--hud-color);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.mission-card:hover {
+  border-color: var(--accent);
+  background: rgba(24, 30, 26, 0.85);
+  transform: translateY(-1px);
+}
+.mc-tag { font-size: 10px; letter-spacing: 0.22em; color: var(--accent); }
+.mc-title { font-size: 19px; letter-spacing: 0.14em; color: #e8f2ec; }
+.mc-desc { font-size: 11.5px; line-height: 1.5; color: rgba(207, 227, 216, 0.72); }
+.mc-flow { font-size: 10px; letter-spacing: 0.16em; color: rgba(207, 227, 216, 0.5); border-top: 1px solid rgba(207, 227, 216, 0.16); padding-top: 7px; width: 100%; }
+@media (max-width: 860px) { .mission-grid { grid-template-columns: 1fr; } }
+
+/* ---- white mode HUD readability ---- */
+body.daymode #hud {
+  --hud-color: #1a241f;
+  --hud-dim: #3c4a42;
+  --accent: #8a5f14;
+  --danger: #a03325;
+  --ok: #2c6e3f;
+}
+body.daymode #hud #vignette { opacity: 0.3; }
+body.daymode #hud #compass-strip { background: rgba(244, 247, 244, 0.45); }
+body.daymode #hud #objective-toast,
+body.daymode #hud #interact-prompt { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65); }
+
+/* ---- realism: radio chatter, suppression, frags ---- */
+
+
+
+
+@keyframes pulse-pin { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+
+/* ---- realism stage 4: compass, tac map, armor, bandage ---- */
+#compass-wrap {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  pointer-events: none;
+}
+#compass {
+  display: block;
+  background: linear-gradient(180deg, rgba(8,12,16,0.55), rgba(8,12,16,0.25));
+  border: 1px solid rgba(140,170,150,0.22);
+  border-radius: 3px;
+}
+
+.armor-inner.flash { background: #ffffff !important; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+
+/* ---- mini-map + HUD map button ---- */
+
+
+
+
+
+/* ---- vehicle HUD ---- */
+#veh-hud {
+  position: absolute; left: 24px; bottom: 112px; z-index: 5; pointer-events: none;
+  background: rgba(8,12,15,0.55); border: 1px solid rgba(140,180,160,0.25);
+  padding: 8px 12px; min-width: 196px;
+}
+#veh-hud.hidden { display: none; }
+#veh-name { font-size: 10px; letter-spacing: 0.3em; color: #9fc7a8; }
+#veh-speed { font-size: 22px; color: #dfe8e2; letter-spacing: 0.06em; margin: 2px 0 6px; }
+#veh-speed i { font-size: 9px; color: #7d8a92; font-style: normal; letter-spacing: 0.2em; }
+#veh-speed b { float: right; font-size: 13px; color: #e8d259; border: 1px solid rgba(232,210,89,0.4); padding: 1px 7px; }
+#veh-readouts { display: flex; justify-content: space-between; gap: 12px; margin: 1px 0 7px; font-size: 8px; letter-spacing: 0.12em; color: #92a49b; }
+#veh-hud[data-vehicle="helicopter"] #veh-name { color: #a9cad0; }
+#veh-hud[data-vehicle="helicopter"] #veh-gear { color: #a9d7dc; border-color: rgba(127,194,205,0.42); }
+
+
+.veh-inner { background: linear-gradient(90deg, #47d95f, #9fd66a); height: 100%; width: 100%; }
+#veh-hint { margin-top: 6px; font-size: 8px; letter-spacing: 0.14em; color: #7d8a92; }
+#veh-controls { margin-top: 5px; color: #a5b4ad; font-size: 7px; line-height: 1.5; letter-spacing: 0.08em; }
+#veh-hud[data-vehicle="helicopter"] #veh-controls { color: #a9cad0; }
+
+/* ---- C3: flashbang, loadout, ammo total, throw-row states ---- */
+
+
+
+
+.loadout-panel {
+  margin: 10px auto 16px; max-width: 860px; padding: 10px 14px;
+  border: 1px solid rgba(140, 170, 150, 0.22); background: rgba(10, 16, 12, 0.55);
+}
+.lo-title { font-size: 10px; letter-spacing: 0.22em; color: #9fd8ab; margin-bottom: 8px; }
+.lo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 14px; }
+.lo-grid label {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  font-size: 9px; letter-spacing: 0.14em; color: #7d8a92;
+}
+.lo-grid select {
+  flex: 1; background: #0c120e; color: #cfe4d4; border: 1px solid rgba(140, 170, 150, 0.3);
+  font-family: monospace; font-size: 10px; padding: 3px 4px; outline: none;
+}
+.lo-status { display: flex; justify-content: space-between; margin-top: 8px; font-size: 9px; letter-spacing: 0.14em; }
+#lo-weight { color: #7d8a92; }
+.lo-ok { color: #8fd89a; }
+.lo-bad { color: #e0705a; }
+
+/* ---- throwable row + equipment wheel ---- */
+
+
+
+
+
+.controls-ref {
+  margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(140,170,150,0.18);
+  display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: center;
+  font-size: 9px; letter-spacing: 0.12em; color: var(--hud-dim, #7d8a92);
+}
+.controls-ref b { color: var(--hud-ok, #9fc7a8); font-weight: 700; }
+
+/* ---- meta update: menu badges, list screens, debrief, alert chip ---- */
+.btn-badge {
+  display: inline-block; margin-left: 8px; padding: 1px 7px;
+  font-size: 9px; letter-spacing: 0.1em; color: #0c1210;
+  background: var(--hud-ok, #8fd694); border-radius: 2px; vertical-align: 1px;
+}
+.btn-badge:empty { display: none; }
+.menu-rank {
+  margin-top: 10px; text-align: center; font-size: 10px; letter-spacing: 0.24em;
+  color: var(--hud-ok, #9fc7a8);
+}
+.menu-rank .rank-bar {
+  display: block; width: min(220px, 58vw); height: 3px; margin: 6px auto 0;
+  background: rgba(140,170,150,0.18); border-radius: 2px; overflow: hidden;
+}
+.menu-rank .rank-bar i { display: block; height: 100%; background: var(--hud-ok, #8fd694); }
+.list-panel { width: min(680px, 92vw); max-height: 88vh; display: flex; flex-direction: column; }
+.panel-sub { font-size: 10px; letter-spacing: 0.12em; color: var(--hud-dim, #7d8a92); margin: -4px 0 10px; text-align: center; }
+.scroll-list { overflow-y: auto; max-height: 56vh; margin-bottom: 14px; scrollbar-width: thin; }
+.mission-row, .list-row {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 9px 12px; margin-bottom: 6px; text-align: left;
+  background: rgba(10,16,14,0.55); border: 1px solid rgba(140,170,150,0.16);
+  color: #cfe0d4; font-family: inherit; font-size: 11px; letter-spacing: 0.1em; cursor: pointer;
+}
+.mission-row:hover:not(.locked), .list-row:hover:not(.locked) { border-color: rgba(160,220,170,0.5); }
+.mission-row.locked, .list-row.locked { opacity: 0.45; cursor: not-allowed; }
+.mission-row .m-main { flex: 1; }
+.mission-row .m-title { font-weight: 700; font-size: 12px; letter-spacing: 0.16em; }
+.mission-row .m-tag { font-size: 9px; color: var(--hud-dim, #7d8a92); margin-top: 2px; }
+.mission-row .m-status { font-size: 9px; letter-spacing: 0.14em; text-align: right; color: var(--hud-ok, #8fd694); }
+.mission-row .m-status.lock { color: #b0715f; }
+.awards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.medal-card {
+  padding: 8px 10px; background: rgba(10,16,14,0.55);
+  border: 1px solid rgba(140,170,150,0.16); font-size: 10px;
+}
+.medal-card .medal-name { font-weight: 700; letter-spacing: 0.14em; color: #6d7a72; font-size: 10px; }
+.medal-card .medal-desc { color: var(--hud-dim, #7d8a92); margin-top: 3px; font-size: 9px; letter-spacing: 0.06em; }
+.medal-card.earned { border-color: rgba(200,170,80,0.55); }
+.medal-card.earned .medal-name { color: #e3c56a; }
+.medal-card .medal-icon { float: left; margin-right: 8px; font-size: 16px; filter: grayscale(1) brightness(0.6); }
+.medal-card.earned .medal-icon { filter: none; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 18px; font-size: 11px; }
+.stat-grid .s-label { color: var(--hud-dim, #7d8a92); letter-spacing: 0.1em; padding: 3px 0; }
+.stat-grid .s-val { color: #d6e6da; text-align: right; padding: 3px 0; letter-spacing: 0.08em; }
+.intel-map { font-size: 11px; letter-spacing: 0.18em; color: var(--hud-ok, #9fc7a8); margin: 10px 0 4px; }
+.intel-item { font-size: 10px; letter-spacing: 0.08em; padding: 3px 0 3px 10px; color: var(--hud-dim, #7d8a92); }
+.intel-item.found { color: #d6e6da; }
+.intel-item.found::before { content: '✓ '; color: var(--hud-ok, #8fd694); }
+.intel-item:not(.found)::before { content: '— '; }
+
+/* debrief */
+.debrief-panel { width: min(640px, 94vw); max-height: 92vh; overflow-y: auto; }
+.debrief-body { text-align: left; font-size: 11px; }
+.debrief-sec { margin-bottom: 12px; }
+.debrief-sec h3 {
+  font-size: 10px; letter-spacing: 0.3em; color: var(--hud-ok, #9fc7a8);
+  border-bottom: 1px solid rgba(140,170,150,0.2); padding-bottom: 4px; margin-bottom: 6px;
+}
+.debrief-row { display: flex; justify-content: space-between; padding: 2px 0; color: #c6d4c9; letter-spacing: 0.06em; }
+.debrief-row b { color: #e6f0e8; font-weight: 700; }
+.debrief-row .ok { color: #8fd694; } .debrief-row .bad { color: #d67f6a; }
+.rating-big { text-align: center; margin: 4px 0 12px; }
+.rating-big .r-num { font-size: 40px; font-weight: 800; letter-spacing: 0.06em; color: #e8f2e9; }
+.rating-big .r-label { font-size: 10px; letter-spacing: 0.4em; color: var(--hud-ok, #9fc7a8); }
+.medal-strip { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.medal-chip {
+  padding: 4px 9px; font-size: 9px; letter-spacing: 0.14em;
+  border: 1px solid rgba(200,170,80,0.6); color: #e3c56a; background: rgba(60,48,16,0.25);
+}
+.medal-chip.new::after { content: ' NEW'; color: #ffd479; font-weight: 700; }
+.xp-strip { margin-top: 8px; }
+.xp-bar { height: 6px; background: rgba(140,170,150,0.18); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.xp-bar i { display: block; height: 100%; background: linear-gradient(90deg, #6fae77, #b9d98f); transition: width 0.6s; }
+.unlock-line { font-size: 10px; letter-spacing: 0.14em; color: #ffd479; padding: 2px 0; }
+.debrief-buttons { display: flex; gap: 8px; margin-top: 10px; }
+.debrief-buttons .menu-btn { flex: 1; }
+.debrief-buttons .menu-btn.wide { flex-basis: 100%; }
+
+/* alert chip */
+#alert-chip {
+  position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; letter-spacing: 0.34em; padding: 3px 12px;
+  border: 1px solid rgba(140,170,150,0.25); background: rgba(8,12,10,0.5);
+  color: var(--hud-dim, #8a949e); pointer-events: none; transition: color 0.4s, border-color 0.4s;
+}
+#alert-chip.hidden { display: none; }
+#alert-chip.suspicious { color: #d8c98a; border-color: rgba(216,201,138,0.4); }
+#alert-chip.investigating { color: #d8a86a; border-color: rgba(216,168,106,0.45); }
+#alert-chip.alert, #alert-chip.combat { color: #e0705a; border-color: rgba(224,112,90,0.55); }
+#alert-chip.searching, #alert-chip.recovering { color: #b0a878; }
+
+/* =========================================================
+   UI SYSTEM
+   One visual language for every screen — not "every rectangle rounded".
+   Layered translucent cards, hairline borders, rounded corners, a single
+   restrained accent used as a rail/underline rather than a flood fill, and a
+   clear typographic hierarchy (title > heading > body > micro-label).
+   Motion is opt-out via body.reduce-motion and prefers-reduced-motion.
+   ========================================================= */
+:root {
+  --ui-card:    linear-gradient(180deg, rgba(18, 25, 22, 0.72) 0%, rgba(9, 13, 12, 0.62) 100%);
+  --ui-card-hi: linear-gradient(180deg, rgba(31, 41, 36, 0.82) 0%, rgba(14, 20, 17, 0.70) 100%);
+  --ui-line:     rgba(207, 227, 216, 0.16);
+  --ui-line-hi:  rgba(217, 164, 65, 0.55);
+  --ui-r:    12px;
+  --ui-r-sm: 8px;
+  --ui-lift:  0 10px 34px rgba(0, 0, 0, 0.45);
+  --ui-inset: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+/* ------------------------------------------------------- screen backdrop -- */
+.screen {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(28, 38, 46, 0.55), rgba(4, 6, 8, 0.97) 72%),
+    var(--bg);
+}
+
+/* --------------------------------------------------------------- panels -- */
+.panel {
+  background: var(--ui-card);
+  border: 1px solid var(--ui-line);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--ui-r);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--ui-lift), var(--ui-inset);
+}
+
+/* typographic hierarchy: the panel title is a ruled section head, not just
+   a bigger font */
+.panel-title {
+  font-size: clamp(15px, 2.2vh, 20px);
+  letter-spacing: 5px;
+  padding-bottom: 11px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--ui-line);
+  position: relative;
+}
+.panel-title::after {
+  content: ""; position: absolute; left: 0; bottom: -1px;
+  width: 44px; height: 2px; background: var(--accent);
+}
+
+/* -------------------------------------------------------------- buttons -- */
+.menu-btn {
+  position: relative;
+  overflow: hidden;
+  font-size: 14px;
+  letter-spacing: 3.5px;
+  padding: 12px 18px;
+  color: var(--hud-color);
+  background: var(--ui-card);
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  box-shadow: var(--ui-inset);
+  cursor: pointer;
+  transition: background .14s ease, border-color .14s ease, color .14s ease,
+              transform .08s ease, box-shadow .14s ease;
+}
+/* an accent rail grows on hover — restrained, not a flood fill */
+.menu-btn::before {
+  content: "";
+  position: absolute; left: 0; top: 14%; bottom: 14%;
+  width: 2px; background: var(--accent);
+  transform: scaleY(0); transform-origin: center;
+  transition: transform .16s ease;
+}
+.menu-btn:hover, .menu-btn:focus-visible {
+  background: var(--ui-card-hi);
+  border-color: var(--ui-line-hi);
+  color: #fff;
+  outline: none;
+}
+.menu-btn:hover::before, .menu-btn:focus-visible::before { transform: scaleY(1); }
+.menu-btn:focus-visible { box-shadow: var(--ui-inset), 0 0 0 2px rgba(217, 164, 65, 0.35); }
+.menu-btn:active { transform: translateY(1px); }
+
+/* -------------------------------------------------------- mission cards -- */
+.mission-card {
+  border-radius: var(--ui-r);
+  background: var(--ui-card);
+  border: 1px solid var(--ui-line);
+  box-shadow: var(--ui-inset);
+  transition: border-color .15s ease, background .15s ease,
+              transform .15s ease, box-shadow .15s ease;
+}
+.mission-card:hover, .mission-card:focus-visible {
+  border-color: var(--ui-line-hi);
+  background: var(--ui-card-hi);
+  transform: translateY(-2px);
+  box-shadow: var(--ui-inset), 0 12px 28px rgba(0, 0, 0, 0.45);
+  outline: none;
+}
+.mission-card:active { transform: translateY(0); }
+.mission-card.selected, .mission-card[aria-selected="true"] {
+  border-color: var(--ui-line-hi);
+  background: var(--ui-card-hi);
+}
+.mc-title { font-size: clamp(16px, 2.1vh, 19px); letter-spacing: 0.12em; }
+
+/* ------------------------------------------------------------- settings -- */
+.setting-row {
+  padding: 7px 10px;
+  margin-bottom: 6px;
+  border-radius: var(--ui-r-sm);
+  background: rgba(207, 227, 216, 0.03);
+  border: 1px solid transparent;
+  transition: background .14s ease, border-color .14s ease;
+}
+.setting-row:hover { background: rgba(207, 227, 216, 0.06); border-color: var(--ui-line); }
+.set-sec {
+  border-top-color: var(--ui-line);
+  padding-top: 14px;
+  margin: 24px 0 12px;
+}
+
+/* --------------------------------------------------------------- inputs -- */
+input[type="range"] {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(207, 227, 216, 0.22);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid rgba(10, 14, 12, 0.9);
+  box-shadow: 0 0 8px rgba(217, 164, 65, 0.40);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid rgba(10, 14, 12, 0.9);
+  cursor: pointer;
+}
+input[type="range"]:focus-visible { outline: 2px solid rgba(217, 164, 65, 0.35); outline-offset: 4px; }
+
+select {
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-card-hi);
+  border: 1px solid var(--ui-line);
+  padding: 7px 9px;
+  transition: border-color .14s ease, background .14s ease;
+}
+select:hover, select:focus { border-color: var(--ui-line-hi); outline: none; }
+input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+
+/* --------------------------------------------------- mobile bottom nav --- */
+#mobnav {
+  background: rgba(6, 9, 12, 0.90);
+  border-top: 1px solid var(--ui-line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.mn-btn {
+  border-radius: var(--ui-r-sm);
+  border: 1px solid var(--ui-line);
+  background: var(--ui-card);
+  transition: color .14s ease, border-color .14s ease, background .14s ease;
+}
+.mn-btn:active { transform: translateY(1px); }
+.mn-btn.on {
+  color: var(--accent);
+  border-color: var(--ui-line-hi);
+  background: rgba(217, 164, 65, 0.12);
+}
+
+/* --------------------------------------------- tactical map + objective -- */
+
+
+
+
+
+.obj-row {
+  border-radius: var(--ui-r-sm);
+  background: var(--ui-card);
+  border: 1px solid var(--ui-line);
+}
+
+/* -------------------------------------------------------------- motion --- */
+.screen:not(.hidden) { animation: ui-fade .22s ease-out both; }
+.screen:not(.hidden) > .panel,
+.screen:not(.hidden) > .menu-wrap { animation: ui-rise .26s cubic-bezier(.2, .7, .3, 1) both; }
+
+@keyframes ui-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ui-rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.995); }
+  to   { opacity: 1; transform: none; }
+}
+
+body.reduce-motion .screen:not(.hidden),
+body.reduce-motion .screen:not(.hidden) > .panel,
+body.reduce-motion .screen:not(.hidden) > .menu-wrap,
+body.reduce-motion .menu-btn,
+body.reduce-motion .mission-card { animation: none; transition: none; }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .screen:not(.hidden),
+  .screen:not(.hidden) > .panel,
+  .screen:not(.hidden) > .menu-wrap { animation: none; }
+  .menu-btn, .mission-card { transition: none; }
+}
+
+
+/* =========================================================
+   HUD SYSTEM
+   Layered translucent modules, hairline borders, rounded corners, restrained
+   accent lighting, compact typography. No flat opaque rectangles.
+
+   Scaling: each module scales from its own anchor via the independent `scale`
+   property, so the user's HUD scale can never push a module off-screen (a
+   plain `zoom` on #hud used to do exactly that at larger settings).
+   ========================================================= */
+:root {
+  /* The one scaled unit for touch layout. Declared at :root (not on
+     #touch-controls) so the HUD band can line itself up with the thumb
+     clusters, which scale by the same factor. */
+  --tc-u: calc(var(--touch-scale) * var(--tc-boost, 1));
+  --hud-glass: linear-gradient(180deg, rgba(14, 20, 18, 0.50) 0%, rgba(6, 10, 9, 0.38) 100%);
+  --hud-glass-strong: linear-gradient(180deg, rgba(16, 22, 20, 0.74) 0%, rgba(6, 10, 9, 0.62) 100%);
+  --hud-line: rgba(207, 227, 216, 0.14);
+  --hud-line-strong: rgba(217, 164, 65, 0.42);
+  --hud-r-sm: 6px;
+  --hud-r-md: 10px;
+  --hud-r-lg: 14px;
+  --hud-blur: blur(7px);
+  --hud-lift: inset 0 1px 0 rgba(255,255,255,0.05), 0 6px 20px rgba(0,0,0,0.32);
+}
+
+/* --- shared module chrome --- */
+
+
+
+/* --- per-module scaling anchor (never drifts off-screen) --- */
+
+
+
+#veh-hud           { transform-origin: left bottom;  scale: var(--hud-scale, 1); }
+
+
+#alert-chip        { transform-origin: center top;   scale: var(--hud-scale, 1); }
+/* The compass wrapper is full-bleed, so it must NOT be scaled (that would push
+   it past the viewport). Scale the bounded tape inside it instead. */
+#compass-wrap > #compass { transform-origin: center top; scale: var(--hud-scale, 1); }
+
+
+
+/* --- compass: centred without translateX so `scale` keeps it centred --- */
+#compass-wrap {
+  top: calc(8px + var(--sat));
+  left: 0; right: 0;
+  display: flex; justify-content: center;
+  transform: none;          /* drop the old translateX(-50%): it fought `scale` */
+}
+/* the tick strip: centred with auto margins so `scale` keeps it centred */
+
+#compass {
+  border-radius: var(--hud-r-sm);
+  border-color: var(--hud-line);
+  background: linear-gradient(180deg, rgba(8,12,11,0.46) 0%, rgba(8,12,11,0.14) 100%);
+  box-shadow: var(--hud-lift);
+  backdrop-filter: var(--hud-blur);
+  -webkit-backdrop-filter: var(--hud-blur);
+}
+#compass-marker { background: var(--accent); box-shadow: 0 0 6px rgba(217,164,65,0.6); }
+
+/* --- alert chip: centred pill --- */
+#alert-chip {
+  top: calc(48px + var(--sat));
+  left: 0; right: 0;
+  margin-inline: auto;
+  width: max-content;
+  border-radius: 999px;
+  background: var(--hud-glass-strong);
+  border-color: var(--hud-line);
+  backdrop-filter: var(--hud-blur);
+  -webkit-backdrop-filter: var(--hud-blur);
+  transform: none;
+}
+
+/* --- objective: left accent rule, not a box --- */
+
+
+
+/* --- vitals --- */
+
+
+
+.stamina-outer { height: 3px; }
+
+
+/* --- weapon / ammo --- */
+
+
+
+/* --- minimap --- */
+
+
+
+
+
+/* --- vehicle HUD --- */
+#veh-hud { border-radius: var(--hud-r-md); }
+
+/* --- bottom band ---------------------------------------------------------
+   Desktop/mouse: `display: contents` keeps the two modules exactly where they
+   always were, so nothing about the desktop HUD changes.
+   Touch: the band becomes a flex row placed in the horizontal gap between the
+   left and right thumb clusters, so health/ammo are always readable and never
+   sit under a thumb, a notch or a control. It wraps on narrow screens.
+   ------------------------------------------------------------------------ */
+
+
+
+
+
+
+
+/* The minimap lives top-right; on touch it is sized against viewport height so
+   it can never grow down into the thumb cluster below it. */
+
+
+
+/* Objective drops below the top-left PAUSE button on touch. */
+
+
+/* Interaction prompt + hack bar: keep them out of the thumb clusters too */
+
+
+
+
+
+/* =========================================================
+   RESPONSIVE SYSTEM (Stage D) — phones, tablets, notches,
+   orientation changes, touch targets, safe areas.
+   ========================================================= */
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --touch-scale: 1;          /* settings: button size */
+  --joy-scale: 1;            /* settings: joystick size */
+  --look-scale: 1;           /* settings: look-stick size */
+  --joy-op: 0.55;            /* settings: joystick opacity */
+  --btn-op: 0.8;             /* settings: button opacity */
+  --hud-scale: 1;            /* settings: HUD scale */
+}
+
+html, body {
+  position: fixed;           /* keep the game viewport pinned; panels scroll locally */
+  overscroll-behavior: none;
+}
+
+/* Restrict gesture suppression to gameplay surfaces and custom controls. The
+   menu, mission, settings and debrief panels keep native vertical scrolling. */
+
+.screen, .menu-wrap, .panel, .scroll-list, .brief-panel {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen {
+  padding: calc(8px + var(--sat)) calc(8px + var(--sar)) calc(8px + var(--sab)) calc(8px + var(--sal));
+  align-items: safe center;
+}
+
+/* --- short viewports (phone landscape): menu flows in rows, never scrolls off --- */
+@media (max-height: 560px) {
+  .menu-wrap { gap: clamp(6px, 1.6vh, 14px); }
+  .menu-brand .subtitle { display: none; }
+  .brand-line { margin: 6px auto; }
+  .title-main { font-size: clamp(18px, 4.4vh, 30px); }
+  .title-accent { font-size: clamp(20px, 5.2vh, 34px); }
+  .menu-buttons {
+    flex-direction: row; flex-wrap: wrap; justify-content: center;
+    width: min(96vw, 760px); gap: 6px;
+  }
+  .menu-buttons .menu-btn { flex: 1 1 148px; padding: 10px 8px; font-size: 12px; letter-spacing: 2px; }
+  .menu-buttons .menu-btn.wide { flex-basis: 100%; }
+  .menu-footer .hint { display: none; }
+  .menu-rank { margin-top: 2px; }
+  .panel { padding: 14px 18px; }
+  .panel-title { margin-bottom: 10px; font-size: 16px; }
+  .controls-ref { display: none; }
+  .mission-grid { gap: 8px; margin: 8px 0; }
+  .mission-card { padding: 8px 12px; gap: 3px; }
+  .mc-desc { display: none; }
+}
+
+/* --- narrow viewports (phones portrait) --- */
+@media (max-width: 620px) {
+  .setting-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 10px;
+    margin-bottom: 16px;
+  }
+  .setting-row label { grid-column: 1 / -1; font-size: 10px; }
+  .setting-row input[type="range"], .setting-row select { grid-column: 1; }
+  .setting-row .setting-val { grid-column: 2; align-self: center; }
+  .setting-row input[type="checkbox"] { grid-column: 1; justify-self: start; width: 22px; height: 22px; }
+  .awards-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr auto; }
+  .lo-grid { grid-template-columns: 1fr; }
+  .debrief-buttons { flex-wrap: wrap; }
+  .debrief-buttons .menu-btn { flex: 1 1 44%; }
+  
+  
+  .list-panel { width: min(680px, calc(100vw - 16px)); max-height: calc(100dvh - 16px); }
+  .scroll-list { max-height: min(56vh, calc(100dvh - 210px)); }
+  .brief-panel { width: min(560px, calc(100vw - 16px)); }
+}
+
+/* --- touch devices: real tap targets (>=44px), no hover reliance --- */
+@media (pointer: coarse) {
+  .menu-btn { min-height: 46px; font-size: 14px; }
+  
+  .mission-row, .list-row { padding: 13px 12px; min-height: 48px; }
+  input[type="range"] {
+    height: 44px;
+    background: linear-gradient(rgba(207,227,216,0.28), rgba(207,227,216,0.28)) center / 100% 3px no-repeat transparent;
+    touch-action: pan-y;
+  }
+  input[type="range"]::-webkit-slider-thumb { width: 24px; height: 24px; }
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; }
+  select { padding: 10px; font-size: 13px; min-height: 44px; touch-action: manipulation; }
+  input[type="checkbox"] { width: 24px; height: 24px; }
+  .mission-card { padding: 16px; }
+  
+}
+
+/* ==== PHASE 06: coherent menu hierarchy + HUD de-duplication ==== */
+/* Amber-filled primary CTA (obsidian on amber) — CAMPAIGN, RESUME. */
+.menu-btn.primary {
+  color: #0b0e11;
+  background: linear-gradient(180deg, #e8b04b, var(--accent));
+  border-color: #e8c26a;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  text-shadow: none;
+  box-shadow: 0 0 18px rgba(217, 164, 65, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.menu-btn.primary:hover, .menu-btn.primary:focus-visible { background: linear-gradient(180deg, #f2be5e, #d9a441); }
+/* Group separator inside button columns: always spans the FULL grid row
+   (hotfix: plain cells scattered buttons out of the auto-fit grid). */
+.menu-sub {
+  grid-column: 1 / -1;
+  align-self: stretch;
+  margin: 10px 2px 2px;
+  padding: 2px 0 0;
+  border-top: 1px solid rgba(207, 227, 216, 0.14);
+  color: var(--hud-dim);
+  font: 600 9px/1.6 var(--font-ui);
+  letter-spacing: 0.3em;
+}
+/* Danger tone for destructive exits. */
+.menu-btn.danger { color: #e8a79c; border-color: rgba(201, 79, 61, 0.55); }
+.menu-btn.danger:hover, .menu-btn.danger:focus-visible { border-color: var(--danger); color: #f0c1b8; }
+/* Touch: #tbtn-mode (44px) already covers fire-mode; the HUD chip is desktop/keyboard hint only. */
+
+
+/* --- HUD condensation on small screens --- */
+@media (max-width: 820px), (max-height: 560px) {
+  #hud { --hud-scale: var(--hud-scale, 1); }
+  #compass-wrap { top: calc(4px + var(--sat)); }
+  #compass { width: min(300px, 56vw); height: 22px; }
+  #alert-chip { top: calc(34px + var(--sat)); font-size: 8px; padding: 2px 8px; }
+  
+  
+  
+  
+  
+  
+  
+  
+  #veh-hud { left: calc(10px + var(--sal)); bottom: calc(96px + var(--sab)); min-width: 160px; padding: 6px 9px; }
+  #veh-speed { font-size: 18px; }
+  
+  
+  
+  .dmg-indicator { width: 96px; height: 96px; }
+}
+
+/* keep vitals/weapon above the thumb zones when touch controls are on */
+
+
+
+body.touch-on #veh-hud { bottom: calc(282px + var(--sab)); }
+
+
+
+/* --- rotate-device overlay --- */
+#rotate-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(4, 6, 8, 0.96);
+  padding: calc(20px + var(--sat)) 20px calc(20px + var(--sab));
+}
+#rotate-overlay.hidden { display: none; }
+.rotate-inner { text-align: center; }
+.rotate-icon { animation: rotate-hint 2.4s ease-in-out infinite; }
+@keyframes rotate-hint { 0%, 20% { transform: rotate(0deg); } 60%, 100% { transform: rotate(90deg); } }
+.rotate-title { margin-top: 22px; font-size: clamp(20px, 5vw, 30px); letter-spacing: clamp(4px, 1.4vw, 10px); color: var(--accent); font-weight: 700; }
+.rotate-sub { margin-top: 10px; font-family: var(--font-mono); font-size: clamp(10px, 2.6vw, 13px); letter-spacing: 2px; color: var(--hud-dim); }
+
+/* --- subtitles (comms / radio / objective lines) --- */
+
+
+
+
+
+/* --- mission briefing panel --- */
+.brief-panel { width: min(640px, calc(100vw - 20px)); }
+.brief-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 4px 14px; margin-bottom: 14px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1px; color: var(--hud-dim);
+}
+.brief-meta b { color: var(--hud-color); font-weight: 600; }
+.brief-body { font-size: 13px; line-height: 1.65; color: var(--hud-color); margin-bottom: 14px; }
+.brief-objectives { margin-bottom: 12px; }
+.brief-objectives h3, .brief-reward h3 {
+  font-size: 10px; letter-spacing: 3px; color: var(--accent);
+  border-bottom: 1px solid rgba(140,170,150,0.2); padding-bottom: 4px; margin-bottom: 6px;
+}
+.brief-objectives li { list-style: none; font-family: var(--font-mono); font-size: 11px; color: var(--hud-dim); padding: 3px 0 3px 14px; position: relative; }
+.brief-objectives li::before { content: '◇'; position: absolute; left: 0; color: var(--accent); }
+.brief-objectives li.opt::before { content: '·'; }
+.brief-reward { margin-bottom: 14px; font-family: var(--font-mono); font-size: 10.5px; color: var(--hud-dim); letter-spacing: 1px; }
+.brief-buttons-row { display: flex; gap: 8px; margin-top: 8px; }
+.brief-buttons-row .menu-btn { flex: 1; }
+
+/* --- objectives list (pause overlay) --- */
+.obj-row { display: flex; gap: 10px; align-items: baseline; padding: 8px 10px; margin-bottom: 5px; background: rgba(10,16,14,0.55); border: 1px solid rgba(140,170,150,0.16); font-size: 12px; }
+.obj-row .obj-mark { font-family: var(--font-mono); color: var(--hud-faint); width: 18px; flex: none; }
+.obj-row.done { opacity: 0.62; }
+.obj-row.done .obj-mark { color: var(--ok); }
+.obj-row.current { border-color: var(--accent); }
+.obj-row.current .obj-mark { color: var(--accent); }
+.obj-row .obj-dist { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--hud-dim); white-space: nowrap; }
+
+/* --- performance suggestion card (non-blocking) ---
+   Hotfix: the card covered menu buttons underneath it (clicks died on the
+   card area). Clicks now pass through the card; only its own buttons remain
+   interactive for Apply/Dismiss. */
+#perf-suggest {
+  position: fixed; left: 50%; bottom: calc(18px + var(--sab)); transform: translateX(-50%);
+  z-index: 300; width: min(420px, calc(100vw - 24px));
+  pointer-events: none;
+}
+#perf-suggest .menu-btn { pointer-events: auto; }
+#perf-suggest.hidden { display: none; }
+.perf-card {
+  background: var(--panel-bg); border: 1px solid rgba(140,170,150,0.35); border-top: 2px solid var(--accent);
+  padding: 14px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.perf-title { font-size: 12px; letter-spacing: 3px; color: var(--accent); margin-bottom: 6px; }
+.perf-sub { font-size: 11.5px; line-height: 1.5; color: var(--hud-dim); margin-bottom: 10px; }
+.perf-buttons { display: flex; gap: 8px; }
+.perf-buttons .menu-btn { flex: 1; min-height: 42px; }
+
+/* =========================================================
+   TOUCH CONTROLS (built by js/touch.js)
+
+   Visual language: layered translucent panels, hairline borders, generous
+   corner radii, restrained accent glow. Nothing is a flat opaque rectangle.
+
+   Layout: every size AND every offset is expressed in the same scaled unit
+   (--tc-u), so the whole cluster scales uniformly with the user's button-size
+   setting and with the tablet boost. Because size and spacing scale by the
+   same factor, the buttons can never collide at any scale.
+
+   Everything is anchored to the safe-area insets, so a notch, rounded corner
+   or home indicator can never cover a control.
+   ========================================================= */
+
+
+
+
+/* While the tactical map is up only MAP and PAUSE stay reachable, so the same
+   button that opened it can close it. */
+
+
+/* ---------------------------------------------------------- analog sticks -- */
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------------------------------------------------- buttons -- */
+
+
+
+
+
+/* ---- Primary: FIRE — largest, circular, warm accent, thumb-reachable ---- */
+
+
+
+/* ---- Primary: ADS — circular, cool accent ---- */
+
+
+
+/* ---- Secondary cluster — right thumb ---- */
+
+
+
+
+
+
+
+/* ---- Secondary cluster — left thumb ---- */
+
+
+
+
+/* ---- Utility — top-left, always clear of the notch ---- */
+
+
+/* ---- Contextual INTERACT — pill, centred, only when a prompt is live ---- */
+
+
+/* ------------------------------------------------- weapon pickup card ----- */
+#tpick-card {
+  position: absolute; left: 50%; bottom: calc(38% + var(--sab)); transform: translateX(-50%);
+  width: min(340px, calc(100vw - 32px));
+  border-radius: 14px;
+  border: 1px solid rgba(217,164,65,0.45);
+  background: linear-gradient(180deg, rgba(20,17,10,0.88) 0%, rgba(8,12,10,0.90) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 30px rgba(0,0,0,0.5);
+  padding: 12px 16px; font-family: var(--font-mono);
+}
+#tpick-card.hidden { display: none; }
+.tpick-head { font-size: 9px; letter-spacing: 3px; color: var(--accent); margin-bottom: 4px; }
+.tpick-name { font-size: 15px; letter-spacing: 2px; color: #e8f2ec; }
+.tpick-meta { font-size: 10px; color: var(--hud-dim); margin-top: 3px; letter-spacing: 1px; line-height: 1.5; }
+.tpick-btn { margin-top: 8px; width: 100%; min-height: 44px; }
+
+/* --------------------------------------------------------- breakpoints --- */
+
+/* Very short landscape (small phones): tighten the vertical stack.
+   The default stack needs ~280px of height; this trims it to ~215px. */
+@media (max-height: 460px) {
+  /* Short landscape: fold the stack sideways rather than upward. The default
+     stack is ~280px tall, which would eat 75% of a 375px-tall phone and leave
+     no room for the HUD. Here SWITCH sits beside JUMP and the cluster tops
+     out at ~224px. */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* use the freed space: the HUD band can sit lower and stay compact */
+  
+}
+
+/* Portrait (tablets — phones are covered by the rotate prompt): the thumb
+   clusters sit a little lower and the sticks get more room. */
+
+
+
+
+
+
+
+
+
+
+/* Tablets: bigger hands, bigger targets — multiplies the user's own setting. */
+@media (min-width: 900px) and (min-height: 600px) {
+  /* --tc-boost is set at :root so --tc-u — and therefore the HUD band's
+     clearance from the thumb clusters — picks it up too. */
+  :root { --tc-boost: 1.16; }   /* multiplies the user's own button-size setting */
+  
+  
+  
+}
+
+/* --- mobile bottom navigation --- */
+#mobnav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: flex; gap: 4px;
+  padding: 6px calc(6px + var(--sar)) calc(6px + var(--sab)) calc(6px + var(--sal));
+  background: rgba(6, 9, 12, 0.92);
+  border-top: 1px solid rgba(140,170,150,0.25);
+}
+#mobnav.hidden { display: none; }
+.mn-btn {
+  flex: 1; min-height: 48px;
+  background: rgba(207,227,216,0.04); border: 1px solid rgba(207,227,216,0.18);
+  color: var(--hud-dim); font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 2px; cursor: pointer;
+  padding: 8px 2px;
+}
+.mn-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(217,164,65,0.1); }
+/* menu screens must not hide content behind the nav on touch devices */
+body.touch-device .screen { padding-bottom: calc(70px + var(--sab)); }
+body.touch-device .screen > .panel {
+  max-height: calc(100dvh - 96px - var(--sat) - var(--sab));
+}
+
+/* settings section headers */
+.set-sec {
+  margin: 22px 0 12px; padding-top: 12px;
+  border-top: 1px solid rgba(140,170,150,0.25);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 4px; color: var(--accent);
+}
+/* mission category chips */
+.cat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.cat-chip {
+  padding: 8px 12px; min-height: 36px;
+  background: rgba(10,16,14,0.55); border: 1px solid rgba(140,170,150,0.25);
+  color: var(--hud-dim); font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+  cursor: pointer;
+}
+.cat-chip.on { border-color: var(--accent); color: var(--accent); background: rgba(217,164,65,0.12); }
+
+/* HUD scale (settings) — zoom keeps canvas offsetX mapping consistent */
+/* HUD scale is applied per module (see HUD SYSTEM) so nothing drifts off-screen */
+
+/* --- accessibility modes --- */
+body.contrast-high { --hud-dim: rgba(224, 240, 230, 0.92); --hud-faint: rgba(207, 227, 216, 0.6); }
+body.contrast-high .panel { background: rgba(4, 7, 9, 0.98); border-color: rgba(207,227,216,0.5); }
+body.contrast-high .mc-desc, body.contrast-high .hint, body.contrast-high .setting-val { color: #d8e6dc; }
+body.text-lg .panel, body.text-lg .brief-body { font-size: 15px; }
+body.text-lg .menu-btn { font-size: 16px; letter-spacing: 2px; }
+body.text-lg .mission-row, body.text-lg .list-row { font-size: 13px; }
+body.text-lg .setting-row { font-size: 13px; }
+
+body.text-lg .mc-title { font-size: 21px; }
+body.text-lg .mc-desc { font-size: 13px; }
+body.reduce-motion * { animation-duration: 0.001s !important; transition-duration: 0.06s !important; }
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001s !important; transition-duration: 0.06s !important; }
+}
+
+/* §13: pulsing RELOAD suggestion when the magazine is dry */
+
+@keyframes rld-suggest {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 190, 60, 0.55); }
+  50% { box-shadow: 0 0 0 9px rgba(255, 190, 60, 0); }
+}
+@media (prefers-reduced-motion: reduce) {  }
+
+
+/* =========================================================
+   STAGE A — thumb-first HUD, safe-area layout and controls
+   ========================================================= */
+:root {
+  --tc-fit: 1;
+  --tc-fit-global: 1;
+  --tc-u-global: 1;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* Focused, compact menu grids on landscape phones; menu actions remain
+   semantic HTML buttons and fit without a horizontal scroll region. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 560px) {
+  #screen-select .menu-wrap { gap: 5px; }
+  #screen-select .menu-brand .subtitle { display: none; }
+  #screen-select .loadout-panel { margin: 4px auto; padding: 7px 10px; }
+  #screen-select .mission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin: 5px 0; }
+  #screen-select .mission-card { padding: 8px 10px; gap: 3px; }
+  #screen-select .mc-desc { display: none; }
+}
+
+/* Settings are a scrollable tactical panel rather than a full-screen wall. */
+.settings-panel {
+  width: min(680px, calc(100vw - 24px - var(--sal) - var(--sar)));
+  max-height: calc(100dvh - 28px - var(--sat) - var(--sab));
+}
+.set-sub {
+  margin: 18px 0 8px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--accent);
+  background: rgba(217,164,65,0.06);
+  color: var(--hud-color);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.settings-note {
+  margin: 0 0 12px;
+  color: var(--hud-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+}
+.setting-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+.setting-actions .menu-btn {
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 8px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+/* Gameplay overlay: left thumb owns movement, right thumb owns aim/actions. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Primary actions are intentionally bigger; the rest form spaced, aligned rows. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Left-handed preset mirrors the two thumb zones and the action hierarchy. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Context actions only appear when useful; all controls stay outside the reticle. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body.hud-customizing #hud { display: none; }
+body.hud-customizing #mobnav { display: none !important; }
+body.hud-customizing #screen-settings { display: none !important; }
+body.hud-customizing { cursor: default; }
+
+/* Compact vital/ammo modules live in the gap between the two thumb clusters. */
+
+
+
+
+
+
+
+
+
+
+body.touch-on .stamina-outer { height: 3px; }
+
+
+
+
+
+
+
+
+
+body.touch-on #compass-wrap { top: calc(6px + var(--sat)); }
+body.touch-on #compass-wrap > #compass { width: min(240px, 34vw); height: 22px; }
+
+
+
+
+
+body.touch-on .dmg-indicator { width: 100px; height: 100px; }
+
+
+
+
+
+/* Tablet/portrait: wider thumb zones, vertically balanced action rail. */
+@media (orientation: portrait) {
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+/* Crosshair stays small; ADS reduces the arms to a precise point. */
+
+
+
+
+
+
+
+/* Tactical map: keep close/zoom/route controls thumb-sized and the canvas pannable. */
+
+
+
+
+
+
+
+
+
+
+@media (pointer: coarse) {
+  .mn-btn { min-height: 48px; letter-spacing: 0.08em; font-size: 9px; }
+  .menu-btn { min-height: 46px; }
+  .mission-row, .list-row { min-height: 48px; }
+  
+  
+}
+@media (max-width: 620px) {
+  .settings-panel { max-height: calc(100dvh - 90px - var(--sat) - var(--sab)); }
+  .mobile-layout-actions { grid-template-columns: 1fr; }
+  .setting-actions .menu-btn { min-height: 46px; }
+  
+  
+}
+@media (pointer: coarse) and (max-height: 560px) {
+  body.touch-device #perf-suggest { bottom: calc(70px + var(--sab)); }
+  body.touch-device .perf-card { padding: 8px 10px; }
+  body.touch-device .perf-sub { display: none; }
+  body.touch-device .perf-title { margin-bottom: 5px; font-size: 10px; }
+  body.touch-device .perf-buttons { gap: 6px; }
+  body.touch-device .perf-buttons .menu-btn { min-height: 44px; padding: 8px 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  
+}
+
+/* =========================================================
+   PHASE 1 — cinematic insertion, human-scale dressing, readable field HUD
+   Original generated key art is local/offline; all panels remain lightweight.
+   ========================================================= */
+#screen-menu {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #05080b;
+}
+#screen-menu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(4, 7, 9, 0.96) 0%, rgba(5, 8, 10, 0.88) 27%, rgba(5, 8, 10, 0.48) 57%, rgba(5, 8, 10, 0.12) 100%),
+    linear-gradient(0deg, rgba(3, 5, 7, 0.58), transparent 48%, rgba(3, 5, 7, 0.18)),
+    url("assets/environments/phase1-night-insertion.jpg") center 54% / cover no-repeat;
+}
+#screen-menu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.16;
+  background: repeating-linear-gradient(0deg, transparent 0 39px, rgba(207, 227, 216, 0.08) 40px, transparent 41px);
+  mask-image: linear-gradient(90deg, #000 0%, transparent 58%);
+}
+
+#screen-loading {
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: clamp(18px, 7vw, 108px);
+  padding-right: clamp(14px, 4vw, 52px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #05080b;
+}
+#screen-loading::before {
+  content: "";
+  position: absolute;
+  inset: -2.5%;
+  z-index: -2;
+  background: url("assets/environments/phase1-night-insertion.jpg") center 52% / cover no-repeat;
+  transform: scale(1.02);
+  animation: insertion-drift 24s ease-in-out infinite alternate;
+}
+#screen-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(3, 6, 8, 0.96) 0%, rgba(4, 7, 9, 0.83) 31%, rgba(4, 7, 9, 0.43) 58%, rgba(4, 7, 9, 0.13) 100%),
+    linear-gradient(0deg, rgba(3, 5, 7, 0.46), transparent 44%, rgba(3, 5, 7, 0.16));
+}
+.loading-wrap {
+  position: relative;
+  width: min(600px, 88vw);
+  text-align: left;
+  padding: clamp(18px, 4vh, 42px) 0;
+  animation: field-copy-in 520ms cubic-bezier(.2,.75,.25,1) both;
+}
+.loading-rail, .loading-foot, .loading-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+.loading-rail {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(207, 227, 216, 0.2);
+  color: rgba(207, 227, 216, 0.62);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+.loading-mark { color: #e0e8e3; }
+.loading-mark i { color: var(--accent); font-style: normal; padding: 0 5px; }
+.loading-weather { color: rgba(207, 227, 216, 0.48); text-align: right; }
+.loading-copy { max-width: 540px; padding: clamp(28px, 7vh, 70px) 0 clamp(28px, 6vh, 56px); }
+.loading-kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+  color: #d8b56c;
+  font: 10px/1.4 var(--font-mono);
+  letter-spacing: 0.18em;
+}
+.signal-dot {
+  width: 7px; height: 7px; flex: 0 0 auto;
+  border-radius: 50%;
+  background: #8dbb91;
+  box-shadow: 0 0 12px rgba(141, 187, 145, 0.72);
+  animation: field-signal 2.2s ease-in-out infinite;
+}
+.loading-title {
+  max-width: 600px;
+  color: #f0f3ef;
+  font-size: clamp(28px, 5.3vw, 58px);
+  line-height: 1.04;
+  font-weight: 650;
+  letter-spacing: clamp(0.04em, 0.62vw, 0.12em);
+  text-shadow: 0 3px 32px rgba(0, 0, 0, 0.84);
+  text-wrap: balance;
+}
+.loading-location {
+  margin-top: 12px;
+  color: #d8b56c;
+  font: 10px/1.5 var(--font-mono);
+  letter-spacing: 0.16em;
+}
+.loading-brief {
+  max-width: 490px;
+  margin-top: 18px;
+  color: rgba(230, 237, 232, 0.76);
+  font-size: clamp(12px, 1.2vw, 14px);
+  line-height: 1.65;
+  text-shadow: 0 2px 16px #000;
+}
+.loading-progress-head { align-items: baseline; margin-bottom: 8px; }
+.loading-status { color: rgba(220, 231, 224, 0.82); font-size: 9px; letter-spacing: 0.16em; }
+.loading-percent { color: #f0ca73; font: 11px/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.loading-bar-outer {
+  position: relative;
+  width: 100%; height: 3px;
+  margin: 0;
+  overflow: visible;
+  background: rgba(207, 227, 216, 0.17);
+  box-shadow: 0 0 0 1px rgba(5, 8, 9, 0.4);
+}
+.loading-bar-inner {
+  position: relative;
+  width: 0%; height: 100%;
+  background: linear-gradient(90deg, #849b77, #d9a441 72%, #f3dc9b);
+  box-shadow: 0 0 12px rgba(217, 164, 65, 0.48);
+  transition: width 260ms cubic-bezier(.2,.7,.2,1);
+}
+.loading-bar-inner::after {
+  content: ""; position: absolute; right: -2px; top: -3px;
+  width: 7px; height: 9px; border-radius: 50%;
+  background: #f7e3ab; box-shadow: 0 0 10px rgba(247, 227, 171, 0.85);
+}
+.loading-foot {
+  margin-top: 13px;
+  color: rgba(207, 227, 216, 0.4);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+@keyframes insertion-drift { from { transform: scale(1.02) translate3d(0, 0, 0); } to { transform: scale(1.07) translate3d(-0.7%, -0.4%, 0); } }
+@keyframes field-copy-in { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes field-signal { 50% { opacity: 0.55; box-shadow: 0 0 4px rgba(141, 187, 145, 0.4); } }
+
+/* Compact, semantic ammo hierarchy: weapon name > magazine > class/status. */
+
+
+.weapon-meta { display: flex; align-items: center; justify-content: flex-end; gap: 7px; }
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-height: 560px) {
+  .loading-copy { padding: 20px 0 22px; }
+  .loading-brief { margin-top: 10px; line-height: 1.45; }
+  .loading-title { font-size: clamp(24px, 5.6vh, 42px); }
+}
+@media (max-width: 620px) {
+  #screen-loading { padding-left: max(16px, calc(18px + var(--sal))); padding-right: max(12px, calc(14px + var(--sar))); }
+  .loading-wrap { width: 100%; }
+  .loading-rail, .loading-foot { flex-wrap: wrap; justify-content: flex-start; }
+  .loading-rail > *, .loading-foot > * { min-width: 0; overflow-wrap: anywhere; }
+  .loading-rail { font-size: 7px; letter-spacing: 0.08em; }
+  .loading-weather { max-width: 52%; }
+  .loading-copy { padding: 24px 0; }
+  .loading-kicker, .loading-location { font-size: 8px; letter-spacing: 0.1em; }
+  .loading-title { font-size: clamp(27px, 8vw, 42px); }
+  .loading-brief { max-width: 94%; font-size: 12px; }
+}
+@media (max-width: 620px) and (max-height: 520px) {
+  .loading-copy { padding: 16px 0; }
+  .loading-brief { display: none; }
+  .loading-foot { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #screen-loading::before, .loading-wrap, .signal-dot { animation: none !important; }
+}
+
+
+/* Dedicated, independently owned touch fire-mode action. It sits beside the
+   switch/reload row, not in the magazine readout or the fire/ADS buttons. */
+
+
+
+
+/* ==== PHASE 08: consolidated ACTIONS tray + movement cluster ==== */
+/* Closed (default): rare/secondary actions out of the float zone. */
+
+/* MORE toggle on the right action rail, symmetric with JUMP. */
+
+
+
+/* Movement cluster: CROUCH migrates next to SPRINT near the move stick. */
+
+
+/* Open tray: secondary actions form ONE compact 2×2 cluster above MORE. */
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==== HOTFIX (touch-09): each stick owns its whole half of the play layer ====
+   Root cause of "movement input drives the gun": the old zones were short
+   percentage boxes (left 42%w×68%h, right 44%w×82%h) with an invisible dead
+   strip down the middle and undiscoverable boundaries. A forward push that
+   started right of centre landed on the LOOK zone, so the camera/gun moved
+   and the player did not; a push in the strip did nothing at all.
+   Fix (hit-region only — pointer-id ownership, capture and release logic in
+   js/touch.js are unchanged and already correct): the two zones tile the full
+   gameplay layer with a strict LEFT = move / RIGHT = look split, the standard
+   floating-stick scheme. Buttons stay above (z 3 over z 1) and keep priority.
+   Earlier width/height rules (incl. the max-height:460px and portrait media
+   overrides) are superseded here by source order; equal specificity. */
+
+
+
+/* #touch-controls.portrait rules above carry an extra class of specificity;
+   match it so portrait gets the same strict halves. */
+
+
+
+
+
+/* User-customized stick areas keep their saved box (full-height must not
+   fight the saved left/top anchoring). */
+
+@media (orientation: portrait) {
+  
+}
+
+/* Vehicle context uses restrained amber/aviation-cyan cues without moving
+   user-customized controls or changing pointer ownership. */
+
+
+
+
+
+
+/* =========================================================
+/* =========================================================
+   PHASE 09 — tactical lobby (main menu)
+   Full-viewport lobby: environment backdrop, brand focus, left OPERATIONS
+   panel (missions + threat level + DEPLOY), compact bottom navigation.
+   Zero real-time scene cost: the backdrop is a static pre-rendered image;
+   no animations run behind the panel (rendered canvas stays frozen in MENU).
+   ========================================================= */
+#screen-menu {
+  display: block;
+  padding: 0;
+  background: var(--bg);
+  /* PHASE 12: the menu screen itself is the single scroll container, so a
+     menu taller than the viewport (short/landscape phones, large text) stays
+     fully reachable instead of being hard-clipped. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.lobby {
+  /* PHASE 12: one centered, cohesive column — brand, then operations panel,
+     then navigation grid. Vertically centered when it fits; top-anchored and
+     scrolled by #screen-menu when it does not (safe center). */
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: clamp(10px, 2.2vh, 20px);
+  padding: calc(12px + var(--sat)) calc(12px + var(--sar)) calc(16px + var(--sab)) calc(12px + var(--sal));
+}
+.lobby-backdrop {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 5, 7, 0.92) 0%, rgba(3, 5, 7, 0.72) 26%, rgba(3, 5, 7, 0.30) 55%, rgba(3, 5, 7, 0.62) 100%),
+    linear-gradient(0deg, rgba(3, 5, 7, 0.86) 0%, rgba(3, 5, 7, 0.10) 34%, rgba(3, 5, 7, 0.42) 100%),
+    url("../assets/environments/phase1-night-insertion.jpg") center 30% / cover no-repeat,
+    radial-gradient(ellipse at 62% 34%, #1a232c 0%, #05080b 72%);
+}
+/* faint static tactical grid — decorative, paint-once, no animation */
+.lobby-backdrop::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(207, 227, 216, 0.028) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgba(207, 227, 216, 0.028) 0 1px, transparent 1px 56px);
+  mask-image: radial-gradient(ellipse at 60% 38%, rgba(0,0,0,0.9), transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at 60% 38%, rgba(0,0,0,0.9), transparent 78%);
+}
+.lobby-brand, .lobby-ops, .lobby-nav { position: relative; z-index: 1; }
+
+/* -- brand focus (centered above the operations panel) -- */
+.lobby-brand {
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+.lobby-brand .title-main {
+  font-size: clamp(26px, 5.2vw, 64px);
+  line-height: 1.04;
+  letter-spacing: clamp(4px, 1.2vw, 14px);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+}
+.lobby-brand .title-accent { font-size: inherit; letter-spacing: inherit; }
+.lobby-brand .brand-endorse {
+  margin-top: 10px;
+  font-size: clamp(9px, 1.1vw, 12px);
+}
+.lobby-tagline {
+  margin-top: 6px;
+  font: 600 clamp(8px, 0.95vw, 10.5px)/1.6 var(--font-mono);
+  letter-spacing: 0.34em;
+  color: var(--hud-dim);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* -- operations panel (centered column member; never clips, the menu scrolls) -- */
+.lobby-ops {
+  width: min(440px, 100%);
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px 12px 12px;
+  background: linear-gradient(160deg, rgba(6, 10, 12, 0.88), rgba(8, 12, 14, 0.78));
+  border: 1px solid rgba(207, 227, 216, 0.16);
+  border-top: 2px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  overflow: visible;
+}
+.lobby-sec {
+  font: 700 10px/1.4 var(--font-mono);
+  letter-spacing: 0.32em;
+  color: var(--accent);
+}
+.lobby-missions { display: flex; flex-direction: column; gap: 6px; }
+.lobby-mission {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  width: 100%; min-height: 46px;
+  padding: 8px 10px 8px 12px;
+  text-align: left;
+  background: rgba(12, 18, 18, 0.55);
+  border: 1px solid rgba(207, 227, 216, 0.14);
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  color: var(--hud-color);
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.lobby-mission:hover, .lobby-mission:focus-visible { background: rgba(28, 34, 30, 0.72); }
+.lobby-mission .lm-title {
+  font: 700 clamp(11px, 1.2vw, 13px)/1.25 var(--font-ui);
+  letter-spacing: 0.14em;
+}
+.lobby-mission .lm-tag {
+  font: 600 clamp(7.5px, 0.85vw, 9px)/1.5 var(--font-mono);
+  letter-spacing: 0.18em;
+  color: var(--hud-dim);
+}
+.lobby-mission.on {
+  border-left-color: var(--accent);
+  background: linear-gradient(100deg, rgba(217, 164, 65, 0.16), rgba(12, 18, 18, 0.5));
+  border-top-color: rgba(217, 164, 65, 0.4);
+  border-right-color: rgba(217, 164, 65, 0.4);
+  border-bottom-color: rgba(217, 164, 65, 0.4);
+}
+.lobby-mission.on .lm-title { color: #f4e2c0; }
+.lobby-mission.locked { opacity: 0.45; cursor: default; }
+.lobby-mission.locked:hover { background: rgba(12, 18, 18, 0.55); }
+.lobby-meta {
+  display: grid; gap: 3px;
+  margin: 2px 0;
+  padding: 8px 10px;
+  border: 1px dashed rgba(207, 227, 216, 0.16);
+  border-radius: 6px;
+  background: rgba(5, 8, 10, 0.55);
+  font: 600 clamp(7.5px, 0.9vw, 9.5px)/1.55 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--hud-dim);
+}
+.lobby-meta b { color: var(--hud-color); font-weight: 700; }
+.lobby-difficulty {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  font: 700 9px/1.4 var(--font-mono);
+  letter-spacing: 0.26em;
+  color: var(--hud-dim);
+}
+.lobby-difficulty select {
+  flex: 0 1 62%;
+  min-height: 38px;
+  padding: 4px 8px;
+  background: rgba(10, 15, 17, 0.8);
+  color: var(--hud-color);
+  border: 1px solid rgba(207, 227, 216, 0.22);
+  border-radius: 6px;
+  font: 700 10px/1.2 var(--font-mono);
+  letter-spacing: 0.14em;
+}
+
+/* -- DEPLOY: one prominent amber primary action -- */
+.start-btn {
+  margin-top: 2px;
+  width: 100%;
+  min-height: 56px;
+  font-size: clamp(13px, 1.5vw, 16px);
+  letter-spacing: 0.3em;
+  border-width: 1px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5), 0 0 22px rgba(217, 164, 65, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.start-btn.launching {
+  opacity: 0.75;
+  cursor: wait;
+  background: linear-gradient(180deg, #b08834, #8a6a24);
+}
+
+/* -- secondary navigation: one consistent 3×3 grid, centered under the panel -- */
+.lobby-nav {
+  width: min(440px, 100%);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.lobby-nav .menu-btn {
+  min-height: 42px;
+  padding: 6px 8px;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  background: linear-gradient(180deg, rgba(10, 15, 17, 0.72), rgba(7, 10, 12, 0.62));
+  border-color: rgba(207, 227, 216, 0.18);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* menu screens must not reserve mobnav space on the lobby (it has its own nav) */
+body.touch-device #screen-menu { padding-bottom: 0; }
+
+/* ==== responsive adaptation: SAME centered column, compacted when short ====
+   PHASE 12: no breakpoint rearranges the lobby into side-by-side strips any
+   more; the menu always scrolls, short screens only get tighter paddings. */
+@media (max-height: 800px) {
+  .lobby-ops { gap: 6px; padding: 10px 10px 9px; }
+  .lobby-missions { gap: 4px; }
+  .lobby-mission { min-height: 42px; padding: 6px 9px 6px 11px; }
+  .lobby-meta { padding: 6px 9px; }
+  .lobby-tagline { display: none; }
+  .start-btn { min-height: 50px; }
+}
+/* very short screens (landscape phones, split view): tight rail, menu scrolls */
+@media (max-height: 560px) {
+  .lobby { gap: 6px; padding-top: calc(6px + var(--sat)); padding-bottom: calc(10px + var(--sab)); }
+  .lobby-brand .brand-endorse { margin-top: 3px; font-size: 8px; }
+  .lobby-tagline { display: none; }
+  .lobby-ops { gap: 4px; padding: 7px 8px 7px; }
+  .lobby-missions { gap: 3px; }
+  .lobby-mission { min-height: 34px; padding: 3px 7px 3px 9px; }
+  .lobby-mission .lm-title { font-size: 10.5px; }
+  .lobby-mission .lm-tag { font-size: 6.8px; }
+  .lobby-meta { display: none; }
+  .lobby-difficulty select { min-height: 30px; }
+  .start-btn { min-height: 42px; font-size: 12px; }
+  .lobby-nav { gap: 4px; }
+  .lobby-nav .menu-btn { min-height: 40px; font-size: 8px; padding: 4px 4px; }
+}
+/* touch: guarantee 44px nav targets at any orientation (the menu scrolls) */
+@media (pointer: coarse) {
+  .lobby-nav .menu-btn { min-height: 44px; }
+}
+/* narrow portrait phones (320-380px wide with limited height): compact stack */
+@media (max-width: 380px) and (max-height: 700px) {
+  .lobby { gap: 6px; padding-top: calc(8px + var(--sat)); padding-bottom: calc(6px + var(--sab)); }
+  .lobby-brand .brand-endorse { margin-top: 3px; font-size: 8px; }
+  .lobby-tagline { display: none; }
+  .lobby-ops { gap: 5px; padding: 8px 9px 8px; }
+  .lobby-missions { gap: 3px; }
+  .lobby-mission { min-height: 38px; padding: 4px 8px 4px 10px; }
+  .lobby-meta { display: none; }
+  .lobby-difficulty select { min-height: 32px; }
+  .start-btn { min-height: 44px; font-size: 12px; letter-spacing: 0.24em; }
+  .lobby-nav { gap: 4px; }
+  .lobby-nav .menu-btn { font-size: 8px; padding: 3px 4px; letter-spacing: 0.1em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lobby-mission, .lobby-nav .menu-btn, .start-btn { animation: none !important; transition: none !important; }
+}
+
+/* =========================================================
+   PHASE 11 — single-authority lobby typography (consolidation)
+   Before Phase 11, several pre-lobby `#screen-menu …` blocks (Phase-01/06/08
+   era) still outranked these lobby rules by id specificity, so the lobby's
+   own title sizes never applied. Those legacy blocks are now deleted; the
+   VALUES they actually produced (verified by computed-style capture at six
+   viewports, see PHASE11 report §4) are re-declared here under lobby-owned,
+   id-anchored selectors so the rendered result is identical and there is
+   exactly one authority per breakpoint. Blocks whose media condition could
+   never beat the later base rule (e.g. the coarse-landscape 4vh/5vh titles,
+   fully shadowed by the Phase-01 base rules) were removed without being
+   re-declared — they were dead code, not live behaviour. */
+#screen-menu .lobby-brand .title-main { font-size: clamp(21px, 3.4vw, 40px); letter-spacing: 0.15em; }
+#screen-menu .lobby-brand .title-accent { font-size: clamp(28px, 5.2vw, 56px); letter-spacing: clamp(0.12em, 1vw, 0.2em); }
+@media (max-width: 620px) {
+  #screen-menu .lobby-brand .title-main { font-size: clamp(18px, 5vw, 24px); letter-spacing: 0.1em; }
+  #screen-menu .lobby-brand .title-accent { font-size: clamp(25px, 8vw, 37px); letter-spacing: 0.1em; }
+}
+@media (min-width: 901px) and (max-height: 900px) and (hover: hover) and (pointer: fine) {
+  #screen-menu .lobby-brand .title-main { font-size: clamp(30px, 3.6vh, 36px); }
+  #screen-menu .lobby-brand .title-accent { font-size: clamp(38px, 5.6vh, 48px); }
+}
+/* Menu-wide button wash that the pre-lobby menu block used to apply; kept so
+   the lobby navigation keeps its shipped paint now that the old block is gone. */
+#screen-menu .lobby-nav .menu-btn {
+  background: linear-gradient(110deg, rgba(12, 18, 18, 0.76), rgba(11, 15, 17, 0.48));
+}
+
+
+/* Make keyboard position visible on every real control, not just menu links. */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #f0c978 !important;
+  outline-offset: 3px;
+}
+.screen h1:focus-visible,
+.screen h2:focus-visible,
+.screen .panel-title:focus-visible {
+  outline: 1px solid rgba(240, 201, 120, 0.72);
+  outline-offset: 5px;
+}
+
+/* Profile summary: progression is useful, but no longer occupies menu space. */
+body.touch-device .controls-ref { display: none; }
+.profile-panel { width: min(700px, calc(100vw - 24px - var(--sal) - var(--sar))); }
+.debrief-note {
+  margin: 8px 0;
+  color: var(--hud-dim);
+  font: 9px/1.5 var(--font-mono);
+  letter-spacing: 0.06em;
+}
+.profile-overview {
+  margin: 0 0 16px;
+  padding: 14px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-r-sm);
+  background: linear-gradient(135deg, rgba(217, 164, 65, 0.09), rgba(207, 227, 216, 0.035));
+}
+.profile-topline, .profile-progress-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.profile-caption, .profile-progress-meta, .profile-milestones span, .profile-tutorial-state {
+  color: var(--hud-dim);
+  font: 9px/1.5 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+.profile-caption { display: block; margin-bottom: 4px; }
+.profile-rank { display: block; color: var(--accent); font-size: clamp(20px, 3vw, 27px); letter-spacing: 0.08em; }
+.profile-xp { display: flex; align-items: baseline; gap: 6px; font-family: var(--font-mono); }
+.profile-xp strong { font-size: clamp(20px, 3vw, 27px); font-variant-numeric: tabular-nums; }
+.profile-xp span { color: var(--accent); font-size: 11px; letter-spacing: 0.12em; }
+.profile-progress-meta { margin-top: 12px; gap: 8px; }
+.profile-progress-meta span:last-child { text-align: right; }
+.profile-xp-bar { height: 7px; margin: 7px 0 12px; overflow: hidden; background: rgba(207, 227, 216, 0.12); border-radius: 5px; }
+.profile-xp-bar i { display: block; height: 100%; background: linear-gradient(90deg, #849b77, var(--accent)); border-radius: inherit; }
+.profile-milestones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.profile-milestones > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.profile-milestones strong { font: 700 13px/1.3 var(--font-mono); font-variant-numeric: tabular-nums; }
+.profile-milestones span { font-size: 8px; }
+.profile-tutorial-state { margin-top: 12px; }
+
+/* Guided tutorial: one short, input-aware lesson per page. */
+#screen-tutorial { padding-bottom: calc(8px + var(--sab)); }
+#screen-tutorial > .tutorial-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(640px, calc(100vw - 24px - var(--sal) - var(--sar)));
+  max-height: calc(100dvh - 24px - var(--sat) - var(--sab));
+  padding: clamp(14px, 3vh, 24px) clamp(16px, 4vw, 34px);
+}
+.tutorial-kicker, .tutorial-progress {
+  color: var(--accent);
+  font: 10px/1.4 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-align: center;
+}
+#screen-tutorial .panel-title { margin-bottom: 4px; text-align: center; }
+.tutorial-progress { color: var(--hud-dim); font-size: 9px; }
+.tutorial-step { padding: 12px 0; }
+.tutorial-step h3 { margin-bottom: 8px; color: var(--hud-color); font-size: clamp(16px, 2.5vw, 20px); letter-spacing: 0.08em; }
+.tutorial-step p { font-size: 13px; line-height: 1.55; color: var(--hud-color); }
+.tutorial-step .tutorial-hint { margin-top: 10px; color: var(--hud-dim); font-size: 11px; }
+.tutorial-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tutorial-panel .menu-btn { min-height: 44px; padding: 9px 10px; font-size: 11px; letter-spacing: 0.1em; }
+.tutorial-panel > .menu-btn.wide { margin-top: 0; }
+.tutorial-panel .menu-btn:disabled { opacity: 0.48; cursor: not-allowed; }
+@media (max-width: 620px) {
+  .profile-overview { padding: 11px; }
+  .profile-caption, .profile-progress-meta { font-size: 8px; }
+  .profile-milestones { gap: 5px; }
+  .profile-milestones strong { font-size: 11px; }
+  .profile-milestones span { font-size: 7px; }
+  .tutorial-step { padding: 8px 0; }
+  .tutorial-step p { font-size: 12px; line-height: 1.45; }
+  .tutorial-step .tutorial-hint { margin-top: 7px; font-size: 10px; }
+  .tutorial-panel .menu-btn { padding-inline: 7px; font-size: 10px; letter-spacing: 0.06em; }
+}
+@media (max-height: 480px) {
+  #screen-tutorial > .tutorial-panel { gap: 4px; padding: 10px 14px; }
+  .tutorial-step { padding: 4px 0; }
+  .tutorial-step h3 { margin-bottom: 4px; font-size: 15px; }
+  .tutorial-step p { font-size: 11px; line-height: 1.32; }
+  .tutorial-step .tutorial-hint { margin-top: 4px; font-size: 9px; }
+  .tutorial-panel .menu-btn { min-height: 42px; padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-xp-bar i { transition: none; }
+}
+
+/* Battlefield selection: constrain every grid track and control to the
+   available width; the menu itself remains the intentional scroll container. */
+#screen-select .menu-wrap { width: min(100%, 1060px); }
+#screen-select .loadout-panel { width: min(100%, 860px); min-width: 0; }
+#screen-select .lo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#screen-select .lo-grid label,
+#screen-select .lo-grid select { min-width: 0; }
+#screen-select .lo-grid select { width: 0; max-width: 100%; }
+#screen-select .lo-status { flex-wrap: wrap; gap: 6px 12px; }
+#screen-select .lo-status > * { min-width: 0; overflow-wrap: anywhere; }
+#screen-select .mission-grid { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#screen-select .mission-card { min-width: 0; overflow-wrap: anywhere; }
+#screen-select .menu-wrap { scrollbar-width: thin; scrollbar-color: rgba(217, 164, 65, 0.55) transparent; }
+@media (max-width: 860px) {
+  #screen-select .mission-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  #screen-select .lo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  #screen-select .lo-grid label { display: flex; flex-direction: column; align-items: stretch; gap: 4px; font-size: 8px; }
+  #screen-select .lo-grid select { width: 100%; flex: initial; }
+  #screen-select .mission-card { padding: 12px; }
+}
+@media (min-width: 620px) and (max-height: 560px) {
+  #screen-select .mission-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #screen-select .mission-card { padding: 8px 10px; gap: 3px; }
+  #screen-select .mc-desc { display: none; }
+  #screen-select .loadout-panel { margin-block: 4px; padding-block: 7px; }
+}
+
+/* PHASE-13: HUD-zone presentation retired (219 legacy rules) — owned by css/hud.css. */
+
+/* PHASE-13 Stage-3: entire legacy touch-control zone retired (185 rules) — owned by css/touch.css. */

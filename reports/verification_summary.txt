@@ -1,0 +1,16 @@
+collision_behaviour_tests    exit=0  PASS=33  FAIL=0
+collision_coverage_audit     exit=0  PASS=1  FAIL=0
+collision_leak_audit         exit=0  PASS=1  FAIL=0
+enemy_ai_combat              exit=0  PASS=27  FAIL=0
+ammunition                   exit=0  PASS=12  FAIL=0
+ammo_pickups                 exit=0  PASS=20  FAIL=0
+firing_pipeline              exit=0  PASS=6  FAIL=0
+firing_input                 exit=0  PASS=16  FAIL=0
+tactical_map                 exit=0  PASS=21  FAIL=0
+browser_map                  exit=0  PASS=0  FAIL=0  SKIPPED (no Playwright/Chromium here)
+runtime_smoke                exit=0  PASS=17  FAIL=0
+gameplay_v3_smoke            exit=0  PASS=1  FAIL=0
+verify_requirements          exit=0  PASS=15  FAIL=0
+campaign_100_audit           exit=0  PASS=5  FAIL=0
+mission_scaling              exit=0  PASS=29  FAIL=0
+pwa_offline                  exit=0  PASS=9  FAIL=0

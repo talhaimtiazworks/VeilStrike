@@ -1,0 +1,10 @@
+PASS P1. pre-fix contract, VX-4 auto: a held boolean per frame multi-fires one click — the reported ladder — level-driven auto: 1f(17ms)->1 9f(150ms)->2 15f(250ms)->3 30f(500ms)->5 — a ~250 ms click is 3 shots
+PASS P2. pre-fix contract, every auto weapon: shot count is hold length / (60/rpm) + 1, not clicks — old level-driven path, holds of 1/9/15/30 frames: vx4 1f->1 9f->2 15f->3 30f->5 @660RPM | p9 1f->1 9f->2 15f->3 30f->5 @720RPM | mpx5 1f->1 9f->2 15f->3 30f->6 @850RPM | vekp 1f->1 9f->3 15f->4 30f->8 @920RPM | cr9 1f->1 9f->2 15f->3 30f->5 @700RPM | hmg9 1f->1 9f->2 15f->3 30f->5 @600RPM
+PASS P3. semi was never affected: the old path was already edge-driven per press — 1 shot per press; a 10 s hold stayed at 1 shot; 20 presses -> 20 more shots
+PASS P4. shipped contract: the same 250 ms click is exactly one shot and one round — 15-frame click through FireTriggerInput + _fireStep -> 1 shot, 1 round, for 9 weapon/mode pairs (vx4/auto, p9/auto, mpx5/auto, vekp/auto, cr9/auto, hmg9/auto, vx4/semi, mr7/semi, st12/semi)
+PASS P5. shipped contract: a real hold still auto-fires at RPM and stops on release — 30-frame hold -> 4 shots at 660 RPM, frozen on release; 150 ms click -> 1 shot
+PASS P6. burst keeps its configured length: one press = one burst, never a burst per frame — one press = exactly one burst for every burst weapon (vekp:3, cr9:3, rk4:3, sz8:3)
+
+==================================================================
+6/6 firing-pipeline tests passed
+==================================================================

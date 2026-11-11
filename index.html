@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#07090b">
+<title>VEILSTRIKE</title>
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icons/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/touch.css">
+<link rel="stylesheet" href="css/shell.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./assets/vendor/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ============ GAME CANVAS CONTAINER ============ -->
+<div id="game-container"></div>
+
+<!-- ============ ERROR OVERLAY ============ -->
+<div id="error-overlay" class="screen hidden">
+  <div class="panel error-panel">
+    <h1 class="glitch-title">SYSTEM FAILURE</h1>
+    <p id="error-message">An unknown error occurred.</p>
+    <p class="hint">This game requires a modern browser with WebGL and Web Audio. Desktop mouse look uses Pointer Lock; touch devices use the mobile control layout.</p>
+  </div>
+</div>
+
+<!-- ============ ROTATE DEVICE (gameplay wants landscape) ============ -->
+<div id="rotate-overlay" class="hidden">
+  <div class="rotate-inner">
+    <svg class="rotate-icon" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+      <rect x="20" y="6" width="24" height="44" rx="3" fill="none" stroke="#d9a441" stroke-width="2.5"/>
+      <path d="M50 34 a18 18 0 0 1 -18 18" fill="none" stroke="#cfe3d8" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M28 52 l4 6 l-10 0 z" fill="#cfe3d8"/>
+    </svg>
+    <div class="rotate-title">ROTATE DEVICE</div>
+    <div class="rotate-sub">LANDSCAPE MODE RECOMMENDED FOR GAMEPLAY</div>
+    <button id="btn-rotate-continue" class="menu-btn ghost" type="button">CONTINUE IN PORTRAIT</button>
+  </div>
+</div>
+
+<!-- ============ CINEMATIC FIELD INSERTION ============ -->
+<div id="screen-loading" class="screen hidden" aria-label="Preparing mission">
+  <div class="loading-wrap">
+    <div class="loading-rail">
+      <span class="loading-mark"><img class="loading-logo" src="assets/logo-veilstrike.jpg" alt="VEILSTRIKE" width="46" height="46" /><span class="loading-mark-text">VEILSTRIKE <i>·</i> FIELD SYSTEMS</span></span>
+      <span id="loading-weather" class="loading-weather">OFFLINE READY // BUILD 01</span>
+    </div>
+    <div class="loading-copy">
+      <div class="loading-kicker"><span class="signal-dot"></span> OPERATION PACKAGE // AUTHORIZED</div>
+      <h1 id="loading-title" class="loading-title">SYSTEM INITIALIZATION</h1>
+      <div id="loading-location" class="loading-location">STAGING AREA · FIELD NETWORK</div>
+      <p id="loading-brief" class="loading-brief">Preparing the field interface and checking local mission systems.</p>
+    </div>
+    <div class="loading-progress-head">
+      <span id="loading-status" class="loading-status" role="status" aria-live="polite">INITIALIZING…</span>
+      <span id="loading-percent" class="loading-percent">00%</span>
+    </div>
+    <div class="loading-bar-outer" role="progressbar" aria-label="Mission load progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="loading-bar" class="loading-bar-inner"></div>
+    </div>
+    <div class="loading-foot"><span>NO NETWORK REQUIRED</span><span>PERSONNEL · TERRAIN · COMMS</span></div>
+  </div>
+</div>
+
+<!-- ============ SHARED MENU SHELL (Phase 16) ============
+     Wallpaper + topbar chrome shared by every menu-family screen. Visibility
+     is driven by body.in-menus / body.menu-home, toggled in ui.showScreen. -->
+<div id="shell-wall" class="hidden" aria-hidden="true"></div>
+<header id="shell-topbar" class="hidden">
+  <button id="shell-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-drawer">
+    <span></span><span></span><span></span>
+  </button>
+  <button id="stb-brand" class="stb-brand" type="button" aria-label="VEILSTRIKE — main menu">VEIL<em>STRIKE</em><i>A TIW ORIGINAL</i></button>
+  <div class="stb-right">
+    <button class="stb-chip" id="shell-player" type="button" aria-label="Profile and stats">
+      <img src="assets/icons/icon-192.png" alt="" class="stb-ava">
+      <span class="stb-id"><span class="stb-name">TIW OPERATOR</span><span class="stb-lv" id="stb-lv">LV. 1</span></span>
+      <span class="stb-xp" role="progressbar" aria-label="Rank progress"><span id="stb-xpfill"></span></span>
+    </button>
+    <button id="btn-shell-settings" class="stb-icon" type="button" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87 1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+    </button>
+    <button id="btn-shell-home" class="stb-icon stb-home" type="button" aria-label="Main menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5.5h5V20"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ MAIN MENU ============ -->
+<div id="screen-menu" class="screen hidden" aria-label="Main menu">
+  <div class="menu-stage">
+    <nav class="lobby-nav" id="menu-drawer" aria-label="Main menu options">
+      <div class="lnv-brand">
+        <img class="menu-logo" src="assets/logo-veilstrike.jpg" alt="VEILSTRIKE official emblem" width="74" height="74" />
+        <h1 class="lnv-logo">VEIL<span>STRIKE</span></h1>
+        <div class="lnv-endorse">A TIW ORIGINAL</div>
+      </div>
+      <div class="lnv-list" role="list">
+        <button id="btn-nav-deploy" class="lnv-item lnv-gold" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.8v14.4c0 .9 1 1.5 1.8 1L20 13a1.2 1.2 0 0 0 0-2L8.8 3.8A1.2 1.2 0 0 0 7 4.8z"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">DEPLOY</span><span class="lnv-sub">Start an operation</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-training" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">TRAINING</span><span class="lnv-sub">Learn &amp; practice</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-missions" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5 3.5 5.6v14.9L9 18.4l6 2.1 5.5-2.1V3.5L15 5.6 9 3.5z"/><path d="M9 3.5v14.9M15 5.6v14.9"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">ALL OPERATIONS</span><span class="lnv-sub">Browse missions</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-armory" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 13.5 14 6.8l1.2.8 1 .8 2.3-1 1.5 1.7-2 2.2-.7.4-2.5 5.4-1.5-.5.9-2.1-1.1-.7-8.5 5.4a1 1 0 0 1-1.4-.4l-.3-.5a1 1 0 0 1 .3-1.3z"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">LOADOUT</span><span class="lnv-sub">Weapons &amp; equipment</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-armory-ops" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.4"/><path d="M4.5 20.5c.9-3.8 3.9-5.9 7.5-5.9s6.6 2.1 7.5 5.9"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">OPERATORS</span><span class="lnv-sub">Choose your operative</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-fieldload" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8.5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3V20H5V8.5z"/><path d="M9 9.5h6M9 13h6"/><path d="M12 5.5V3.2"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">FIELD LOADOUT</span><span class="lnv-sub">Gear &amp; throwables</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-loadout" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z"/><path d="M9.2 14.2a2.9 2.9 0 0 0 2.5 2.9"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">WEAPON FINISHES</span><span class="lnv-sub">Camo &amp; coatings</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-intel" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.8h8.5L19 7.3V21H6V2.8z"/><path d="M14 3v4.8h4.8"/><path d="M8.8 12h6.4M8.8 15.6h6.4"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">INTEL</span><span class="lnv-sub">Briefings &amp; files</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-awards" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4l-5.2 2.8 1-5.9L3.5 9.2l5.9-.8L12 3z"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">AWARDS</span><span class="lnv-sub">Achievements</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-stats" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M9.5 20V4M15 20v-8.5M20.5 20V7"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">PROFILE &amp; STATS</span><span class="lnv-sub">Your progress</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-credits" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M2.8 19.5c.7-3.2 3.2-5 6.2-5s5.5 1.8 6.2 5"/><circle cx="17" cy="9" r="2.2"/><path d="M15.4 14.8c2.6.3 4.7 1.8 5.4 4.7"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">CREDITS</span><span class="lnv-sub">Thanks to our supporters</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <button id="btn-settings" class="lnv-item" type="button">
+          <svg class="lnv-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87 1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+          <span class="lnv-txt"><span class="lnv-label">SETTINGS</span><span class="lnv-sub">Game &amp; controls</span></span>
+          <svg class="lnv-ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="lnv-foot">VEILSTRIKE × TIW</div>
+    </nav>
+    <div id="drawer-scrim" aria-hidden="true"></div>
+
+    <div class="menu-slogan" aria-hidden="true">SOME BATTLES<br>ARE FOUGHT<br><em>IN SILENCE</em></div>
+
+    <aside class="feat-card" aria-label="Featured operation">
+      <div class="feat-head">
+        <span class="feat-kicker">— FEATURED OPERATION</span>
+        <span class="feat-pager">
+          <button id="feat-prev" type="button" aria-label="Previous operation">‹</button>
+          <button id="feat-next" type="button" aria-label="Next operation">›</button>
+        </span>
+      </div>
+      <div class="feat-art" id="feat-art" data-map="facility">
+        <img src="assets/environments/phase1-night-insertion.jpg" alt="">
+      </div>
+      <div class="feat-body">
+        <div class="feat-title" id="feat-title">KESTREL YARD</div>
+        <div class="feat-tag" id="feat-tag">NIGHT · INFILTRATION</div>
+        <p class="feat-desc" id="feat-desc"></p>
+        <ul class="feat-obj" id="feat-obj"></ul>
+        <div id="lobby-meta" class="lobby-meta feat-meta" aria-live="polite"></div>
+        <div class="lobby-difficulty feat-diff">
+          <label for="lobby-difficulty">THREAT LEVEL</label>
+          <select id="lobby-difficulty">
+            <option value="recruit">RECRUIT</option>
+            <option value="standard" selected>STANDARD</option>
+            <option value="hard">HARD</option>
+            <option value="veteran">VETERAN</option>
+          </select>
+        </div>
+        <button id="btn-lobby-start" class="menu-btn primary start-btn feat-deploy" type="button">DEPLOY NOW ▸</button>
+      </div>
+      <div id="lobby-missions" class="sr-only" role="listbox" aria-label="Select featured operation"></div>
+    </aside>
+  </div>
+
+  <footer class="menu-foot">
+    <div class="mf-left">
+      <button id="btn-fullscreen" class="mf-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>
+        FULLSCREEN
+      </button>
+      <span class="mf-sep" aria-hidden="true"></span>
+      <button id="btn-exit" class="mf-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M12 3v8"/><path d="M6.3 6.5a8 8 0 1 0 11.4 0"/></svg>
+        <span id="btn-exit-label">EXIT</span>
+      </button>
+    </div>
+    <div class="mf-mid">REAL TACTICS. REAL THREATS. YOUR MISSION.</div>
+    <div class="mf-right">VEILSTRIKE × TIW</div>
+  </footer>
+</div>
+
+<!-- ============ THEATER SELECT ============ -->
+<div id="screen-select" class="screen hidden" role="region" aria-labelledby="select-title">
+  <div class="menu-wrap wide">
+    <div class="menu-brand">
+      <img class="campaign-logo" src="assets/logo-veilstrike.jpg" alt="VEILSTRIKE official emblem" width="56" height="56" />
+      <div class="brand-line"></div>
+      <h1 class="title-main" id="select-title">SELECT<span class="title-accent">BATTLEFIELD</span></h1>
+      <p class="subtitle">CAMPAIGN OPERATIONS · ONE OPERATOR</p>
+      <div class="brand-line"></div>
+    </div>
+    <section class="loadout-panel" aria-labelledby="lo-panel-title">
+      <div class="lo-title" id="lo-panel-title">LOADOUT — PRE-DEPLOY CONFIGURATION</div>
+      <div class="lo-grid">
+        <label>PRIMARY<select id="lo-primary"></select></label>
+        <label>SECONDARY<select id="lo-secondary"></select></label>
+        <label>THROWABLE<select id="lo-throwable"></select></label>
+        <label>THROWABLES<select id="lo-tcount"></select></label>
+        <label>UTILITY<select id="lo-utility"></select></label>
+        <label>UTILITY CT<select id="lo-ucount"></select></label>
+      </div>
+      <div class="lo-status"><span id="lo-weight"></span><span id="lo-msg"></span></div>
+      <p class="panel-sub">FIELD ISSUE: VX-FRAG ×20 MINIMUM EACH RUN — INCLUDING TRAINING RANGE</p>
+    </section>
+    <div id="select-campaign-bar" class="campaign-bar">
+      <span id="select-campaign-summary" class="campaign-summary">100-MISSION TACTICAL CAMPAIGN · PROGRESSIVE UNLOCKING</span>
+      <button id="btn-select-all-ops" class="menu-btn accent-btn" type="button">BROWSE ALL 100 OPERATIONS ▸</button>
+    </div>
+    <div class="mission-grid" role="group" aria-label="Available campaign theaters">
+      <button id="btn-mission-facility" class="mission-card" type="button">
+        <span class="mc-tag">NIGHT · INFILTRATION</span>
+        <span class="mc-title">KESTREL YARD</span>
+        <span class="mc-desc">Industrial logistics compound. Breach the fence, hack the server wing, survive the response.</span>
+        <span class="mc-flow">9-STAGE CAMPAIGN MISSION</span>
+      </button>
+      <button id="btn-mission-snow" class="mission-card" type="button">
+        <span class="mc-tag">SNOW · ASSAULT</span>
+        <span class="mc-title">WHITEOUT RELAY</span>
+        <span class="mc-desc">Frozen relay station above the tree line. Breach loud, clear the compound, reach the helipad.</span>
+        <span class="mc-flow">ASSAULT — CLEAR &amp; EXTRACT</span>
+      </button>
+      <button id="btn-mission-desert" class="mission-card" type="button">
+        <span class="mc-tag">DESERT · INFILTRATION</span>
+        <span class="mc-title">DUSTBOWL CACHE</span>
+        <span class="mc-desc">Adobe compound in a dry wadi. Slip the wall, download the cache manifest, walk out north-east.</span>
+        <span class="mc-flow">INFILTRATION WITH TIMED RESPONSE</span>
+      </button>
+      <button id="btn-mission-urban" class="mission-card" type="button">
+        <span class="mc-tag">URBAN · INFILTRATION</span>
+        <span class="mc-title">GREYLINE DISTRICT</span>
+        <span class="mc-desc">Abandoned city block. Pass the checkpoint, crack the bank record room, vanish down the alley.</span>
+        <span class="mc-flow">INFILTRATION WITH TIMED RESPONSE</span>
+      </button>
+      <button id="btn-mission-recon_desert" class="mission-card" type="button">
+        <span class="mc-tag">DESERT · RECON</span>
+        <span class="mc-title">SANDGLASS RECON</span>
+        <span class="mc-desc">Multi-ridge wadi observation. Glass compound perimeters from overwatch points and confirm cache data.</span>
+        <span class="mc-flow">RECONNAISSANCE &amp; OBSERVATION</span>
+      </button>
+      <button id="btn-mission-sabotage_industrial" class="mission-card" type="button">
+        <span class="mc-tag">INDUSTRIAL · SABOTAGE</span>
+        <span class="mc-title">COLD FORGE</span>
+        <span class="mc-desc">Ravel Works processing plant. Restore auxiliary power, plant timed demolition charges across 3 critical systems.</span>
+        <span class="mc-flow">MULTI-OBJECTIVE DEMOLITION</span>
+      </button>
+      <button id="btn-mission-investigate_rural" class="mission-card" type="button">
+        <span class="mc-tag">OUTSKIRTS · RECON</span>
+        <span class="mc-title">QUIET HARVEST</span>
+        <span class="mc-desc">Hollow farmstead investigation. Collect hidden physical evidence across 3 sites and extract frequency records.</span>
+        <span class="mc-flow">SEARCH &amp; EVIDENCE RECOVERY</span>
+      </button>
+      <button id="btn-mission-rescue_rural" class="mission-card" type="button">
+        <span class="mc-tag">OUTSKIRTS · EXTRACTION</span>
+        <span class="mc-title">LOST SHEPHERD</span>
+        <span class="mc-desc">Mill Road safehouse rescue. Locate pinned survivor, escort through occupied rural zone, and reach extract LZ.</span>
+        <span class="mc-flow">HIGH-VALUE ESCORT &amp; RESCUE</span>
+      </button>
+      <button id="btn-mission-defense_urban" class="mission-card" type="button">
+        <span class="mc-tag">CITY · DEFENSE</span>
+        <span class="mc-title">NIGHT WATCH</span>
+        <span class="mc-desc">Hold the Greyline bank archive through the incoming waves, then reach the service-yard extraction point.</span>
+        <span class="mc-flow">150-SECOND DEFENSE &amp; EXTRACT</span>
+      </button>
+      <button id="btn-mission-hold_snow" class="mission-card" type="button">
+        <span class="mc-tag">SNOW · EXTRACTION</span>
+        <span class="mc-title">LAST LIGHT</span>
+        <span class="mc-desc">Reach the west helipad, hold until the pickup is ready, then board out from the lit pad.</span>
+        <span class="mc-flow">120-SECOND HOLD &amp; EXTRACT</span>
+      </button>
+    </div>
+    <nav class="menu-buttons">
+      <button id="btn-select-back" class="menu-btn wide" type="button">BACK</button>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ SETTINGS ============ -->
+<div id="screen-settings" class="screen hidden">
+  <div class="panel settings-panel">
+    <div class="settings-header">
+      <h2 class="panel-title">SYSTEM SETTINGS</h2>
+      <div class="settings-tabs" role="tablist">
+        <button type="button" class="set-tab active" data-tab="tab-gameplay" role="tab" aria-selected="true">GAMEPLAY</button>
+        <button type="button" class="set-tab" data-tab="tab-graphics" role="tab" aria-selected="false">GRAPHICS</button>
+        <button type="button" class="set-tab" data-tab="tab-audio" role="tab" aria-selected="false">AUDIO</button>
+        <button type="button" class="set-tab" data-tab="tab-controls" role="tab" aria-selected="false">CONTROLS</button>
+        <button type="button" class="set-tab" data-tab="tab-display" role="tab" aria-selected="false">DISPLAY &amp; ACCESSIBILITY</button>
+      </div>
+    </div>
+
+    <div class="settings-content-wrap">
+      <!-- 1. GAMEPLAY TAB -->
+      <div id="tab-gameplay" class="settings-tab-pane active" role="tabpanel">
+        <div class="set-sub">AIM &amp; SENSITIVITY</div>
+        <div class="setting-row">
+          <label for="set-sens">MOUSE SENSITIVITY</label>
+          <input type="range" id="set-sens" min="0.2" max="3" step="0.05">
+          <span class="setting-val" id="val-sens">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-aim-sens">ADS SENSITIVITY</label>
+          <input type="range" id="set-aim-sens" min="0.3" max="1.5" step="0.05" value="0.8">
+          <span class="setting-val" id="val-aim-sens">0.80</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-invert-y">INVERT LOOK Y</label>
+          <input type="checkbox" id="set-invert-y">
+          <span class="setting-val">FLIP VERTICAL CAMERA AXIS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-aim-mode">AIM BUTTON MODE</label>
+          <select id="set-aim-mode">
+            <option value="hold" selected>HOLD TO AIM</option><option value="toggle">TOGGLE AIM</option>
+          </select>
+          <span class="setting-val">ADS TRIGGER BEHAVIOR</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-ads-key">AIM KEYBOARD TOGGLE</label>
+          <select id="set-ads-key">
+            <option value="KeyX" selected>X — TAP TO AIM, AGAIN TO EXIT</option>
+            <option value="CapsLock">CAPS LOCK</option>
+            <option value="Semicolon">; (SEMICOLON)</option>
+            <option value="KeyU">U</option>
+          </select>
+          <span class="setting-val">DEDICATED TOGGLE KEY</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-aim-assist">AIM ASSIST</label>
+          <select id="set-aim-assist">
+            <option value="off">OFF</option><option value="low" selected>LOW</option>
+            <option value="medium">MEDIUM</option><option value="high">HIGH</option>
+          </select>
+          <span class="setting-val">TARGET TRACKING MAGNETISM</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-difficulty">DIFFICULTY</label>
+          <select id="set-difficulty">
+            <option value="recruit">RECRUIT</option>
+            <option value="standard" selected>STANDARD</option>
+            <option value="hard">HARD</option>
+            <option value="veteran">VETERAN</option>
+          </select>
+          <span class="setting-val" id="difficulty-desc"></span>
+        </div>
+        <div class="setting-row">
+          <label for="set-ads-mag">ADS MAGNIFICATION</label>
+          <input type="range" id="set-ads-mag" min="0.8" max="1.3" step="0.05" value="1">
+          <span class="setting-val" id="val-ads-mag">1.00×</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-zoom-mag">OBSERVATION ZOOM</label>
+          <input type="range" id="set-zoom-mag" min="1.5" max="4" step="0.25" value="2">
+          <span class="setting-val" id="val-zoom-mag">2.00×</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-auto-sprint">AUTO SPRINT</label>
+          <input type="checkbox" id="set-auto-sprint" checked>
+          <span class="setting-val">FULL DEFLECTION ENGAGES SPRINT</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-auto-fire">AUTO FIRE</label>
+          <input type="checkbox" id="set-auto-fire">
+          <span class="setting-val">FIRE WHILE AIMING AT ASSIST TARGET</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-shake">CAMERA SHAKE</label>
+          <input type="range" id="set-shake" min="0" max="1.5" step="0.1" value="1">
+          <span class="setting-val" id="val-shake">1.0</span>
+        </div>
+
+        <div class="set-sub">GROUND VEHICLES</div>
+        <div class="setting-row">
+          <label for="set-veh-sens">STEERING SENSITIVITY</label>
+          <input type="range" id="set-veh-sens" min="0.4" max="1.8" step="0.05" value="1">
+          <span class="setting-val" id="val-veh-sens">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-veh-invert">INVERT VEHICLE STEERING</label>
+          <input type="checkbox" id="set-veh-invert">
+          <span class="setting-val">SWAP LEFT / RIGHT WHILE REVERSING</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-veh-cam">CHASE CAM DISTANCE</label>
+          <input type="range" id="set-veh-cam" min="0.7" max="1.5" step="0.05" value="1">
+          <span class="setting-val" id="val-veh-cam">1.00</span>
+        </div>
+      </div>
+
+      <!-- 2. GRAPHICS TAB -->
+      <div id="tab-graphics" class="settings-tab-pane hidden" role="tabpanel">
+        <div class="set-sub">RENDER PIPELINE</div>
+        <div class="setting-row">
+          <label for="set-quality">GRAPHICS PRESET</label>
+          <select id="set-quality">
+            <option value="low">LOW — HIGH FPS / WEAK GPUS</option>
+            <option value="medium" selected>MEDIUM — BALANCED TACTICAL</option>
+            <option value="high">HIGH — MAXIMUM QUALITY &amp; SHADOWS</option>
+          </select>
+          <span class="setting-val">ACTIVE PRESET</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-perf">PERFORMANCE MODE</label>
+          <input type="checkbox" id="set-perf">
+          <span class="setting-val">AGGRESSIVE CULLING, REDUCED PARTICLES &amp; SHADOWS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-daymode">WHITE MODE (DAYLIGHT)</label>
+          <input type="checkbox" id="set-daymode">
+          <span class="setting-val">OVERCAST DAYLIGHT RELIGHT — WHITE SKY &amp; SUN</span>
+        </div>
+        <div class="tactical-status-card">
+          <div class="ts-row"><span>PLATFORM RENDERER</span><b id="status-gl-info">WebGL 2.0 (HARDWARE ACCELERATED)</b></div>
+          <div class="ts-row"><span>SHADOW MAPS</span><b id="status-shadow-info">HIGH = 2048px CASCADED · MED = 1536px MOON</b></div>
+          <div class="ts-row"><span>DYNAMIC RESOLUTION</span><b id="status-dynres-info">ADAPTIVE 60 FPS SCALING ACTIVE</b></div>
+        </div>
+      </div>
+
+      <!-- 3. AUDIO TAB -->
+      <div id="tab-audio" class="settings-tab-pane hidden" role="tabpanel">
+        <div class="set-sub">VOLUME LEVELS</div>
+        <div class="setting-row">
+          <label for="set-master">MASTER VOLUME</label>
+          <input type="range" id="set-master" min="0" max="1" step="0.05">
+          <span class="setting-val" id="val-master">80%</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-sfx">SOUND EFFECTS</label>
+          <input type="range" id="set-sfx" min="0" max="1" step="0.05">
+          <span class="setting-val" id="val-sfx">90%</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-amb">AMBIENCE &amp; FOLEY</label>
+          <input type="range" id="set-amb" min="0" max="1" step="0.05">
+          <span class="setting-val" id="val-amb">70%</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-music-vol">MUSIC VOLUME</label>
+          <input type="range" id="set-music-vol" min="0" max="1" step="0.01">
+          <span class="setting-val" id="val-music-vol">45%</span>
+        </div>
+
+        <div class="set-sub">LOCAL SOUNDTRACK · OFFLINE READY</div>
+        <div class="music-settings" id="music-settings" role="group" aria-labelledby="music-sec-title">
+          <div class="setting-row">
+            <label for="set-music-on">BACKGROUND MUSIC</label>
+            <input type="checkbox" id="set-music-on" checked>
+            <span class="setting-val">ENABLED (TACTICAL SFX UNAFFECTED)</span>
+          </div>
+          <div class="setting-row">
+            <label for="set-music-track">ACTIVE TRACK</label>
+            <select id="set-music-track">
+              <option value="ins-fearless-pt-2">FEARLESS PT 2</option>
+            </select>
+            <span class="setting-val">SELECT TO PREVIEW</span>
+          </div>
+          <div class="music-status" id="music-status" aria-live="polite">STOPPED · FEARLESS PT 2</div>
+          <div class="music-status" id="music-files-status" aria-live="polite">FEARLESS PT 2 · BUNDLED LOCALLY FOR OFFLINE PLAY</div>
+          <div class="music-transport" role="group" aria-label="Music playback controls">
+            <button id="btn-music-prev" class="menu-btn mt-btn" type="button" aria-label="Previous track">◀◀ PREV</button>
+            <button id="btn-music-play" class="menu-btn mt-btn primary" type="button">▶ PLAY</button>
+            <button id="btn-music-next" class="menu-btn mt-btn" type="button" aria-label="Next track">NEXT ▶▶</button>
+            <button id="btn-music-shuffle" class="menu-btn mt-btn" type="button" aria-pressed="false">SHUFFLE: OFF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. CONTROLS TAB -->
+      <div id="tab-controls" class="settings-tab-pane hidden" role="tabpanel">
+        <div class="set-sub">DESKTOP KEY BINDINGS</div>
+        <div class="keybinds-grid">
+          <div class="kb-row"><span class="kb-action">MOVE FORWARD / BACK / STRAFE</span><kbd class="kb-key">W A S D</kbd></div>
+          <div class="kb-row"><span class="kb-action">SPRINT</span><kbd class="kb-key">SHIFT</kbd></div>
+          <div class="kb-row"><span class="kb-action">CROUCH / STANCE</span><kbd class="kb-key">C</kbd></div>
+          <div class="kb-row"><span class="kb-action">JUMP / MANTLE</span><kbd class="kb-key">SPACE</kbd></div>
+          <div class="kb-row"><span class="kb-action">FIRE WEAPON</span><kbd class="kb-key">LMB</kbd></div>
+          <div class="kb-row"><span class="kb-action">AIM DOWN SIGHTS (ADS)</span><kbd class="kb-key">RMB / X</kbd></div>
+          <div class="kb-row"><span class="kb-action">RELOAD</span><kbd class="kb-key">R</kbd></div>
+          <div class="kb-row"><span class="kb-action">CYCLE FIRE MODE</span><kbd class="kb-key">B</kbd></div>
+          <div class="kb-row"><span class="kb-action">WEAPON SLOTS</span><kbd class="kb-key">1 2 3 4</kbd></div>
+          <div class="kb-row"><span class="kb-action">DEPLOY THROWABLE (FRAG/EMP)</span><kbd class="kb-key">G</kbd></div>
+          <div class="kb-row"><span class="kb-action">CYCLE THROWABLE BACKWARD</span><kbd class="kb-key">N</kbd></div>
+          <div class="kb-row"><span class="kb-action">DEPLOY BARRIER SHIELD</span><kbd class="kb-key">V</kbd></div>
+          <div class="kb-row"><span class="kb-action">OPERATOR ABILITY</span><kbd class="kb-key">L</kbd></div>
+          <div class="kb-row"><span class="kb-action">PRECISION BASE STRIKE</span><kbd class="kb-key">K</kbd></div>
+          <div class="kb-row kb-highlight"><span class="kb-action">INTERACT (TERMINAL/VEHICLE)</span><kbd class="kb-key">HOLD [F]</kbd></div>
+          <div class="kb-row kb-highlight"><span class="kb-action">TACTICAL FLASHLIGHT / TORCH</span><kbd class="kb-key">[F] / [T]</kbd></div>
+          <div class="kb-row"><span class="kb-action">OBSERVATION ZOOM (TOGGLE)</span><kbd class="kb-key">[Y]</kbd></div>
+          <div class="kb-row"><span class="kb-action">TACTICAL SATELLITE MAP</span><kbd class="kb-key">M</kbd></div>
+          <div class="kb-row"><span class="kb-action">PAUSE / RESUME / MENU</span><kbd class="kb-key">ESC</kbd></div>
+        </div>
+
+        <div class="set-sub">MOBILE &amp; TOUCH CONTROLS</div>
+        <div class="setting-row">
+          <label for="set-touch-mode">TOUCH OVERLAY</label>
+          <select id="set-touch-mode">
+            <option value="auto" selected>AUTO (TOUCH DEVICES)</option><option value="on">ALWAYS ON</option><option value="off">OFF</option>
+          </select>
+          <span class="setting-val">MOBILE INPUT MODE</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-handed-layout">HANDEDNESS</label>
+          <select id="set-handed-layout">
+            <option value="right" selected>RIGHT-HANDED</option>
+            <option value="left">LEFT-HANDED</option>
+          </select>
+          <span class="setting-val">MIRRORS STICKS &amp; BUTTONS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-look-sens">LOOK SENSITIVITY</label>
+          <input type="range" id="set-look-sens" min="0.3" max="2.5" step="0.05" value="1">
+          <span class="setting-val" id="val-look-sens">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-hud-scale">HUD OVERALL SCALE</label>
+          <input type="range" id="set-hud-scale" min="0.75" max="1.3" step="0.05" value="1">
+          <span class="setting-val" id="val-hud-scale">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-btn-size">BUTTON SCALE</label>
+          <input type="range" id="set-btn-size" min="0.7" max="1.5" step="0.05" value="1">
+          <span class="setting-val" id="val-btn-size">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-btn-opacity">BUTTON OPACITY</label>
+          <input type="range" id="set-btn-opacity" min="0.3" max="1" step="0.05" value="0.8">
+          <span class="setting-val" id="val-btn-opacity">0.80</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-joy-size">MOVE STICK SIZE</label>
+          <input type="range" id="set-joy-size" min="0.7" max="1.5" step="0.05" value="1">
+          <span class="setting-val" id="val-joy-size">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-look-stick-size">AIM STICK SIZE</label>
+          <input type="range" id="set-look-stick-size" min="0.7" max="1.5" step="0.05" value="1">
+          <span class="setting-val" id="val-look-stick-size">1.00</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-joy-opacity">JOYSTICK OPACITY</label>
+          <input type="range" id="set-joy-opacity" min="0.2" max="1" step="0.05" value="0.55">
+          <span class="setting-val" id="val-joy-opacity">0.55</span>
+        </div>
+        <div class="setting-actions mobile-layout-actions">
+          <button id="btn-customize-hud" class="menu-btn primary wide">CUSTOMIZE TOUCH HUD LAYOUT</button>
+        </div>
+
+        <div class="set-sub">TOUCH HUD VISIBILITY</div>
+        <div class="setting-row">
+          <label for="set-mobile-hud-compass">COMPASS</label>
+          <input type="checkbox" id="set-mobile-hud-compass" checked>
+          <span class="setting-val">SHOW TOP NAV COMPASS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-mobile-hud-objective">OBJECTIVE</label>
+          <input type="checkbox" id="set-mobile-hud-objective" checked>
+          <span class="setting-val">SHOW MISSION OBJECTIVES BANNER</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-mobile-hud-vitals">HEALTH &amp; ARMOR</label>
+          <input type="checkbox" id="set-mobile-hud-vitals" checked>
+          <span class="setting-val">SHOW VITALS BARS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-mobile-hud-ammo">WEAPON &amp; AMMO</label>
+          <input type="checkbox" id="set-mobile-hud-ammo" checked>
+          <span class="setting-val">SHOW WEAPON &amp; AMMO COUNTERS</span>
+        </div>
+      </div>
+
+      <!-- 5. DISPLAY & ACCESSIBILITY TAB -->
+      <div id="tab-display" class="settings-tab-pane hidden" role="tabpanel">
+        <div class="set-sub">DISPLAY &amp; CAMERA</div>
+        <div class="setting-row">
+          <label>FULLSCREEN MODE</label>
+          <button id="btn-fullscreen-toggle" class="menu-btn" type="button">TOGGLE FULLSCREEN</button>
+          <span class="setting-val">EXPAND VIEWPORT</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-fov">FIELD OF VIEW (FOV)</label>
+          <input type="range" id="set-fov" min="60" max="100" step="1">
+          <span class="setting-val" id="val-fov">75°</span>
+        </div>
+
+        <div class="set-sub">TACTICAL MINI-MAP</div>
+        <div class="setting-row">
+          <label for="set-minimap">ENABLE MINI-MAP</label>
+          <input type="checkbox" id="set-minimap" checked>
+          <span class="setting-val">RADAR / COMPASS OVERLAY</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-minimap-size">MINI-MAP SIZE</label>
+          <select id="set-minimap-size">
+            <option value="s">SMALL (120px)</option>
+            <option value="m" selected>MEDIUM (150px)</option>
+            <option value="l">LARGE (190px)</option>
+          </select>
+          <span class="setting-val" id="val-minimap-size"></span>
+        </div>
+        <div class="setting-row">
+          <label for="set-minimap-opacity">MINI-MAP OPACITY</label>
+          <input type="range" id="set-minimap-opacity" min="0.3" max="1" step="0.05">
+          <span class="setting-val" id="val-minimap-opacity">0.85</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-minimap-rotate">ORIENTATION</label>
+          <select id="set-minimap-rotate">
+            <option value="north" selected>NORTH-UP (STATIC)</option>
+            <option value="player">PLAYER-UP (ROTATING)</option>
+          </select>
+          <span class="setting-val" id="val-minimap-rotate"></span>
+        </div>
+
+        <div class="set-sub">ACCESSIBILITY &amp; READABILITY</div>
+        <div class="setting-row">
+          <label for="set-contrast">HIGH CONTRAST</label>
+          <input type="checkbox" id="set-contrast">
+          <span class="setting-val">REINFORCED BORDERS &amp; BRIGHTER TEXT</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-large-text">LARGER TEXT</label>
+          <input type="checkbox" id="set-large-text">
+          <span class="setting-val">LARGER HUD &amp; MENU LABELS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-reduce-motion">REDUCED MOTION</label>
+          <input type="checkbox" id="set-reduce-motion">
+          <span class="setting-val">DISABLES UI GLITCH &amp; SCREEN SHAKES</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-subtitles">SUBTITLES &amp; COMMS</label>
+          <input type="checkbox" id="set-subtitles" checked>
+          <span class="setting-val">RADIO DIALOGUE &amp; TOAST READOUTS</span>
+        </div>
+        <div class="setting-row">
+          <label for="set-vibration">HAPTIC VIBRATION</label>
+          <input type="checkbox" id="set-vibration" checked>
+          <span class="setting-val">TACTILE FEEDBACK ON TOUCH DEVICES</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation modal for Reset to Defaults -->
+    <div id="reset-confirm-box" class="reset-confirm-box hidden">
+      <div class="rc-inner">
+        <div class="rc-msg">RESET ALL SETTINGS TO FACTORY DEFAULTS?</div>
+        <div class="rc-actions">
+          <button id="btn-reset-confirm" class="menu-btn danger" type="button">YES, RESET</button>
+          <button id="btn-reset-cancel" class="menu-btn" type="button">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-footer">
+      <button id="btn-settings-reset" class="menu-btn danger" type="button">RESET TO DEFAULTS</button>
+      <button id="btn-settings-back" class="menu-btn primary wide" type="button">BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CREDITS ============ -->
+<div id="screen-credits" class="screen hidden">
+  <div class="panel credits-panel">
+    <h2 class="panel-title">CREDITS</h2>
+    <div class="credits-body">
+      <p><b>VEILSTRIKE</b></p>
+      <p class="dim">A TIW ORIGINAL</p>
+      <p class="credit-creator">MADE BY <span class="cc-name">TALHA</span></p>
+      <p>Developed by <b>TalhaImtiazWorks (TIW)</b>.</p>
+      <p>An original tactical first-person shooter prototype.</p>
+      <p>Engine — Three.js (MIT License)</p>
+      <p>All geometry, textures, audio and code in this project are
+         original or procedurally generated. No assets from any
+         existing commercial title are used.</p>
+      <p class="dim">Any resemblance to real persons, organizations,
+         locations or events is entirely coincidental. This is a work of fiction.</p>
+      <p class="dim">Weapon behaviour is stylised game simulation only —
+         not a representation of real-world weapons handling.</p>
+    </div>
+    <button id="btn-credits-back" class="menu-btn wide">BACK</button>
+  </div>
+</div>
+
+<!-- ============ MISSIONS / LOADOUT / INTEL / AWARDS / STATS ============ -->
+<div id="screen-missions" class="screen hidden">
+  <div class="panel list-panel missions-panel-wide">
+    <h2 class="panel-title">CAMPAIGN OPERATIONS (100+ MISSIONS)</h2>
+    <div id="missions-toolbar" class="missions-toolbar"></div>
+    <div id="missions-list" class="scroll-list"></div>
+    <button id="btn-missions-back" class="menu-btn wide">BACK</button>
+  </div>
+</div>
+
+<div id="screen-loadout" class="screen hidden">
+  <div class="panel list-panel">
+    <h2 class="panel-title">LOADOUT — WEAPON FINISHES</h2>
+    <p class="panel-sub">Cosmetic finishes for all three weapons. Earned by rank.</p>
+    <div id="loadout-list" class="scroll-list"></div>
+    <button id="btn-loadout-back" class="menu-btn wide">BACK</button>
+  </div>
+</div>
+
+<div id="screen-armory" class="screen hidden">
+  <div class="panel list-panel armory-panel">
+    <h2 class="panel-title">ARMORY — SERVICE ARSENAL</h2>
+    <p class="panel-sub">TEN SERVICE WEAPONS EARNED THROUGH REAL OPERATIONS. COMPLETE MISSIONS, MEET THE REQUIREMENT, EQUIP.</p>
+    <div class="armory-tabs" role="tablist">
+      <button id="armory-tab-arsenal" class="tab-btn active" type="button" role="tab" aria-selected="true">ARSENAL</button>
+      <button id="armory-tab-operators" class="tab-btn" type="button" role="tab" aria-selected="false">OPERATORS</button>
+    </div>
+    <div id="armory-list" class="scroll-list armory-grid" role="list"></div>
+    <div id="operator-list" class="scroll-list armory-grid hidden" role="list"></div>
+    <button id="btn-armory-back" class="menu-btn wide" type="button">BACK</button>
+  </div>
+</div>
+
+<div id="screen-intel" class="screen hidden">
+  <div class="panel list-panel">
+    <h2 class="panel-title">INTELLIGENCE ARCHIVE</h2>
+    <div id="intel-list" class="scroll-list"></div>
+    <button id="btn-intel-back" class="menu-btn wide">BACK</button>
+  </div>
+</div>
+
+<div id="screen-awards" class="screen hidden">
+  <div class="panel list-panel">
+    <h2 class="panel-title">AWARDS</h2>
+    <div id="awards-list" class="scroll-list awards-grid"></div>
+    <button id="btn-awards-back" class="menu-btn wide">BACK</button>
+  </div>
+</div>
+
+<div id="screen-stats" class="screen hidden">
+  <div class="panel list-panel profile-panel">
+    <h2 class="panel-title">PROFILE &amp; SERVICE RECORD</h2>
+    <div id="stats-list" class="scroll-list"></div>
+    <button id="btn-stats-back" class="menu-btn wide" type="button">BACK</button>
+  </div>
+</div>
+
+<!-- ============ GUIDED FIELD TUTORIAL ============ -->
+<div id="screen-tutorial" class="screen hidden" aria-label="Guided field tutorial">
+  <section class="panel tutorial-panel" aria-labelledby="tutorial-heading">
+    <div class="tutorial-kicker" id="tutorial-mode">FIELD GUIDE</div>
+    <h2 class="panel-title" id="tutorial-heading">TRAINING</h2>
+    <div class="tutorial-progress" id="tutorial-progress" role="status" aria-live="polite">STEP 1 OF 7</div>
+    <div class="tutorial-step" aria-live="polite">
+      <h3 id="tutorial-step-title">MOVE &amp; LOOK</h3>
+      <p id="tutorial-step-body"></p>
+      <p class="tutorial-hint" id="tutorial-step-hint"></p>
+    </div>
+    <div class="tutorial-buttons">
+      <button id="btn-tutorial-prev" class="menu-btn" type="button">PREVIOUS</button>
+      <button id="btn-tutorial-next" class="menu-btn" type="button">NEXT</button>
+    </div>
+    <button id="btn-tutorial-range" class="menu-btn wide" type="button">START RANGE NOW · SKIP GUIDE</button>
+    <button id="btn-tutorial-back" class="menu-btn wide" type="button">BACK</button>
+  </section>
+</div>
+
+<!-- ============ MISSION BRIEFING (pre-deploy) ============ -->
+<div id="screen-brief" class="screen hidden">
+  <div class="panel brief-panel">
+    <h2 class="panel-title" id="brief-title">MISSION BRIEFING</h2>
+    <div class="brief-meta" id="brief-meta"></div>
+    <div class="brief-body" id="brief-body"></div>
+    <div class="brief-objectives" id="brief-objectives"></div>
+    <div class="brief-reward" id="brief-reward"></div>
+    <div class="brief-buttons">
+      <button id="btn-brief-start" class="menu-btn wide">START MISSION</button>
+      <div class="brief-buttons-row">
+        <button id="btn-brief-loadout" class="menu-btn">FIELD LOADOUT ▸</button>
+        <button id="btn-brief-back" class="menu-btn">BACK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MISSION OBJECTIVES (pause overlay) ============ -->
+<div id="screen-objectives" class="screen hidden">
+  <div class="panel list-panel">
+    <h2 class="panel-title">MISSION OBJECTIVES</h2>
+    <div id="objectives-list" class="scroll-list"></div>
+    <button id="btn-objectives-back" class="menu-btn wide">BACK TO PAUSE</button>
+  </div>
+</div>
+
+<!-- ============ PAUSE ============ -->
+<div id="screen-pause" class="screen hidden">
+  <div class="panel pause-panel">
+    <img class="pause-logo" src="assets/logo-veilstrike.jpg" alt="VEILSTRIKE official emblem" width="52" height="52" />
+    <h2 class="panel-title">PAUSED</h2>
+    <button id="btn-resume" class="menu-btn wide primary">RESUME</button>
+    <button id="btn-pause-objectives" class="menu-btn wide">MISSION OBJECTIVES</button>
+    <button id="btn-pause-map" class="menu-btn wide">TACTICAL MAP</button>
+    <button id="btn-pause-equipment" class="menu-btn wide">EQUIPMENT / LOADOUT</button>
+    <button id="btn-pause-settings" class="menu-btn wide">SETTINGS</button>
+    <button id="btn-pause-music" class="menu-btn wide" aria-live="polite">MUSIC: NIGHT OPS ▸</button>
+    <button id="btn-pause-strike" class="menu-btn wide">BASE STRIKE</button>
+    <div class="menu-sub">RECOVERY</div>
+    <button id="btn-restart-cp" class="menu-btn wide">RESTART FROM CHECKPOINT</button>
+    <button id="btn-restart-mission" class="menu-btn wide">RESTART MISSION</button>
+    <button id="btn-quit" class="menu-btn wide danger">ABORT — MAIN MENU</button>
+    <div class="controls-ref" aria-label="Keyboard and mouse controls">
+      <span><b>WASD</b> MOVE</span><span><b>MOUSE</b> LOOK</span><span><b>SHIFT</b> SPRINT</span><span><b>CTRL</b> CROUCH</span><span><b>SPACE</b> JUMP</span>
+      <span><b>LMB</b> FIRE</span><span><b>RMB</b> AIM</span><span><b>R</b> RELOAD / CLEAR STOPPAGE</span><span><b>1–4</b> SELECT GEAR</span><span><b>HOLD Q</b> EQUIPMENT WHEEL</span>
+      <span><b>G</b> CYCLE ITEM</span><span><b>Z/E</b> LEAN</span><span><b>X</b> AIM TOGGLE</span><span><b>H</b> HOLD — BANDAGE</span><span><b>M</b> TACTICAL MAP</span><span><b>F</b> INTERACT / HOLD</span><span><b>V</b> SHIELD RAISE / PLANT / PICK UP</span><span><b>HOLD V</b> STOW SHIELD</span><span><b>T</b> FLASHLIGHT</span><span><b>HOLD Y / MMB</b> OBSERVATION ZOOM</span><span><b>K</b> BASE STRIKE</span><span><b>ESC</b> RESUME / PAUSE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEATH ============ -->
+<div id="screen-death" class="screen hidden">
+  <div class="panel death-panel">
+    <h2 class="panel-title death-title">K.I.A.</h2>
+    <p id="death-cause" class="death-cause">You were eliminated by hostile fire.</p>
+    <button id="btn-death-cp" class="menu-btn wide">RESTART FROM CHECKPOINT</button>
+    <button id="btn-death-mission" class="menu-btn wide">RESTART MISSION</button>
+    <button id="btn-death-menu" class="menu-btn wide">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ============ MISSION COMPLETE ============ -->
+<div id="screen-complete" class="screen hidden">
+  <div class="panel complete-panel debrief-panel">
+    <h2 class="panel-title complete-title">MISSION COMPLETE</h2>
+    <div id="debrief-body" class="debrief-body"></div>
+    <div class="debrief-buttons">
+      <button id="btn-complete-retry" class="menu-btn">REDEPLOY</button>
+      <button id="btn-complete-next" class="menu-btn">NEXT MISSION</button>
+      <button id="btn-complete-menu" class="menu-btn wide">RETURN TO MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MISSION FAILED ============ -->
+<div id="screen-failed" class="screen hidden">
+  <div class="panel failed-panel">
+    <h2 class="panel-title failed-title">MISSION FAILED</h2>
+    <p id="failed-reason" class="death-cause">The facility entered full lockdown before extraction.</p>
+    <button id="btn-failed-cp" class="menu-btn wide">RESTART FROM CHECKPOINT</button>
+    <button id="btn-failed-mission" class="menu-btn wide">RESTART MISSION</button>
+    <button id="btn-failed-menu" class="menu-btn wide">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ============ HUD ============ -->
+<div id="hud" class="hidden">
+  <!-- Low-profile official brand mark; kept clear of the reticle and controls. -->
+  <img id="hud-brand" src="assets/icons/favicon-48.png" alt="VEILSTRIKE" width="28" height="28" />
+  <!-- Squad alert state (minimal) -->
+  <div id="alert-chip" class="hidden">UNAWARE</div>
+
+  <!-- Compass strip -->
+  <div id="compass-wrap"><canvas id="compass" width="440" height="36"></canvas></div>
+
+  <!-- Mini-map (settings: on/off, size, opacity, rotation) + map button -->
+  <canvas id="minimap" class="hidden" width="180" height="180"></canvas>
+  <button id="hud-mapbtn" title="Open tactical map (M)">MAP ⌖</button>
+
+  <div id="vignette"></div>
+  <div id="damage-flash"></div>
+  <div id="flashbang"></div>
+
+  <!-- Objective -->
+  <div id="hud-objective">
+    <div id="obj-meta" class="obj-meta">PRIMARY MISSION</div>
+    <div id="obj-label">OBJECTIVE</div>
+    <div id="obj-text">—</div>
+    <div id="obj-action" class="obj-action"></div>
+    <div id="obj-hostiles" class="obj-hostiles hidden"></div>
+    <div id="obj-sub"></div>
+    <div id="lockdown-timer" class="hidden"></div>
+  </div>
+
+  <!-- Crosshair -->
+  <div id="crosshair">
+    <div class="ch-tick ch-top"></div>
+    <div class="ch-tick ch-bottom"></div>
+    <div class="ch-tick ch-left"></div>
+    <div class="ch-tick ch-right"></div>
+    <div id="ch-dot"></div>
+    <div id="ads-reticle">
+      <svg class="ads-reticle-svg" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+        <circle cx="32" cy="32" r="22" class="ads-ring-bg" />
+        <circle cx="32" cy="32" r="22" class="ads-ring-fg" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Dedicated Tactical Sniper Optic Overlay -->
+  <div id="sniper-scope-overlay" class="hidden" aria-hidden="true">
+    <div class="sc-dark-edge"></div>
+    <svg class="sniper-reticle-svg" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <mask id="scope-aperture-mask">
+          <rect x="-500" y="-500" width="1000" height="1000" fill="white" />
+          <circle cx="0" cy="0" r="375" fill="black" />
+        </mask>
+        <radialGradient id="lens-shade" cx="50%" cy="50%" r="50%">
+          <stop offset="68%" stop-color="rgba(0,0,0,0)" />
+          <stop offset="90%" stop-color="rgba(10,22,18,0.4)" />
+          <stop offset="100%" stop-color="rgba(3,8,10,0.94)" />
+        </radialGradient>
+      </defs>
+      <!-- Surrounding blackout mask -->
+      <rect x="-500" y="-500" width="1000" height="1000" fill="#05080a" mask="url(#scope-aperture-mask)" />
+      <!-- Internal optical lens shading -->
+      <circle cx="0" cy="0" r="375" fill="url(#lens-shade)" />
+      <!-- Metallic optical tube bezel rings -->
+      <circle cx="0" cy="0" r="374" class="sc-bezel-outer" />
+      <circle cx="0" cy="0" r="371" class="sc-bezel-inner" />
+
+      <!-- Major Crosshair lines (Dual-stroke for maximum contrast against any terrain) -->
+      <!-- Vertical line -->
+      <line x1="0" y1="-370" x2="0" y2="370" class="sc-line-bg" />
+      <line x1="0" y1="-370" x2="0" y2="370" class="sc-line-fg" />
+      <!-- Horizontal line -->
+      <line x1="-370" y1="0" x2="370" y2="0" class="sc-line-bg" />
+      <line x1="-370" y1="0" x2="370" y2="0" class="sc-line-fg" />
+
+      <!-- Center fine gap and high-contrast illuminated center dot -->
+      <circle cx="0" cy="0" r="2.8" class="sc-center-dot-bg" />
+      <circle cx="0" cy="0" r="1.5" class="sc-center-dot-fg" />
+
+      <!-- Elevation ballistic drop marks on lower vertical arm -->
+      <line x1="-12" y1="35" x2="12" y2="35" class="sc-hash-bg" /><line x1="-12" y1="35" x2="12" y2="35" class="sc-hash-fg" />
+      <line x1="-22" y1="70" x2="22" y2="70" class="sc-hash-bg" /><line x1="-22" y1="70" x2="22" y2="70" class="sc-hash-fg" />
+      <line x1="-14" y1="105" x2="14" y2="105" class="sc-hash-bg" /><line x1="-14" y1="105" x2="14" y2="105" class="sc-hash-fg" />
+      <line x1="-30" y1="140" x2="30" y2="140" class="sc-hash-bg" /><line x1="-30" y1="140" x2="30" y2="140" class="sc-hash-fg" />
+      <line x1="-14" y1="175" x2="14" y2="175" class="sc-hash-bg" /><line x1="-14" y1="175" x2="14" y2="175" class="sc-hash-fg" />
+      <line x1="-38" y1="210" x2="38" y2="210" class="sc-hash-bg" /><line x1="-38" y1="210" x2="38" y2="210" class="sc-hash-fg" />
+      <line x1="-14" y1="245" x2="14" y2="245" class="sc-hash-bg" /><line x1="-14" y1="245" x2="14" y2="245" class="sc-hash-fg" />
+      <line x1="-48" y1="280" x2="48" y2="280" class="sc-hash-bg" /><line x1="-48" y1="280" x2="48" y2="280" class="sc-hash-fg" />
+
+      <!-- Horizontal windage mil marks -->
+      <line x1="-35" y1="-8" x2="-35" y2="8" class="sc-hash-bg" /><line x1="-35" y1="-8" x2="-35" y2="8" class="sc-hash-fg" />
+      <line x1="-70" y1="-14" x2="-70" y2="14" class="sc-hash-bg" /><line x1="-70" y1="-14" x2="-70" y2="14" class="sc-hash-fg" />
+      <line x1="-105" y1="-8" x2="-105" y2="8" class="sc-hash-bg" /><line x1="-105" y1="-8" x2="-105" y2="8" class="sc-hash-fg" />
+      <line x1="-140" y1="-20" x2="-140" y2="20" class="sc-hash-bg" /><line x1="-140" y1="-20" x2="-140" y2="20" class="sc-hash-fg" />
+      <line x1="35" y1="-8" x2="35" y2="8" class="sc-hash-bg" /><line x1="35" y1="-8" x2="35" y2="8" class="sc-hash-fg" />
+      <line x1="70" y1="-14" x2="70" y2="14" class="sc-hash-bg" /><line x1="70" y1="-14" x2="70" y2="14" class="sc-hash-fg" />
+      <line x1="105" y1="-8" x2="105" y2="8" class="sc-hash-bg" /><line x1="105" y1="-8" x2="105" y2="8" class="sc-hash-fg" />
+      <line x1="140" y1="-20" x2="140" y2="20" class="sc-hash-bg" /><line x1="140" y1="-20" x2="140" y2="20" class="sc-hash-fg" />
+
+      <!-- Mil-dots on upper and lateral arms -->
+      <circle cx="0" cy="-35" r="2.0" class="sc-dot" />
+      <circle cx="0" cy="-70" r="2.0" class="sc-dot" />
+      <circle cx="0" cy="-105" r="2.0" class="sc-dot" />
+      <circle cx="0" cy="-140" r="2.0" class="sc-dot" />
+      <circle cx="-175" cy="0" r="2.0" class="sc-dot" />
+      <circle cx="-210" cy="0" r="2.0" class="sc-dot" />
+      <circle cx="175" cy="0" r="2.0" class="sc-dot" />
+      <circle cx="210" cy="0" r="2.0" class="sc-dot" />
+
+      <!-- Range Stadiametric marks & labels -->
+      <text x="30" y="74" class="sc-label">200M</text>
+      <text x="38" y="144" class="sc-label">400M</text>
+      <text x="46" y="214" class="sc-label">600M</text>
+      <text x="56" y="284" class="sc-label">800M</text>
+    </svg>
+    <div class="sniper-scope-hud">
+      <span class="sc-telemetry-badge">MAG: 8.0×</span>
+      <span class="sc-telemetry-badge">CAL: 7.62×51</span>
+      <span id="sc-allowance-badge" class="sc-telemetry-badge hidden">ALLOWANCE: 100/100</span>
+    </div>
+  </div>
+  <div id="hitmarker" class="hidden">✕</div>
+  <div id="kill-feed" role="status" aria-live="polite" aria-label="Confirmed eliminations"></div>
+  <div id="zoom-frame" aria-hidden="true"></div>
+  <div id="damage-indicators"></div>
+  <!-- Enemy Proximity Alert & Directional Threat Indicators (P0-C) -->
+  <div id="proximity-alert" class="hidden" aria-live="assertive" role="alert">
+    <span class="prox-pulse-dot"></span>
+    <span class="prox-icon">⚠</span>
+    <span id="prox-text">ENEMY NEARBY</span>
+    <span id="prox-dist" class="prox-dist"></span>
+  </div>
+  <div id="threat-indicators" aria-hidden="true">
+    <div id="threat-arc-rear" class="threat-arc threat-rear hidden"></div>
+    <div id="threat-arc-left" class="threat-arc threat-left hidden"></div>
+    <div id="threat-arc-right" class="threat-arc threat-right hidden"></div>
+  </div>
+  <!-- Phase-14 tactical tracking markers (tracker passive / specialist ping) -->
+  <div id="tac-markers"></div>
+
+  <!-- Bottom HUD band: vitals + weapon/ammo.
+       Grouped so touch layouts can place both clear of the thumb clusters. -->
+  <div id="hud-bottom">
+    <!-- Bottom left: health / stamina -->
+    <div id="hud-vitals">
+      <div class="vital-row">
+        <span class="vital-label">ARMOR</span>
+        <div class="bar-outer armor-outer"><div id="armor-fill" class="bar-inner armor-inner"></div></div>
+      </div>
+      <div class="vital-row">
+        <span class="vital-label">HEALTH</span>
+        <div class="bar-outer health-outer"><div id="health-fill" class="bar-inner health-inner"></div></div>
+        <span class="vital-num" id="health-num">100</span>
+      </div>
+      <div class="vital-row">
+        <span class="vital-label">STAMINA</span>
+        <div class="bar-outer stamina-outer"><div id="stamina-fill" class="bar-inner stamina-inner"></div></div>
+      </div>
+    </div>
+
+    <!-- Bottom right: weapon / ammo -->
+    <div id="hud-weapon">
+      <div id="weapon-heading"><span id="weapon-name">VX-4</span><div class="weapon-meta"><span id="weapon-class">ASSAULT RIFLE</span><button id="weapon-mode" type="button" aria-label="Change fire mode" title="B — CHANGE FIRE MODE">AUTO · B</button></div></div>
+      <div id="ammo-row">
+        <span id="ammo-mag">30</span><span class="ammo-sep">/</span><span id="ammo-reserve">180</span><span id="ammo-total">Σ 210</span>
+      </div>
+      <div id="weapon-state"></div>
+      <div id="tac-kit" class="hidden" aria-label="Tactical kit status">
+        <span id="kit-ads" class="kit-chip ready hidden">AIM</span>
+        <span id="kit-shield" class="kit-chip">BARRIER</span>
+        <span id="kit-ability" class="kit-chip">ABILITY</span>
+        <span id="kit-light" class="kit-chip hidden">LIGHT</span>
+        <span id="kit-zoom" class="kit-chip hidden">ZOOM</span>
+        <span id="kit-strike" class="kit-chip hidden">BASE STRIKE</span>
+      </div>
+      <div id="frag-count">FRAG ×2</div>
+      <div id="throw-row" class="hidden"><span id="throw-name">FRAG</span> ×<span id="throw-count">0</span></div>
+    </div>
+
+  </div>
+  <!-- Vehicle HUD (visible while driving) -->
+  <div id="veh-hud" class="hidden">
+    <div id="veh-name">—</div>
+    <div id="veh-speed"><span id="veh-kmh">0</span> <i>KM/H</i> <b id="veh-gear">N</b></div>
+    <div id="veh-readouts"><span id="veh-alt">ALT 0.0 M</span><span id="veh-load">SEATS 1/4</span></div>
+    <div class="vital-row"><span class="vital-label">INTEGRITY</span>
+      <div class="bar-outer"><div id="veh-dmg-fill" class="bar-inner veh-inner"></div></div>
+    </div>
+    <div id="veh-hint">OPERATIONAL</div>
+    <div id="veh-controls">F — EXIT · C — CAMERA · SPACE — HANDBRAKE</div>
+  </div>
+
+  <!-- Equipment wheel (hold Q) -->
+  <canvas id="eq-wheel" class="hidden" width="360" height="360"></canvas>
+
+  <!-- Interaction prompt -->
+  <!-- Radio chatter + suppression -->
+  <div id="radio-line"></div>
+  <div id="suppress-hint">SUPPRESSED — KEEP YOUR HEAD DOWN</div>
+
+  <!-- Bandage hold progress -->
+  <div id="bandage-bar" class="hidden"><div id="bandage-fill"></div><span>HOLD H — APPLYING DRESSING</span></div>
+
+  <!-- Tactical map overlay (M) -->
+  <div id="tacmap" class="hidden" role="dialog" aria-modal="true" aria-label="Tactical map">
+    <div id="tacmap-frame">
+      <div id="tacmap-topbar" title="Drag the title bar to move this window; double-click to maximise">
+        <div id="tacmap-title">TACTICAL MAP<span id="tac-compass-deg" class="tac-val">NORTH-UP</span></div>
+        <div id="tacmap-controls">
+          <div class="tac-group" role="group" aria-label="Zoom">
+            <button id="tac-zoomout" class="tac-btn" title="Zoom out  (-  /  wheel down  /  pinch in)">&#8722;</button>
+            <span id="tac-zoomval" class="tac-val">1.0&#215;</span>
+            <button id="tac-zoomin" class="tac-btn" title="Zoom in  (+  /  wheel up  /  pinch out)">+</button>
+          </div>
+          <div class="tac-group" role="group" aria-label="View">
+            <button id="tac-fitbtn" class="tac-btn wide" title="Frame the whole mission area  (0)">RESET</button>
+            <button id="tac-playerbtn" class="tac-btn wide" title="Centre the map on your position  (C)">ME</button>
+            <button id="tac-objbtn" class="tac-btn wide" title="Centre the map on the active objective  (G)">OBJECTIVE</button>
+            <button id="tac-followbtn" class="tac-btn wide" aria-pressed="false" title="Keep the view centred on you while you move  (F)">FOLLOW: OFF</button>
+            <button id="tac-rotbtn" class="tac-btn wide" title="Rotate the map: north-up or player-up  (N / U)">ROT: NORTH-UP</button>
+          </div>
+          <div class="tac-group" role="group" aria-label="Route and content">
+            <button id="tac-routebtn" class="tac-btn wide" title="Cycle which marker the route is planned to">ROUTE: PRIMARY</button>
+            <button id="tac-layersbtn" class="tac-btn wide" aria-expanded="false" aria-controls="tacmap-layers" title="Show or hide map layers  (L)">LAYERS</button>
+            <button id="tac-3dbtn" class="tac-btn wide" title="Toggle the interactive 3D world view">VIEW: 2D</button>
+            <button id="tac-floatbtn" class="tac-btn wide" title="Float this window so you can move and resize it">FLOAT</button>
+          </div>
+          <div id="tac-compass" role="button" tabindex="0" title="Compass - click to switch north-up / player-up">
+            <svg viewBox="0 0 40 40" width="32" height="32" aria-hidden="true">
+              <circle class="cmp-ring" cx="20" cy="20" r="17"></circle>
+              <g id="tac-compass-needle">
+                <path class="cmp-n" d="M20 5 L24 21 L20 18 L16 21 Z"></path>
+                <path class="cmp-s" d="M20 35 L16 19 L20 22 L24 19 Z"></path>
+              </g>
+            </svg>
+          </div>
+          <button id="tac-close" class="tac-btn" title="Close the map  (M / ESC)">CLOSE &#10005;</button>
+        </div>
+      </div>
+      <div id="tacmap-stage">
+        <canvas id="tacmap-canvas" width="560" height="560" draggable="false"
+                aria-label="Tactical map viewport: drag to pan, wheel or pinch to zoom, click a marker for details"></canvas>
+        <div id="map3d-stage" class="hidden">
+          <canvas id="map3dcanvas"></canvas>
+          <div id="tac3d-controls">
+            <button id="tac3d-zoomin" class="tac-btn" title="Zoom in">+</button>
+            <button id="tac3d-zoomout" class="tac-btn" title="Zoom out">&#8722;</button>
+            <button id="tac3d-recenter" class="tac-btn wide" title="Follow the player">RECENTER</button>
+            <button id="tac3d-reset" class="tac-btn wide" title="Reset camera">RESET</button>
+          </div>
+        </div>
+        <div id="tacmap-layers" class="hidden" role="group" aria-label="Map layers">
+          <div class="tl-head">LAYERS</div>
+          <div id="tacmap-layerlist"></div>
+          <div class="tl-foot">Toggling a layer changes what is drawn. The route and the walkability grid always use the full collision data, so hiding walls cannot hide an obstacle.</div>
+        </div>
+        <div id="tacmap-inspector" class="hidden" role="status" aria-live="polite"></div>
+        <div id="tacmap-grip" class="tac-grip" title="Drag to resize this window"></div>
+      </div>
+      <!-- Built from MAP_LEGEND in js/tacmap.js so the symbols and this key cannot drift apart. -->
+      <div id="tacmap-legend" aria-label="Map symbol key">OBJECTIVE &#9670; &#183; EXTRACTION RING &#183; HOSTILES ONLY WHEN SPOTTED &#183; DARK CELLS UNEXPLORED</div>
+      <div id="tac3d-legend" class="hidden">DRAG &#8212; ORBIT &#183; WHEEL/PINCH &#8212; ZOOM &#183; RIGHT/SHIFT-DRAG OR TWO FINGERS &#8212; PAN &#183; STRUCTURES FROM LIVE PHYSICS COLLIDERS &#183; DOORS <b class="c-door">CYAN</b> &#183; GLASS <b class="c-item">PALE</b> &#183; SHIELD WALLS <b class="c-opt">ORANGE</b> &#183; OBJECTIVE <b class="c-obj">GREEN &#9670;</b> &#183; EXTRACTION <b class="c-obj">RING</b> &#183; KNOWN HOSTILES <b class="c-foe">RED &#9679;</b> (SEEN / INTEL-MARKED ONLY) &#183; YOU <b style="color:#62d4ff">&#9650;</b></div>
+    </div>
+  </div>
+
+<div id="interact-prompt" class="hidden"><span class="key-cap">F</span> <span id="interact-text">INTERACT</span></div>
+  <div id="hack-progress" class="hidden"><div id="hack-fill"></div><span id="hack-label">DOWNLOADING…</span></div>
+
+  <!-- Objective toast -->
+  <div id="objective-toast" class="hidden">
+    <div id="toast-label">OBJECTIVE COMPLETE</div>
+    <div id="toast-text"></div>
+  </div>
+
+  <div id="fps-counter" class="hidden">-- FPS</div>
+  <div id="stance-indicator"></div>
+
+  <!-- subtitles: comms / radio / objective voice lines -->
+  <div id="subtitle-line" class="hidden"><span id="subtitle-tag">[COMMS]</span> <span id="subtitle-text"></span></div>
+</div>
+
+<!-- ============ TOUCH CONTROLS (built by js/touch.js; desktop hides) ============ -->
+<div id="touch-controls" class="hidden"></div>
+
+<!-- ============ CONTROL EDITOR (Phase 13) ============ -->
+<div id="screen-controls" class="screen hidden" role="dialog" aria-label="Customize controls">
+  <div id="ces-topbar">
+    <div>
+      <div class="ces-kicker">CUSTOMIZE CONTROLS</div>
+      <div id="ces-name">SELECT A CONTROL</div>
+    </div>
+    <div id="ces-flash" aria-live="polite"></div>
+  </div>
+  <div id="ces-stage">
+    <div class="ces-stage-hint">DRAG CONTROLS · TAP TO SELECT</div>
+  </div>
+  <div id="ces-adjust">
+    <label>SIZE <span id="ces-size-val"></span><input type="range" id="ces-size" min="60" max="200" step="5" value="100"></label>
+    <label>OPACITY <span id="ces-op-val"></span><input type="range" id="ces-opacity" min="25" max="100" step="5" value="80"></label>
+  </div>
+  <div id="ces-actions">
+    <button id="ces-save" class="menu-btn primary start-btn" type="button">SAVE</button>
+    <button id="ces-reset" class="menu-btn" type="button">RESET TO DEFAULT</button>
+    <button id="ces-cancel" class="menu-btn ghost" type="button">CANCEL</button>
+    <button id="ces-done" class="menu-btn ghost" type="button">BACK</button>
+  </div>
+</div>
+
+<!-- ============ MOBILE BOTTOM NAV (menu-side screens, touch devices) ============ -->
+<nav id="mobnav" class="hidden">
+  <button id="mn-home" class="mn-btn">HOME</button>
+  <button id="mn-missions" class="mn-btn">MISSIONS</button>
+  <button id="mn-loadout" class="mn-btn">FIELD KIT</button>
+  <button id="mn-intel" class="mn-btn">INTEL</button>
+  <button id="mn-settings" class="mn-btn">SETTINGS</button>
+</nav>
+
+<!-- ============ PERFORMANCE SUGGESTION (non-blocking, mobile) ============ -->
+<div id="perf-suggest" class="hidden">
+  <div class="perf-card">
+    <div class="perf-title">PERFORMANCE MODE RECOMMENDED</div>
+    <div class="perf-sub">This device may run better with reduced shadows, particles and draw distance.</div>
+    <div class="perf-buttons">
+      <button id="btn-perf-apply" class="menu-btn">APPLY</button>
+      <button id="btn-perf-dismiss" class="menu-btn">NOT NOW</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAUNCH GUARD (v16.4.1) ============
+     Plain script (no modules) so it still runs when the game cannot. It only
+     explains a broken launch (opened from file://, or a server that sends CSS/JS
+     as text/plain) instead of leaving an unstyled page. It never touches gameplay. -->
+<script>
+(function () {
+  var shown = false;
+  function show(title, lines) {
+    if (shown) return; shown = true;
+    var d = document.createElement('div');
+    d.id = 'vs-launch-guard';
+    d.setAttribute('role', 'alert');
+    d.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:#07090b;color:#e6e2d8;' +
+      'font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;' +
+      'justify-content:center;padding:24px;box-sizing:border-box;overflow:auto';
+    var h = '<div style="max-width:640px;border:1px solid #3a3f44;border-left:3px solid #d9a441;background:#0e1114;padding:22px 26px">' +
+      '<div style="letter-spacing:.18em;color:#d9a441;font-size:12px;margin-bottom:6px">VEILSTRIKE &middot; LAUNCH CHECK</div>' +
+      '<div style="font-size:20px;font-weight:700;margin-bottom:12px">' + title + '</div>';
+    for (var i = 0; i < lines.length; i++) h += '<p style="margin:0 0 10px">' + lines[i] + '</p>';
+    d.innerHTML = h + '</div>';
+    (document.body || document.documentElement).appendChild(d);
+  }
+  var HOW = 'How to play: <b>Local</b>: run a local web server in this folder (e.g. <code>python -m http.server 8080</code> or <code>npx serve</code>), then open <code>http://localhost:8080/</code>. ' +
+    '<b>Online</b>: upload the extracted folder to Vercel, Netlify Drop, or GitHub Pages.';
+  function fileMsg() {
+    show('Please don\'t open index.html directly',
+      ['Browsers block game scripts on pages opened from a file (file://), so VEILSTRIKE cannot start this way. Nothing is wrong with the download.', HOW]);
+  }
+  window.__vsLaunchFail = function (what, url) {
+    if (location.protocol === 'file:') { fileMsg(); return; }
+    var detail = 'The browser rejected a JavaScript module request. Check the failed request URL and MIME type in the browser Network panel.';
+    console.error('Launch check failure for:', what, url || 'unknown module URL');
+    show('The game files were blocked by the browser', [detail + ' Check that the deployed root contains index.html, js/, css/, and assets/. For JavaScript modules the server should return HTTP 200 with a JavaScript MIME type.', HOW]);
+  };
+  if (location.protocol === 'file:') {
+    document.addEventListener('DOMContentLoaded', fileMsg);
+    return;
+  }
+  window.addEventListener('load', function () {
+    var el = document.getElementById('error-overlay');
+    // .hidden is display:none in base.css. If it is still visible, the stylesheets were refused.
+    if (el && el.classList.contains('hidden') && getComputedStyle(el).display !== 'none') window.__vsLaunchFail('stylesheets (CSS)');
+  });
+})();
+</script>
+<script type="module" src="js/main.js" onerror="window.__vsLaunchFail && window.__vsLaunchFail('scripts (JavaScript)', this.src)"></script>
+<script type="module" src="js/pwa.js"></script>
+</body>
+</html>

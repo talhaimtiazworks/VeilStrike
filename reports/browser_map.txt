@@ -1,0 +1,3 @@
+SKIP browser_map_tests.mjs — Playwright is not installed here.
+  install: npm i playwright && npx playwright install chromium
+  or point $VEIL_PLAYWRIGHT at a directory containing node_modules/playwright
